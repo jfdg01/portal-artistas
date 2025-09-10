@@ -3,18 +3,18 @@ Aplicación web para la gestión de clases, materiales, portal de ventas y suscr
 
 # Definiciones
 
-- Clase grabada: Conjunto de vídeos, documentos o cualquier recurso didáctivo hecho y subido con antelación
-- Clase online: Reunión online o streaming en la que un profesor da clase (e.g.: Google Meet, Martes de 10:30 a 12:30, clase online de acuarela)
-- Taller: Sesión de clases suelta (e.g.: iniciacion en acuarela, paisaje en acuarela, detalle de retrato en acuarela)
-- Monográfico: Un taller pero mucho mas especifico (e.g.: detalle de un ojo en oleo)
+- **Clase grabada**: Conjunto de vídeos, documentos o cualquier recurso didáctivo hecho y subido con antelación
+- **Clase online**: Reunión online o streaming en la que un profesor da clase (e.g.: Google Meet, Martes de 10:30 a 12:30, clase online de acuarela)
+- **Taller**: Sesión de clases suelta (e.g.: iniciacion en acuarela, paisaje en acuarela, detalle de retrato en acuarela)
+- **Monográfico**: Un taller pero mucho mas especifico (e.g.: detalle de un ojo en oleo)
 
 # Usuarios
 
-- Artista
+- **Artista**
 	- Profesor
 	- Vendedor
-- Alumno
-- Comprador
+- **Alumno**
+- **Comprador**
 
 # Requisitos
 
