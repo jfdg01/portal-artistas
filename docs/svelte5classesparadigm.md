@@ -5,10 +5,11 @@
 This guide provides a comprehensive overview of a modern and powerful paradigm for state management in Svelte applications. By leveraging standard JavaScript classes, the new reactivity model in Svelte 5 known as "runes," and Svelte's built-in context API, you can create highly organized, scalable, and maintainable web applications.
 
 This approach offers several key benefits:
-*   **Separation of Concerns:** Logic is cleanly separated from the UI, making both easier to reason about and maintain.
-*   **Improved Code Organization:** State and the methods that manipulate it are encapsulated within classes, leading to a more structured codebase.
-*   **Enhanced Reusability:** State logic can be easily reused across different components and even different projects.
-*   **Seamless State Sharing:** Sharing state across the component tree becomes straightforward and efficient.
+
+- **Separation of Concerns:** Logic is cleanly separated from the UI, making both easier to reason about and maintain.
+- **Improved Code Organization:** State and the methods that manipulate it are encapsulated within classes, leading to a more structured codebase.
+- **Enhanced Reusability:** State logic can be easily reused across different components and even different projects.
+- **Seamless State Sharing:** Sharing state across the component tree becomes straightforward and efficient.
 
 ---
 
@@ -52,21 +53,21 @@ Here’s how to create a reactive class:
 // src/lib/ChatState.svelte.ts
 
 export class ChatStateClass {
-  // Reactive properties
-  messages = $state<{ role: string; content: string }[]>([]);
-  isLoading = $state(false);
+	// Reactive properties
+	messages = $state<{ role: string; content: string }[]>([]);
+	isLoading = $state(false);
 
-  // Method to add a message
-  async sendMessage(message: string) {
-    this.isLoading = true;
-    this.messages.push({ role: 'user', content: message });
+	// Method to add a message
+	async sendMessage(message: string) {
+		this.isLoading = true;
+		this.messages.push({ role: 'user', content: message });
 
-    // Simulate an API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+		// Simulate an API call
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    this.messages.push({ role: 'assistant', content: 'This is a fake response.' });
-    this.isLoading = false;
-  }
+		this.messages.push({ role: 'assistant', content: 'This is a fake response.' });
+		this.isLoading = false;
+	}
 }
 ```
 
@@ -87,30 +88,28 @@ If the state is only needed by one component or its direct children, you can cre
 ```html
 <!-- src/routes/chat/+page.svelte -->
 <script lang="ts">
-  import { ChatStateClass } from '$lib/ChatState.svelte';
+	import { ChatStateClass } from '$lib/ChatState.svelte';
 
-  const chatState = new ChatStateClass();
-  let message = $state('');
+	const chatState = new ChatStateClass();
+	let message = $state('');
 
-  function handleSubmit() {
-    chatState.sendMessage(message);
-    message = '';
-  }
+	function handleSubmit() {
+		chatState.sendMessage(message);
+		message = '';
+	}
 </script>
 
 <div>
-  {#each chatState.messages as msg}
-    <p class={msg.role}>{msg.content}</p>
-  {/each}
+	{#each chatState.messages as msg}
+	<p class="{msg.role}">{msg.content}</p>
+	{/each} {#if chatState.isLoading}
+	<p>Loading...</p>
+	{/if}
 
-  {#if chatState.isLoading}
-    <p>Loading...</p>
-  {/if}
-
-  <form onsubmit={handleSubmit}>
-    <input bind:value={message} type="text" />
-    <button type="submit">Send</button>
-  </form>
+	<form onsubmit="{handleSubmit}">
+		<input bind:value="{message}" type="text" />
+		<button type="submit">Send</button>
+	</form>
 </div>
 ```
 
@@ -141,24 +140,24 @@ import { getContext, setContext } from 'svelte';
 const COUNTER_KEY = Symbol('counter_state');
 
 export class CounterStateClass {
-  count = $state(0);
+	count = $state(0);
 
-  increment() {
-    this.count++;
-  }
+	increment() {
+		this.count++;
+	}
 
-  decrement() {
-    this.count--;
-  }
+	decrement() {
+		this.count--;
+	}
 }
 
 export function setCounterState() {
-  const counterState = new CounterStateClass();
-  setContext(COUNTER_KEY, counterState);
+	const counterState = new CounterStateClass();
+	setContext(COUNTER_KEY, counterState);
 }
 
 export function getCounterState() {
-  return getContext<CounterStateClass>(COUNTER_KEY);
+	return getContext<CounterStateClass>(COUNTER_KEY);
 }
 ```
 
@@ -167,9 +166,9 @@ export function getCounterState() {
 ```html
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
-  import { setCounterState } from '$lib/CounterState.svelte';
-  
-  setCounterState();
+	import { setCounterState } from '$lib/CounterState.svelte';
+
+	setCounterState();
 </script>
 
 <slot />
@@ -180,15 +179,15 @@ export function getCounterState() {
 ```html
 <!-- src/lib/components/Counter.svelte -->
 <script lang="ts">
-  import { getCounterState } from '$lib/CounterState.svelte';
+	import { getCounterState } from '$lib/CounterState.svelte';
 
-  const counterState = getCounterState();
+	const counterState = getCounterState();
 </script>
 
 <div>
-  <button onclick={() => counterState.increment()}>Increment</button>
-  <span>{counterState.count}</span>
-  <button onclick={() => counterState.decrement()}>Decrement</button>
+	<button onclick="{()" ="">counterState.increment()}>Increment</button>
+	<span>{counterState.count}</span>
+	<button onclick="{()" ="">counterState.decrement()}>Decrement</button>
 </div>
 ```
 

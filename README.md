@@ -12,28 +12,28 @@ Aplicación web para la gestión de clases, materiales, portal de ventas y suscr
 # Usuarios
 
 - **Artista**
-	- Profesor
-	- Vendedor
+  - Profesor
+  - Vendedor
 - **Alumno**
 - **Comprador**
 
 # Requisitos
 
 - Como Artista (Profesor) quiero poder gestionar mis entidades didácticas
-	- Quiero crear/borrar una clase (e.g.: taller, clase grabada, etc)
-	- Quiero editar los datos de una clase (e.g.: precio, nombre, fechas, etc)
-	- Quiero subir/eliminar mi material didáctico (e.g.: videos, documentos, fotos, etc)
+  - Quiero crear/borrar una clase (e.g.: taller, clase grabada, etc)
+  - Quiero editar los datos de una clase (e.g.: precio, nombre, fechas, etc)
+  - Quiero subir/eliminar mi material didáctico (e.g.: videos, documentos, fotos, etc)
 
 - Como Alumno, quiero poder gestionar mis clases y los materieales
-	- Quiero acceder a un catálogo de clases
- 	- Quiero seleecionar una clase y ver su su información 	
- 	- Quiero seleccionar una clase y apuntarme
-    - Quiero acceder a un catálogo de profesores	
-	- Quiero seleccionar un profesor y ver sus clases dispibles (actuales y futuras)
- 	- Quiero acceder a un catálogo de mis clases apuntadas
-  	- Quiero seleccionar una de mis clases apuntadas y ver sus detalles
-  	- Quiero seleccionar una de mis clases y acceder a los recursos de la misma
-  	- Quiero seleecionar una de mis clases y contactar con mi profesor (?)	
+  - Quiero acceder a un catálogo de clases
+  - Quiero seleecionar una clase y ver su su información
+  - Quiero seleccionar una clase y apuntarme
+    - Quiero acceder a un catálogo de profesores
+  - Quiero seleccionar un profesor y ver sus clases dispibles (actuales y futuras)
+  - Quiero acceder a un catálogo de mis clases apuntadas
+    - Quiero seleccionar una de mis clases apuntadas y ver sus detalles
+    - Quiero seleccionar una de mis clases y acceder a los recursos de la misma
+    - Quiero seleecionar una de mis clases y contactar con mi profesor (?)
 
 - Como Usuario?, quiero saber las fechas y localizaciones de eventos relevantes del Artista
-	- Quiero poder ver los eventos futuros (e.g.: cursos, talleres, exposciociones, demostraciones, etc)
+  - Quiero poder ver los eventos futuros (e.g.: cursos, talleres, exposciociones, demostraciones, etc)

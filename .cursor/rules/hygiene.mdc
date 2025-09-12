@@ -1,0 +1,4 @@
+---
+alwaysApply: true
+---
+Every time any significant changes are made to the codebase, run the "npm run hygiene" command and fix any errors and warnings that are currently in the system.

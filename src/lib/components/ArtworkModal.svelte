@@ -1,0 +1,207 @@
+<!--
+@component ArtworkModal
+@description Modal component for displaying detailed artwork information
+@example
+  <ArtworkModal artwork={selectedArtwork} on:close={handleClose} />
+-->
+
+<script lang="ts">
+	import type { Artwork } from '$lib/types/artwork';
+	import { X, Euro, Calendar, Ruler, User, Tag } from 'lucide-svelte';
+	import { fly, fade } from 'svelte/transition';
+
+	/**
+	 * @prop {Artwork | null} artwork - The artwork to display in the modal
+	 * @prop {function} [onclose] - Close handler function
+	 */
+	let {
+		artwork,
+		onclose
+	}: {
+		artwork: Artwork | null;
+		onclose?: () => void;
+	} = $props();
+
+	/**
+	 * @event close - Fired when the modal should be closed
+	 */
+
+	function handleClose() {
+		if (onclose) {
+			onclose();
+		}
+	}
+
+	function handleBackdropClick(event: MouseEvent) {
+		if (event.target === event.currentTarget) {
+			handleClose();
+		}
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			handleClose();
+		}
+	}
+
+	// Focus management
+	$effect(() => {
+		if (artwork) {
+			// Focus the modal when it opens
+			const modal = document.querySelector('[data-modal]') as HTMLElement;
+			if (modal) {
+				modal.focus();
+			}
+		}
+	});
+</script>
+
+{#if artwork}
+	<!-- Modal Overlay -->
+	<div
+		class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+		onclick={handleBackdropClick}
+		onkeydown={handleKeydown}
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="modal-title"
+		tabindex="-1"
+		transition:fade={{ duration: 200 }}
+	>
+		<!-- Modal Content -->
+		<div
+			class="modal-overlay bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+			data-modal
+			tabindex="-1"
+			transition:fly={{ y: 50, duration: 300 }}
+		>
+			<!-- Modal Header -->
+			<div class="flex items-center justify-between p-6 border-b border-gray-200">
+				<h2 id="modal-title" class="text-2xl font-bold text-gray-900">
+					{artwork.title}
+				</h2>
+				<button
+					onclick={handleClose}
+					class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+					aria-label="Close modal"
+				>
+					<X class="w-6 h-6" />
+				</button>
+			</div>
+
+			<!-- Modal Body -->
+			<div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+					<!-- Image Section -->
+					<div class="space-y-4">
+						<div class="relative">
+							<img
+								src={artwork.imageUrl}
+								alt="{artwork.title} by {artwork.artist}"
+								class="w-full h-auto rounded-lg shadow-md"
+								loading="lazy"
+							/>
+							{#if !artwork.isAvailable}
+								<div
+									class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+								>
+									Sold
+								</div>
+							{/if}
+						</div>
+					</div>
+
+					<!-- Details Section -->
+					<div class="space-y-6">
+						<!-- Artist -->
+						<div class="flex items-center space-x-3">
+							<User class="w-5 h-5 text-gray-400" />
+							<div>
+								<p class="text-sm text-gray-500">Artist</p>
+								<p class="text-lg font-semibold text-gray-900">{artwork.artist}</p>
+							</div>
+						</div>
+
+						<!-- Price -->
+						<div class="flex items-center space-x-3">
+							<Euro class="w-5 h-5 text-gray-400" />
+							<div>
+								<p class="text-sm text-gray-500">Price</p>
+								<p class="text-2xl font-bold text-gray-900">
+									{artwork.price}
+									{artwork.currency}
+								</p>
+							</div>
+						</div>
+
+						<!-- Dimensions -->
+						<div class="flex items-center space-x-3">
+							<Ruler class="w-5 h-5 text-gray-400" />
+							<div>
+								<p class="text-sm text-gray-500">Dimensions</p>
+								<p class="text-lg font-semibold text-gray-900">
+									{artwork.dimensions.width} × {artwork.dimensions.height}
+									{artwork.dimensions.unit}
+								</p>
+							</div>
+						</div>
+
+						<!-- Year -->
+						<div class="flex items-center space-x-3">
+							<Calendar class="w-5 h-5 text-gray-400" />
+							<div>
+								<p class="text-sm text-gray-500">Year</p>
+								<p class="text-lg font-semibold text-gray-900">{artwork.year}</p>
+							</div>
+						</div>
+
+						<!-- Category -->
+						<div class="flex items-center space-x-3">
+							<Tag class="w-5 h-5 text-gray-400" />
+							<div>
+								<p class="text-sm text-gray-500">Category</p>
+								<span
+									class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+								>
+									{artwork.category}
+								</span>
+							</div>
+						</div>
+
+						<!-- Description -->
+						<div>
+							<p class="text-sm text-gray-500 mb-2">Description</p>
+							<p class="text-gray-700 leading-relaxed">{artwork.description}</p>
+						</div>
+
+						<!-- Contact Information -->
+						{#if artwork.isAvailable}
+							<div class="bg-green-50 border border-green-200 rounded-lg p-4">
+								<h3 class="text-lg font-semibold text-green-800 mb-2">
+									Interested in this artwork?
+								</h3>
+								<p class="text-green-700 text-sm mb-3">
+									This piece is available for purchase. Contact us for more information about
+									shipping, payment, and delivery.
+								</p>
+								<button
+									class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium"
+								>
+									Contact Artist
+								</button>
+							</div>
+						{:else}
+							<div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+								<h3 class="text-lg font-semibold text-gray-800 mb-2">This artwork has been sold</h3>
+								<p class="text-gray-600 text-sm">
+									Unfortunately, this piece is no longer available. Browse our other artworks to
+									find something you love.
+								</p>
+							</div>
+						{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
