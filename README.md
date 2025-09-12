@@ -24,13 +24,6 @@ Aplicación web para la gestión de clases, materiales, portal de ventas y suscr
 	- Quiero editar los datos de una clase (e.g.: precio, nombre, fechas, etc)
 	- Quiero subir/eliminar mi material didáctico (e.g.: videos, documentos, fotos, etc)
 
-- Como Artista (Vendedor), quiero poder subir mis cuadros para que los compren
-	- Quiero poder subir un cuadro a mi portal con un precio
-
-- Como Comprador, quiero poder comprar un cuadro que vea en el portal
-	- Quiero poder seleccionar un cuadro y ver su informacion (e.g.: precio, fecha, etc)
-	- Quiero poder seleccionar un cuadro y comprarlo (quizas generar una factura)
-
 - Como Alumno, quiero poder gestionar mis clases y los materieales
 	- Quiero acceder a un catálogo de clases
  	- Quiero seleecionar una clase y ver su su información 	
