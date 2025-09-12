@@ -1,38 +1,46 @@
-# sv
+# portal-artistas
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Aplicación web para la gestión de clases, materiales, portal de ventas y suscripciones para artistas y su obra
 
-## Creating a project
+# Definiciones
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Clase grabada**: Conjunto de vídeos, documentos o cualquier recurso didáctivo hecho y subido con antelación
+- **Clase online**: Reunión online o streaming en la que un profesor da clase (e.g.: Google Meet, Martes de 10:30 a 12:30, clase online de acuarela)
+- **Taller**: Sesión de clases suelta (e.g.: iniciacion en acuarela, paisaje en acuarela, detalle de retrato en acuarela)
+- **Monográfico**: Un taller pero mucho mas especifico (e.g.: detalle de un ojo en oleo)
 
-```sh
-# create a new project in the current directory
-npx sv create
+# Usuarios
 
-# create a new project in my-app
-npx sv create my-app
-```
+- **Artista**
+	- Profesor
+	- Vendedor
+- **Alumno**
+- **Comprador**
 
-## Developing
+# Requisitos
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Como Artista (Profesor) quiero poder gestionar mis entidades didácticas
+	- Quiero crear/borrar una clase (e.g.: taller, clase grabada, etc)
+	- Quiero editar los datos de una clase (e.g.: precio, nombre, fechas, etc)
+	- Quiero subir/eliminar mi material didáctico (e.g.: videos, documentos, fotos, etc)
 
-```sh
-npm run dev
+- Como Artista (Vendedor), quiero poder subir mis cuadros para que los compren
+	- Quiero poder subir un cuadro a mi portal con un precio
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- Como Comprador, quiero poder comprar un cuadro que vea en el portal
+	- Quiero poder seleccionar un cuadro y ver su informacion (e.g.: precio, fecha, etc)
+	- Quiero poder seleccionar un cuadro y comprarlo (quizas generar una factura)
 
-## Building
+- Como Alumno, quiero poder gestionar mis clases y los materieales
+	- Quiero acceder a un catálogo de clases
+ 	- Quiero seleecionar una clase y ver su su información 	
+ 	- Quiero seleccionar una clase y apuntarme
+    - Quiero acceder a un catálogo de profesores	
+	- Quiero seleccionar un profesor y ver sus clases dispibles (actuales y futuras)
+ 	- Quiero acceder a un catálogo de mis clases apuntadas
+  	- Quiero seleccionar una de mis clases apuntadas y ver sus detalles
+  	- Quiero seleccionar una de mis clases y acceder a los recursos de la misma
+  	- Quiero seleecionar una de mis clases y contactar con mi profesor (?)	
 
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- Como Usuario?, quiero saber las fechas y localizaciones de eventos relevantes del Artista
+	- Quiero poder ver los eventos futuros (e.g.: cursos, talleres, exposciociones, demostraciones, etc)
