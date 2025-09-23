@@ -61,8 +61,10 @@
 </script>
 
 <div
-	class="artwork-card bg-white rounded-lg shadow-md hover:shadow-lg
-    transition-all duration-300 cursor-pointer hover:scale-[1.02] {sizeClasses[size]}"
+	class="artwork-card group bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50
+    hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-1 {sizeClasses[
+		size
+	]} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 	onclick={handleClick}
 	onkeydown={handleKeydown}
 	tabindex="0"
@@ -70,21 +72,23 @@
 	aria-label={$t('viewDetailsFor', { values: { title: artwork.title, artist: artwork.artist } })}
 >
 	<!-- Image Container -->
-	<div class="relative mb-3 overflow-hidden rounded-lg">
+	<div class="relative mb-3 overflow-hidden rounded-xl">
 		<img
 			src={artwork.thumbnailUrl}
 			alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
 			class="w-full {imageSizeClasses[
 				size
-			]} object-cover transition-transform duration-300 hover:scale-105"
+			]} object-cover transition-transform duration-300 group-hover:scale-105"
 			loading="lazy"
 		/>
 
 		<!-- Overlay on hover -->
 		<div
-			class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center"
+			class="absolute inset-0 pointer-events-none bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center"
 		>
-			<Eye class="w-8 h-8 text-white opacity-0 hover:opacity-100 transition-opacity duration-300" />
+			<Eye
+				class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+			/>
 		</div>
 
 		<!-- Availability Badge -->

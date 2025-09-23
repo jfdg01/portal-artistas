@@ -61,7 +61,7 @@
 	<div class="space-y-3 md:space-y-4">
 		{#each artworks as artwork (artwork.id)}
 			<div
-				class="artwork-list-item bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-[1.01] p-3 xs:p-4"
+				class="artwork-list-item bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-0.5 p-3 xs:p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 				onclick={() => handleArtworkClick(artwork)}
 				onkeydown={(e) => handleKeydown(e, artwork)}
 				tabindex="0"
@@ -76,7 +76,7 @@
 						<img
 							src={artwork.thumbnailUrl}
 							alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
-							class="w-20 h-20 object-cover rounded-lg md:w-24 md:h-24"
+							class="w-20 h-20 object-cover rounded-xl md:w-24 md:h-24"
 							loading="lazy"
 						/>
 						{#if !artwork.isAvailable}

@@ -5,16 +5,32 @@
 
 import type { Artwork } from '$lib/types/artwork';
 
+// Helpers to build srcset strings based on existing processed assets
+function buildImageSrcSet(base: string): string {
+	// base like '/images/notional'
+	return [768, 1280, 1920, 2560].map((w) => `/images/${base}-${w}w.webp ${w}w`).join(', ');
+}
+
+function buildThumbSrcSet(base: string): string {
+	return [320, 640].map((w) => `/images/thumbnails/${base}-${w}w.webp ${w}w`).join(', ');
+}
+
+// Default sizes mapping our breakpoints from app.css
+const defaultCardSizes =
+	'(min-width: 1440px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 425px) 50vw, 100vw';
+
 export const mockArtworks: Artwork[] = [
 	{
 		id: '1',
-		title: 'Sunset Over Mountains',
-		description:
-			'A beautiful landscape painting capturing the golden hour over rolling mountain ranges. The warm colors of the setting sun create a peaceful and serene atmosphere.',
+		title: 'Notional',
+		description: 'Oil on canvas exploring color fields and structure.',
 		price: 450,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/notional-1280w.webp',
+		imageSrcSet: buildImageSrcSet('notional'),
+		thumbnailUrl: '/images/thumbnails/notional-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('notional'),
+		sizes: defaultCardSizes,
 		artist: 'María García',
 		year: 2023,
 		dimensions: { width: 60, height: 40, unit: 'cm' },
@@ -25,13 +41,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '2',
-		title: 'Urban Reflections',
-		description:
-			'An abstract interpretation of city life through the lens of water reflections. Bold colors and dynamic shapes capture the energy of urban environments.',
+		title: 'Belong',
+		description: 'Abstract composition reflecting place and identity.',
 		price: 320,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/belong-1280w.webp',
+		imageSrcSet: buildImageSrcSet('belong'),
+		thumbnailUrl: '/images/thumbnails/belong-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('belong'),
+		sizes: defaultCardSizes,
 		artist: 'James Chen',
 		year: 2023,
 		dimensions: { width: 50, height: 70, unit: 'cm' },
@@ -42,13 +60,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '3',
-		title: 'Portrait of Wisdom',
-		description:
-			"A detailed portrait capturing the depth of human experience. The subject's eyes tell a story of a life well-lived, with every wrinkle and expression carefully rendered.",
+		title: 'Lilith',
+		description: 'Figurative work with strong contrasts and symbolism.',
 		price: 680,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/lilith-1280w.webp',
+		imageSrcSet: buildImageSrcSet('lilith'),
+		thumbnailUrl: '/images/thumbnails/lilith-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('lilith'),
+		sizes: defaultCardSizes,
 		artist: 'Elena Rodriguez',
 		year: 2022,
 		dimensions: { width: 40, height: 50, unit: 'cm' },
@@ -59,13 +79,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '4',
-		title: 'Ocean Waves',
-		description:
-			'A powerful seascape showing the raw energy of ocean waves crashing against rocky shores. The painting captures the movement and sound of the sea.',
+		title: 'The Joke',
+		description: 'Playful gesture and color, layered textures.',
 		price: 520,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/the-joke-1280w.webp',
+		imageSrcSet: buildImageSrcSet('the-joke'),
+		thumbnailUrl: '/images/thumbnails/the-joke-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('the-joke'),
+		sizes: defaultCardSizes,
 		artist: 'David Thompson',
 		year: 2023,
 		dimensions: { width: 80, height: 60, unit: 'cm' },
@@ -76,13 +98,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '5',
-		title: 'Geometric Harmony',
-		description:
-			'A modern abstract composition exploring the relationship between geometric shapes and color. The piece creates visual tension and balance through careful arrangement.',
+		title: 'Negra (detalle)',
+		description: 'Detailed close-up with expressive brushwork.',
 		price: 280,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/negra-detalle-1280w.webp',
+		imageSrcSet: buildImageSrcSet('negra-detalle'),
+		thumbnailUrl: '/images/thumbnails/negra-detalle-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('negra-detalle'),
+		sizes: defaultCardSizes,
 		artist: 'Sophie Martin',
 		year: 2023,
 		dimensions: { width: 45, height: 45, unit: 'cm' },
@@ -93,13 +117,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '6',
-		title: 'Forest Path',
-		description:
-			'A peaceful woodland scene showing a winding path through ancient trees. The dappled sunlight creates a magical atmosphere in this serene forest setting.',
+		title: 'Grafito',
+		description: 'Graphite study with tonal range and edges.',
 		price: 380,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/grafito-1280w.webp',
+		imageSrcSet: buildImageSrcSet('grafito'),
+		thumbnailUrl: '/images/thumbnails/grafito-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('grafito'),
+		sizes: defaultCardSizes,
 		artist: 'Anna Kowalski',
 		year: 2022,
 		dimensions: { width: 70, height: 50, unit: 'cm' },
@@ -110,13 +136,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '7',
-		title: 'Still Life with Flowers',
-		description:
-			'A vibrant still life featuring a bouquet of seasonal flowers in a ceramic vase. The painting celebrates the beauty of everyday objects and natural forms.',
+		title: 'Estudio retrato',
+		description: 'Portrait study highlighting planes and light.',
 		price: 250,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/estudio-retrato-1280w.webp',
+		imageSrcSet: buildImageSrcSet('estudio-retrato'),
+		thumbnailUrl: '/images/thumbnails/estudio-retrato-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('estudio-retrato'),
+		sizes: defaultCardSizes,
 		artist: 'Isabella Rossi',
 		year: 2023,
 		dimensions: { width: 35, height: 45, unit: 'cm' },
@@ -127,13 +155,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '8',
-		title: 'City Lights at Night',
-		description:
-			'An impressionistic view of a city at night, with glowing windows and streetlights creating patterns of light and shadow. The painting captures the energy of urban nightlife.',
+		title: 'Detalle estudio 3',
+		description: 'Studio detail focusing on texture and color.',
 		price: 420,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/detalle-estudio-3-1280w.webp',
+		imageSrcSet: buildImageSrcSet('detalle-estudio-3'),
+		thumbnailUrl: '/images/thumbnails/detalle-estudio-3-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('detalle-estudio-3'),
+		sizes: defaultCardSizes,
 		artist: 'Michael Park',
 		year: 2023,
 		dimensions: { width: 60, height: 40, unit: 'cm' },
@@ -144,13 +174,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '9',
-		title: 'Dancing Figures',
-		description:
-			'A dynamic composition showing figures in motion, capturing the joy and energy of dance. The flowing lines and vibrant colors convey movement and emotion.',
+		title: 'Apunte paisaje 5',
+		description: 'Landscape sketch with gestural strokes.',
 		price: 350,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/apunte-paisaje-5-1280w.webp',
+		imageSrcSet: buildImageSrcSet('apunte-paisaje-5'),
+		thumbnailUrl: '/images/thumbnails/apunte-paisaje-5-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('apunte-paisaje-5'),
+		sizes: defaultCardSizes,
 		artist: 'Carlos Mendez',
 		year: 2022,
 		dimensions: { width: 55, height: 75, unit: 'cm' },
@@ -161,13 +193,15 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '10',
-		title: 'Desert Mirage',
-		description:
-			'A surreal landscape depicting the optical illusion of water in a desert. The painting explores themes of perception and the boundary between reality and illusion.',
+		title: 'Celebes Sea (detalle 1)',
+		description: 'Detail study with marine palette.',
 		price: 480,
 		currency: 'EUR',
-		imageUrl: '/sample.png',
-		thumbnailUrl: '/sample.png',
+		imageUrl: '/images/celebes-sea-detalle-1-1280w.webp',
+		imageSrcSet: buildImageSrcSet('celebes-sea-detalle-1'),
+		thumbnailUrl: '/images/thumbnails/celebes-sea-detalle-1-320w.webp',
+		thumbnailSrcSet: buildThumbSrcSet('celebes-sea-detalle-1'),
+		sizes: defaultCardSizes,
 		artist: 'Sarah Ahmed',
 		year: 2023,
 		dimensions: { width: 65, height: 45, unit: 'cm' },

@@ -7,29 +7,14 @@
 
 <script lang="ts">
 	import { getGalleryState } from '$lib/GalleryState.svelte';
-	import { Search, Funnel, Grid3x3, List, X } from 'lucide-svelte';
+	import { Funnel, Grid3x3, List, X, Languages } from 'lucide-svelte';
 	import FilterPanel from './FilterPanel.svelte';
 	import { locale, t } from 'svelte-i18n';
 
 	// Get shared gallery state
 	const galleryState = getGalleryState();
 
-	let searchInput = $state('');
 	let showFilters = $state(false);
-
-	// Debounced search
-	$effect(() => {
-		const timeout = setTimeout(() => {
-			galleryState.setSearchQuery(searchInput);
-		}, 300);
-
-		return () => clearTimeout(timeout);
-	});
-
-	function clearSearch() {
-		searchInput = '';
-		galleryState.setSearchQuery('');
-	}
 
 	function toggleFilters() {
 		const next = !showFilters;
@@ -41,13 +26,24 @@
 		galleryState.setViewMode(mode);
 	}
 
-	function switchLang(code: 'en' | 'es') {
+	let showLangMenu = $state(false);
+
+	function toggleLangMenu() {
+		showLangMenu = !showLangMenu;
+	}
+
+	function closeLangMenu() {
+		showLangMenu = false;
+	}
+
+	function switchLang(code: 'en' | 'es' | 'fr' | 'de') {
 		locale.set(code);
 		try {
 			localStorage.setItem('lang', code);
 		} catch (e) {
 			console.error('Failed to set language in localStorage:', e);
 		}
+		closeLangMenu();
 	}
 </script>
 
@@ -59,7 +55,9 @@
 	}}
 />
 
-<header class="sticky top-0 z-20 bg-white border-b">
+<header
+	class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm"
+>
 	<div
 		class="mx-auto px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-screen-lg xl:max-w-[1200px] 2xl:max-w-[1400px]"
 	>
@@ -69,63 +67,74 @@
 		>
 			<!-- Logo/Title -->
 			<div class="shrink-0">
-				<h1 class="text-xl xs:text-2xl md:text-3xl font-semibold tracking-tight">
+				<h1
+					class="text-xl xs:text-2xl md:text-3xl font-semibold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
+				>
 					{$t('galleryTitle')}
 				</h1>
 			</div>
 
-			<!-- Search Bar -->
-			<div class="w-full md:max-w-md">
+			<!-- Controls -->
+			<div class="flex items-center gap-2 md:gap-3">
+				<!-- Language Menu -->
 				<div class="relative">
-					<div
-						class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"
+					<button
+						onclick={toggleLangMenu}
+						aria-haspopup="menu"
+						aria-expanded={showLangMenu}
+						aria-label={$t('selectLanguage')}
+						class="inline-flex size-9 items-center justify-center rounded-lg border border-gray-300 bg-white/80 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 					>
-						<Search class="size-5" />
-					</div>
-					<input
-						bind:value={searchInput}
-						type="text"
-						placeholder={$t('searchPlaceholder')}
-						class="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-10 text-base placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-500"
-					/>
-					{#if searchInput}
-						<div class="absolute inset-y-0 right-0 flex items-center pr-1.5">
+						<Languages class="size-5" />
+					</button>
+
+					{#if showLangMenu}
+						<div
+							class="absolute right-0 mt-2 w-44 rounded-lg border border-gray-200 bg-white/95 backdrop-blur-md shadow-lg z-50"
+							role="menu"
+							tabindex="-1"
+							onmouseleave={closeLangMenu}
+						>
 							<button
-								onclick={clearSearch}
-								aria-label={$t('clearSearch')}
-								class="inline-flex size-8 items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+								onclick={() => switchLang('es')}
+								class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 text-left"
+								role="menuitem"
 							>
-								<X class="size-4" />
+								<span class="text-base">🇪🇸</span>
+								<span>Español</span>
+							</button>
+							<button
+								onclick={() => switchLang('en')}
+								class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 text-left"
+								role="menuitem"
+							>
+								<span class="text-base">🇬🇧</span>
+								<span>English</span>
+							</button>
+							<button
+								onclick={() => switchLang('fr')}
+								class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 text-left"
+								role="menuitem"
+							>
+								<span class="text-base">🇫🇷</span>
+								<span>Français</span>
+							</button>
+							<button
+								onclick={() => switchLang('de')}
+								class="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 text-left"
+								role="menuitem"
+							>
+								<span class="text-base">🇩🇪</span>
+								<span>Deutsch</span>
 							</button>
 						</div>
 					{/if}
-				</div>
-			</div>
-
-			<!-- Controls -->
-			<div class="flex items-center gap-2 md:gap-3">
-				<!-- Language Switcher -->
-				<div class="flex items-center gap-1.5 md:gap-2">
-					<button
-						onclick={() => switchLang('en')}
-						aria-label={$t('switchToEnglish')}
-						class="inline-flex size-9 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-					>
-						<span class="text-lg">🇬🇧</span>
-					</button>
-					<button
-						onclick={() => switchLang('es')}
-						aria-label={$t('switchToSpanish')}
-						class="inline-flex size-9 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-					>
-						<span class="text-lg">🇪🇸</span>
-					</button>
 				</div>
 
 				<!-- Filter Toggle -->
 				<button
 					onclick={toggleFilters}
-					class="inline-flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 				>
 					<Funnel class="size-4" />
 					<span>{$t('filters')}</span>
@@ -136,14 +145,14 @@
 					<button
 						onclick={() => setViewMode('grid')}
 						aria-label={$t('gridView')}
-						class="inline-flex size-9 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+						class="inline-flex size-9 items-center justify-center rounded-lg border border-gray-300 bg-white/80 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 					>
 						<Grid3x3 class="size-5" />
 					</button>
 					<button
 						onclick={() => setViewMode('list')}
 						aria-label={$t('listView')}
-						class="inline-flex size-9 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+						class="inline-flex size-9 items-center justify-center rounded-lg border border-gray-300 bg-white/80 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 					>
 						<List class="size-5" />
 					</button>
@@ -156,12 +165,12 @@
 			<div class="md:relative">
 				<!-- Mobile overlay -->
 				<div
-					class="md:hidden fixed inset-0 z-30 bg-black/40"
+					class="md:hidden fixed inset-0 z-40 bg-black/30 backdrop-blur-md"
 					onclick={toggleFilters}
 					role="presentation"
 				>
 					<div
-						class="ml-auto h-full w-80 bg-white p-4 shadow-xl"
+						class="ml-auto h-full w-80 bg-white/90 backdrop-blur-md p-4 shadow-xl"
 						onclick={(e) => e.stopPropagation()}
 						onkeydown={(e) => {
 							if (e.key === 'Enter' || e.key === ' ') {
@@ -185,7 +194,7 @@
 								<button
 									onclick={toggleFilters}
 									aria-label={$t('clearSearch')}
-									class="inline-flex size-9 items-center justify-center rounded-md hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+									class="inline-flex size-9 items-center justify-center rounded-lg hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 								>
 									<X class="size-5" />
 								</button>
@@ -199,7 +208,7 @@
 
 				<!-- Desktop docked panel -->
 				<div
-					class="hidden md:block md:sticky md:top-0 md:z-10 md:mt-2 md:rounded-md md:border md:bg-white md:p-4"
+					class="hidden md:block md:sticky md:top-0 md:z-10 md:mt-2 md:rounded-xl md:border md:border-gray-200/50 md:bg-white/80 md:backdrop-blur-xl md:p-4"
 				>
 					<div class="mb-3 flex items-center justify-between">
 						<h3 class="text-base font-semibold">{$t('filters')}</h3>
