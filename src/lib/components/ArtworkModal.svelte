@@ -9,6 +9,7 @@
 	import type { Artwork } from '$lib/types/artwork';
 	import { X, Euro, Calendar, Ruler, User, Tag } from 'lucide-svelte';
 	import { fly, fade } from 'svelte/transition';
+	import { t } from 'svelte-i18n';
 
 	/**
 	 * @prop {Artwork | null} artwork - The artwork to display in the modal
@@ -83,7 +84,7 @@
 				<button
 					onclick={handleClose}
 					class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200"
-					aria-label="Close modal"
+					aria-label={$t('closeModal')}
 				>
 					<X class="w-6 h-6" />
 				</button>
@@ -97,7 +98,7 @@
 						<div class="relative">
 							<img
 								src={artwork.imageUrl}
-								alt="{artwork.title} by {artwork.artist}"
+								alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
 								class="w-full h-auto rounded-lg shadow-md"
 								loading="lazy"
 							/>
@@ -105,7 +106,7 @@
 								<div
 									class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
 								>
-									Sold
+									{$t('sold')}
 								</div>
 							{/if}
 						</div>
@@ -117,7 +118,7 @@
 						<div class="flex items-center space-x-3">
 							<User class="w-5 h-5 text-gray-400" />
 							<div>
-								<p class="text-sm text-gray-500">Artist</p>
+								<p class="text-sm text-gray-500">{$t('artistLabel')}</p>
 								<p class="text-lg font-semibold text-gray-900">{artwork.artist}</p>
 							</div>
 						</div>
@@ -126,7 +127,7 @@
 						<div class="flex items-center space-x-3">
 							<Euro class="w-5 h-5 text-gray-400" />
 							<div>
-								<p class="text-sm text-gray-500">Price</p>
+								<p class="text-sm text-gray-500">{$t('priceLabel')}</p>
 								<p class="text-2xl font-bold text-gray-900">
 									{artwork.price}
 									{artwork.currency}
@@ -138,7 +139,7 @@
 						<div class="flex items-center space-x-3">
 							<Ruler class="w-5 h-5 text-gray-400" />
 							<div>
-								<p class="text-sm text-gray-500">Dimensions</p>
+								<p class="text-sm text-gray-500">{$t('dimensionsLabel')}</p>
 								<p class="text-lg font-semibold text-gray-900">
 									{artwork.dimensions.width} × {artwork.dimensions.height}
 									{artwork.dimensions.unit}
@@ -150,7 +151,7 @@
 						<div class="flex items-center space-x-3">
 							<Calendar class="w-5 h-5 text-gray-400" />
 							<div>
-								<p class="text-sm text-gray-500">Year</p>
+								<p class="text-sm text-gray-500">{$t('yearLabel')}</p>
 								<p class="text-lg font-semibold text-gray-900">{artwork.year}</p>
 							</div>
 						</div>
@@ -159,7 +160,7 @@
 						<div class="flex items-center space-x-3">
 							<Tag class="w-5 h-5 text-gray-400" />
 							<div>
-								<p class="text-sm text-gray-500">Category</p>
+								<p class="text-sm text-gray-500">{$t('categoryLabel')}</p>
 								<span
 									class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
 								>
@@ -170,7 +171,7 @@
 
 						<!-- Description -->
 						<div>
-							<p class="text-sm text-gray-500 mb-2">Description</p>
+							<p class="text-sm text-gray-500 mb-2">{$t('descriptionLabel')}</p>
 							<p class="text-gray-700 leading-relaxed">{artwork.description}</p>
 						</div>
 
@@ -178,24 +179,22 @@
 						{#if artwork.isAvailable}
 							<div class="bg-green-50 border border-green-200 rounded-lg p-4">
 								<h3 class="text-lg font-semibold text-green-800 mb-2">
-									Interested in this artwork?
+									{$t('interestedHeading')}
 								</h3>
 								<p class="text-green-700 text-sm mb-3">
-									This piece is available for purchase. Contact us for more information about
-									shipping, payment, and delivery.
+									{$t('availableInfo')}
 								</p>
 								<button
 									class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium"
 								>
-									Contact Artist
+									{$t('contactArtist')}
 								</button>
 							</div>
 						{:else}
 							<div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-								<h3 class="text-lg font-semibold text-gray-800 mb-2">This artwork has been sold</h3>
+								<h3 class="text-lg font-semibold text-gray-800 mb-2">{$t('soldHeading')}</h3>
 								<p class="text-gray-600 text-sm">
-									Unfortunately, this piece is no longer available. Browse our other artworks to
-									find something you love.
+									{$t('soldInfo')}
 								</p>
 							</div>
 						{/if}

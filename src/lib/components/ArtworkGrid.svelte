@@ -8,6 +8,7 @@
 <script lang="ts">
 	import type { Artwork } from '$lib/types/artwork';
 	import ArtworkCard from './ArtworkCard.svelte';
+	import { t } from 'svelte-i18n';
 
 	/**
 	 * @prop {Artwork[]} artworks - Array of artworks to display
@@ -45,8 +46,8 @@
 				></path>
 			</svg>
 		</div>
-		<h3 class="text-lg font-medium text-gray-900 mb-2">No artworks found</h3>
-		<p class="text-gray-500">Try adjusting your search or filter criteria.</p>
+		<h3 class="text-lg font-medium text-gray-900 mb-2">{$t('noArtworksTitle')}</h3>
+		<p class="text-gray-500">{$t('noArtworksHint')}</p>
 	</div>
 {:else}
 	<!-- Grid Layout -->
@@ -61,8 +62,7 @@
 	<!-- Results Count -->
 	<div class="mt-8 text-center">
 		<p class="text-sm text-gray-500">
-			Showing {artworks.length}
-			{artworks.length === 1 ? 'artwork' : 'artworks'}
+			{$t('showingCount', { values: { count: artworks.length } })}
 		</p>
 	</div>
 {/if}

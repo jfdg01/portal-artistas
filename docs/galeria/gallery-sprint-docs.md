@@ -31,7 +31,7 @@ interface Artwork {
 	title: string;
 	description: string;
 	price: number;
-	currency: string; // 'EUR', 'USD', etc.
+	currency: string;
 	imageUrl: string;
 	thumbnailUrl: string;
 	artist: string;

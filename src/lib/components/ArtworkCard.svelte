@@ -8,6 +8,7 @@
 <script lang="ts">
 	import type { Artwork } from '$lib/types/artwork';
 	import { Eye, Euro } from 'lucide-svelte';
+	import { t } from 'svelte-i18n';
 
 	/**
 	 * @prop {Artwork} artwork - The artwork object to display
@@ -59,20 +60,19 @@
 </script>
 
 <div
-	class="artwork-card bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 {sizeClasses[
-		size
-	]}"
+	class="artwork-card bg-white rounded-lg shadow-md hover:shadow-lg
+	transition-all duration-300 cursor-pointer transform hover:scale-105 {sizeClasses[size]}"
 	onclick={handleClick}
 	onkeydown={handleKeydown}
 	tabindex="0"
 	role="button"
-	aria-label="View details for {artwork.title} by {artwork.artist}"
+	aria-label={$t('viewDetailsFor', { values: { title: artwork.title, artist: artwork.artist } })}
 >
 	<!-- Image Container -->
 	<div class="relative mb-3 overflow-hidden rounded-lg">
 		<img
 			src={artwork.thumbnailUrl}
-			alt="{artwork.title} by {artwork.artist}"
+			alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
 			class="w-full {imageSizeClasses[
 				size
 			]} object-cover transition-transform duration-300 hover:scale-110"
@@ -91,7 +91,7 @@
 			<div
 				class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold"
 			>
-				Sold
+				{$t('sold')}
 			</div>
 		{/if}
 	</div>
@@ -105,7 +105,7 @@
 
 		<!-- Artist -->
 		<p class="text-gray-600 text-sm">
-			by {artwork.artist}
+			{$t('byAuthor', { values: { artist: artwork.artist } })}
 		</p>
 
 		<!-- Category -->

@@ -8,6 +8,7 @@
 <script lang="ts">
 	import type { Artwork } from '$lib/types/artwork';
 	import { Eye, Euro } from 'lucide-svelte';
+	import { t } from 'svelte-i18n';
 
 	/**
 	 * @prop {Artwork[]} artworks - Array of artworks to display
@@ -52,8 +53,8 @@
 				></path>
 			</svg>
 		</div>
-		<h3 class="text-lg font-medium text-gray-900 mb-2">No artworks found</h3>
-		<p class="text-gray-500">Try adjusting your search or filter criteria.</p>
+		<h3 class="text-lg font-medium text-gray-900 mb-2">{$t('noArtworksTitle')}</h3>
+		<p class="text-gray-500">{$t('noArtworksHint')}</p>
 	</div>
 {:else}
 	<!-- List Layout -->
@@ -65,14 +66,16 @@
 				onkeydown={(e) => handleKeydown(e, artwork)}
 				tabindex="0"
 				role="button"
-				aria-label="View details for {artwork.title} by {artwork.artist}"
+				aria-label={$t('viewDetailsFor', {
+					values: { title: artwork.title, artist: artwork.artist }
+				})}
 			>
 				<div class="flex items-center space-x-4">
 					<!-- Thumbnail -->
 					<div class="flex-shrink-0 relative">
 						<img
 							src={artwork.thumbnailUrl}
-							alt="{artwork.title} by {artwork.artist}"
+							alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
 							class="w-20 h-20 object-cover rounded-lg"
 							loading="lazy"
 						/>
@@ -80,7 +83,7 @@
 							<div
 								class="absolute top-1 right-1 bg-red-500 text-white px-1 py-0.5 rounded text-xs font-semibold"
 							>
-								Sold
+								{$t('sold')}
 							</div>
 						{/if}
 					</div>
@@ -93,7 +96,7 @@
 									{artwork.title}
 								</h3>
 								<p class="text-sm text-gray-600">
-									by {artwork.artist}
+									{$t('byAuthor', { values: { artist: artwork.artist } })}
 								</p>
 								<p class="text-sm text-gray-500 mt-1 line-clamp-2">
 									{artwork.description}
@@ -116,7 +119,7 @@
 
 								<button
 									class="p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-									aria-label="View details"
+									aria-label={$t('viewDetails')}
 								>
 									<Eye class="w-5 h-5" />
 								</button>
@@ -143,8 +146,7 @@
 	<!-- Results Count -->
 	<div class="mt-8 text-center">
 		<p class="text-sm text-gray-500">
-			Showing {artworks.length}
-			{artworks.length === 1 ? 'artwork' : 'artworks'}
+			{$t('showingCount', { values: { count: artworks.length } })}
 		</p>
 	</div>
 {/if}

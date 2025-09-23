@@ -9,6 +9,7 @@
 	import { getGalleryState } from '$lib/GalleryState.svelte';
 	import { Search, Filter, Grid, List, X } from 'lucide-svelte';
 	import FilterPanel from './FilterPanel.svelte';
+	import { locale, t } from 'svelte-i18n';
 
 	// Get shared gallery state
 	const galleryState = getGalleryState();
@@ -31,11 +32,22 @@
 	}
 
 	function toggleFilters() {
-		showFilters = !showFilters;
+		const next = !showFilters;
+		console.log('[GalleryHeader] toggleFilters', { from: showFilters, to: next });
+		showFilters = next;
 	}
 
 	function setViewMode(mode: 'grid' | 'list') {
 		galleryState.setViewMode(mode);
+	}
+
+	function switchLang(code: 'en' | 'es') {
+		locale.set(code);
+		try {
+			localStorage.setItem('lang', code);
+		} catch (e) {
+			console.error('Failed to set language in localStorage:', e);
+		}
 	}
 </script>
 
@@ -45,7 +57,7 @@
 		<div class="flex items-center justify-between h-16">
 			<!-- Logo/Title -->
 			<div class="flex-shrink-0">
-				<h1 class="text-2xl font-bold text-gray-900">Art Gallery</h1>
+				<h1 class="text-2xl font-bold text-gray-900">{$t('galleryTitle')}</h1>
 			</div>
 
 			<!-- Search Bar -->
@@ -57,7 +69,7 @@
 					<input
 						bind:value={searchInput}
 						type="text"
-						placeholder="Search artworks, artists, or descriptions..."
+						placeholder={$t('searchPlaceholder')}
 						class="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
 					/>
 					{#if searchInput}
@@ -65,7 +77,7 @@
 							<button
 								onclick={clearSearch}
 								class="text-gray-400 hover:text-gray-600 focus:outline-none"
-								aria-label="Clear search"
+								aria-label={$t('clearSearch')}
 							>
 								<X class="h-4 w-4" />
 							</button>
@@ -76,6 +88,24 @@
 
 			<!-- Controls -->
 			<div class="flex items-center space-x-2">
+				<!-- Language Switcher -->
+				<div class="flex items-center bg-gray-100 rounded-lg p-1 mr-2">
+					<button
+						onclick={() => switchLang('en')}
+						class="px-2 py-1 text-sm rounded-md hover:bg-white flex items-center"
+						aria-label={$t('switchToEnglish')}
+					>
+						<span class="text-xl">🇬🇧</span>
+					</button>
+					<button
+						onclick={() => switchLang('es')}
+						class="px-2 py-1 text-sm rounded-md hover:bg-white flex items-center"
+						aria-label={$t('switchToSpanish')}
+					>
+						<span class="text-xl">🇪🇸</span>
+					</button>
+				</div>
+
 				<!-- Filter Toggle -->
 				<button
 					onclick={toggleFilters}
@@ -84,7 +114,7 @@
 						: ''}"
 				>
 					<Filter class="h-4 w-4 mr-2" />
-					Filters
+					{$t('filters')}
 				</button>
 
 				<!-- View Mode Toggle -->
@@ -95,7 +125,7 @@
 						'grid'
 							? 'bg-white text-gray-900 shadow-sm'
 							: 'text-gray-500 hover:text-gray-700'}"
-						aria-label="Grid view"
+						aria-label={$t('gridView')}
 					>
 						<Grid class="h-4 w-4" />
 					</button>
@@ -105,7 +135,7 @@
 						'list'
 							? 'bg-white text-gray-900 shadow-sm'
 							: 'text-gray-500 hover:text-gray-700'}"
-						aria-label="List view"
+						aria-label={$t('listView')}
 					>
 						<List class="h-4 w-4" />
 					</button>
@@ -117,12 +147,12 @@
 		{#if showFilters}
 			<div class="border-t border-gray-200 py-4">
 				<div class="flex items-center justify-between mb-4">
-					<h3 class="text-lg font-medium text-gray-900">Filters</h3>
+					<h3 class="text-lg font-medium text-gray-900">{$t('filters')}</h3>
 					<button
 						onclick={() => galleryState.clearFilters()}
 						class="text-sm text-blue-600 hover:text-blue-800 font-medium"
 					>
-						Clear all filters
+						{$t('clearAllFilters')}
 					</button>
 				</div>
 
