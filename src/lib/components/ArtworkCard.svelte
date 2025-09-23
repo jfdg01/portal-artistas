@@ -32,17 +32,18 @@
 	 * @event click - Fired when the artwork card is clicked
 	 */
 
-	// Size-based styling
+	// Size-based styling tuned to mobile-first spacing
 	const sizeClasses = {
-		small: 'p-2',
-		medium: 'p-4',
-		large: 'p-6'
+		small: 'p-3 xs:p-3 md:p-4',
+		medium: 'p-4 xs:p-4 md:p-5',
+		large: 'p-5 xs:p-5 md:p-6'
 	};
 
+	// Use aspect ratios; height will follow container
 	const imageSizeClasses = {
-		small: 'h-32',
-		medium: 'h-48',
-		large: 'h-64'
+		small: 'aspect-[3/4]',
+		medium: 'aspect-[3/4]',
+		large: 'aspect-[3/4]'
 	};
 
 	function handleClick() {
@@ -61,7 +62,7 @@
 
 <div
 	class="artwork-card bg-white rounded-lg shadow-md hover:shadow-lg
-	transition-all duration-300 cursor-pointer transform hover:scale-105 {sizeClasses[size]}"
+    transition-all duration-300 cursor-pointer hover:scale-[1.02] {sizeClasses[size]}"
 	onclick={handleClick}
 	onkeydown={handleKeydown}
 	tabindex="0"
@@ -75,7 +76,7 @@
 			alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
 			class="w-full {imageSizeClasses[
 				size
-			]} object-cover transition-transform duration-300 hover:scale-110"
+			]} object-cover transition-transform duration-300 hover:scale-105"
 			loading="lazy"
 		/>
 
@@ -99,7 +100,9 @@
 	<!-- Content -->
 	<div class="space-y-2">
 		<!-- Title -->
-		<h3 class="font-semibold text-gray-900 text-lg leading-tight line-clamp-2">
+		<h3
+			class="font-semibold text-gray-900 text-base xs:text-[17px] md:text-lg leading-tight line-clamp-2"
+		>
 			{artwork.title}
 		</h3>
 

@@ -60,7 +60,7 @@
 {#if artwork}
 	<!-- Modal Overlay -->
 	<div
-		class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+		class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
 		onclick={handleBackdropClick}
 		onkeydown={handleKeydown}
 		role="dialog"
@@ -77,7 +77,7 @@
 			transition:fly={{ y: 50, duration: 300 }}
 		>
 			<!-- Modal Header -->
-			<div class="flex items-center justify-between p-6 border-b border-gray-200">
+			<div class="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
 				<h2 id="modal-title" class="text-2xl font-bold text-gray-900">
 					{artwork.title}
 				</h2>
@@ -91,8 +91,8 @@
 			</div>
 
 			<!-- Modal Body -->
-			<div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-				<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<div class="p-4 md:p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
 					<!-- Image Section -->
 					<div class="space-y-4">
 						<div class="relative">
@@ -113,9 +113,9 @@
 					</div>
 
 					<!-- Details Section -->
-					<div class="space-y-6">
+					<div class="space-y-5 md:space-y-6">
 						<!-- Artist -->
-						<div class="flex items-center space-x-3">
+						<div class="flex items-center gap-3">
 							<User class="w-5 h-5 text-gray-400" />
 							<div>
 								<p class="text-sm text-gray-500">{$t('artistLabel')}</p>
@@ -124,7 +124,7 @@
 						</div>
 
 						<!-- Price -->
-						<div class="flex items-center space-x-3">
+						<div class="flex items-center gap-3">
 							<Euro class="w-5 h-5 text-gray-400" />
 							<div>
 								<p class="text-sm text-gray-500">{$t('priceLabel')}</p>
@@ -136,7 +136,7 @@
 						</div>
 
 						<!-- Dimensions -->
-						<div class="flex items-center space-x-3">
+						<div class="flex items-center gap-3">
 							<Ruler class="w-5 h-5 text-gray-400" />
 							<div>
 								<p class="text-sm text-gray-500">{$t('dimensionsLabel')}</p>
@@ -148,7 +148,7 @@
 						</div>
 
 						<!-- Year -->
-						<div class="flex items-center space-x-3">
+						<div class="flex items-center gap-3">
 							<Calendar class="w-5 h-5 text-gray-400" />
 							<div>
 								<p class="text-sm text-gray-500">{$t('yearLabel')}</p>

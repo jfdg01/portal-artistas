@@ -31,12 +31,14 @@
 	/>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
+<div class=" min-h-screen">
 	<!-- Header -->
 	<GalleryHeader />
 
 	<!-- Main Content -->
-	<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+	<main
+		class="mx-auto px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-screen-lg xl:max-w-[1200px] 2xl:max-w-[1400px] py-6 md:py-8"
+	>
 		<!-- Gallery Content -->
 		<div class="w-full">
 			{#if galleryState.viewMode === 'grid'}

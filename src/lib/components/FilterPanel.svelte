@@ -45,29 +45,60 @@
 	}
 </script>
 
-<div>
-	<label for="min-price">{$t('minPrice')}</label>
-	<input id="min-price" type="number" min="0" value={minPriceView} oninput={onMinPriceInput} />
-</div>
+<div class="flex flex-wrap items-end gap-3 md:gap-4">
+	<div class="w-full xs:w-auto md:w-44">
+		<label for="min-price" class="block text-xs font-medium text-gray-700 mb-1"
+			>{$t('minPrice')}</label
+		>
+		<input
+			id="min-price"
+			type="number"
+			min="0"
+			value={minPriceView}
+			oninput={onMinPriceInput}
+			class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+		/>
+	</div>
 
-<div>
-	<label for="max-price">{$t('maxPrice')}</label>
-	<input id="max-price" type="number" min="0" value={maxPriceView} oninput={onMaxPriceInput} />
-</div>
+	<div class="w-full xs:w-auto md:w-44">
+		<label for="max-price" class="block text-xs font-medium text-gray-700 mb-1"
+			>{$t('maxPrice')}</label
+		>
+		<input
+			id="max-price"
+			type="number"
+			min="0"
+			value={maxPriceView}
+			oninput={onMaxPriceInput}
+			class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+		/>
+	</div>
 
-<div>
-	<label for="category">{$t('category')}</label>
-	<select id="category" onchange={onCategoryChange}>
-		<option value="">{$t('all')}</option>
-		{#each categoriesView as c (c)}
-			<option value={c} selected={categoryView === c}>{c}</option>
-		{/each}
-	</select>
-</div>
+	<div class="w-full md:w-56">
+		<label for="category" class="block text-xs font-medium text-gray-700 mb-1"
+			>{$t('category')}</label
+		>
+		<select
+			id="category"
+			onchange={onCategoryChange}
+			class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm bg-white"
+		>
+			<option value="">{$t('all')}</option>
+			{#each categoriesView as c (c)}
+				<option value={c} selected={categoryView === c}>{c}</option>
+			{/each}
+		</select>
+	</div>
 
-<div>
-	<label>
-		<input type="checkbox" checked={availableOnlyView} onchange={onAvailableToggle} />
-		{$t('availableOnly')}
-	</label>
+	<div class="h-9 flex items-center">
+		<label class="inline-flex items-center gap-2 text-sm text-gray-700">
+			<input
+				type="checkbox"
+				checked={availableOnlyView}
+				onchange={onAvailableToggle}
+				class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+			/>
+			<span>{$t('availableOnly')}</span>
+		</label>
+	</div>
 </div>

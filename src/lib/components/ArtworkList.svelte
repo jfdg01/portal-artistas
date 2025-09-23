@@ -58,10 +58,10 @@
 	</div>
 {:else}
 	<!-- List Layout -->
-	<div class="space-y-4">
+	<div class="space-y-3 md:space-y-4">
 		{#each artworks as artwork (artwork.id)}
 			<div
-				class="artwork-list-item bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-[1.02] p-4"
+				class="artwork-list-item bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-[1.01] p-3 xs:p-4"
 				onclick={() => handleArtworkClick(artwork)}
 				onkeydown={(e) => handleKeydown(e, artwork)}
 				tabindex="0"
@@ -70,13 +70,13 @@
 					values: { title: artwork.title, artist: artwork.artist }
 				})}
 			>
-				<div class="flex items-center space-x-4">
+				<div class="flex items-center gap-3 md:gap-4">
 					<!-- Thumbnail -->
 					<div class="flex-shrink-0 relative">
 						<img
 							src={artwork.thumbnailUrl}
 							alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
-							class="w-20 h-20 object-cover rounded-lg"
+							class="w-20 h-20 object-cover rounded-lg md:w-24 md:h-24"
 							loading="lazy"
 						/>
 						{#if !artwork.isAvailable}
@@ -127,7 +127,7 @@
 						</div>
 
 						<!-- Category and Year -->
-						<div class="flex items-center space-x-2 mt-2">
+						<div class="flex items-center gap-2 mt-2">
 							<span
 								class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium"
 							>
