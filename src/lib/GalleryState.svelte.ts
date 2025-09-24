@@ -5,8 +5,7 @@
  */
 
 import { getContext, setContext } from 'svelte';
-import { SvelteSet } from 'svelte/reactivity';
-import type { Artwork, GalleryFilter } from '$lib/types/artwork';
+import type { Artwork } from '$lib/types/artwork';
 
 const GALLERY_KEY = Symbol('gallery_state');
 
@@ -18,41 +17,10 @@ export class GalleryStateClass {
 	// Reactive properties using $state rune
 	artworks = $state<Artwork[]>([]);
 	selectedArtwork = $state<Artwork | null>(null);
-	viewMode = $state<'grid' | 'list'>('grid');
-	filter = $state<GalleryFilter>({
-		category: '',
-		priceRange: [0, 10000] as [number, number],
-		availableOnly: false
-	});
 
 	// Getter methods for computed values
 	get filteredArtworks() {
-		return this.artworks.filter((artwork) => {
-			// Category filter
-			if (this.filter.category && artwork.category !== this.filter.category) {
-				return false;
-			}
-
-			// Price range filter
-			if (
-				artwork.price &&
-				(artwork.price < this.filter.priceRange![0] || artwork.price > this.filter.priceRange![1])
-			) {
-				return false;
-			}
-
-			// Availability filter
-			if (this.filter.availableOnly && !artwork.isAvailable) {
-				return false;
-			}
-
-			return true;
-		});
-	}
-
-	get availableCategories() {
-		const categories = new SvelteSet(this.artworks.map((artwork) => artwork.category));
-		return Array.from(categories).sort();
+		return this.artworks;
 	}
 
 	// Actions
@@ -64,33 +32,9 @@ export class GalleryStateClass {
 		this.selectedArtwork = artwork;
 	}
 
-	setViewMode(mode: 'grid' | 'list') {
-		this.viewMode = mode;
-	}
-
-	updateFilters(filters: Partial<GalleryFilter>) {
-		this.filter = { ...this.filter, ...filters };
-	}
-
-	clearFilters() {
-		this.filter = {
-			category: '',
-			priceRange: [0, 10000] as [number, number],
-			availableOnly: false
-		};
-	}
-
 	// Utility methods
 	getArtworkById(id: string): Artwork | undefined {
 		return this.artworks.find((artwork) => artwork.id === id);
-	}
-
-	getArtworksByCategory(category: string): Artwork[] {
-		return this.artworks.filter((artwork) => artwork.category === category);
-	}
-
-	getAvailableArtworks(): Artwork[] {
-		return this.artworks.filter((artwork) => artwork.isAvailable);
 	}
 }
 

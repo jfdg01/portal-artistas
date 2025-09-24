@@ -5,12 +5,20 @@
 
 import type { Artwork } from '$lib/types/artwork';
 
+// Simple image URL helpers (currently unused but kept for future use)
+// function getImageUrl(base: string): string {
+// 	return `/images/${base}-1280w.webp`;
+// }
+
+// function getThumbnailUrl(base: string): string {
+// 	return `/images/thumbnails/${base}-320w.webp`;
+// }
+
 export const mockArtworks: Artwork[] = [
 	{
 		id: '1',
-		title: 'Sunset Over Mountains',
-		description:
-			'A beautiful landscape painting capturing the golden hour over rolling mountain ranges. The warm colors of the setting sun create a peaceful and serene atmosphere.',
+		title: 'Notional',
+		description: 'Oil on canvas exploring color fields and structure.',
 		price: 450,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -24,9 +32,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '2',
-		title: 'Urban Reflections',
-		description:
-			'An abstract interpretation of city life through the lens of water reflections. Bold colors and dynamic shapes capture the energy of urban environments.',
+		title: 'Belong',
+		description: 'Abstract composition reflecting place and identity.',
 		price: 320,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -40,9 +47,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '3',
-		title: 'Portrait of Wisdom',
-		description:
-			"A detailed portrait capturing the depth of human experience. The subject's eyes tell a story of a life well-lived, with every wrinkle and expression carefully rendered.",
+		title: 'Lilith',
+		description: 'Figurative work with strong contrasts and symbolism.',
 		price: 680,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -56,9 +62,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '4',
-		title: 'Ocean Waves',
-		description:
-			'A powerful seascape showing the raw energy of ocean waves crashing against rocky shores. The painting captures the movement and sound of the sea.',
+		title: 'The Joke',
+		description: 'Playful gesture and color, layered textures.',
 		price: 520,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -72,9 +77,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '5',
-		title: 'Geometric Harmony',
-		description:
-			'A modern abstract composition exploring the relationship between geometric shapes and color. The piece creates visual tension and balance through careful arrangement.',
+		title: 'Negra (detalle)',
+		description: 'Detailed close-up with expressive brushwork.',
 		price: 280,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -88,9 +92,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '6',
-		title: 'Forest Path',
-		description:
-			'A peaceful woodland scene showing a winding path through ancient trees. The dappled sunlight creates a magical atmosphere in this serene forest setting.',
+		title: 'Grafito',
+		description: 'Graphite study with tonal range and edges.',
 		price: 380,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -104,9 +107,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '7',
-		title: 'Still Life with Flowers',
-		description:
-			'A vibrant still life featuring a bouquet of seasonal flowers in a ceramic vase. The painting celebrates the beauty of everyday objects and natural forms.',
+		title: 'Estudio retrato',
+		description: 'Portrait study highlighting planes and light.',
 		price: 250,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -120,9 +122,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '8',
-		title: 'City Lights at Night',
-		description:
-			'An impressionistic view of a city at night, with glowing windows and streetlights creating patterns of light and shadow. The painting captures the energy of urban nightlife.',
+		title: 'Detalle estudio 3',
+		description: 'Studio detail focusing on texture and color.',
 		price: 420,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -136,9 +137,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '9',
-		title: 'Dancing Figures',
-		description:
-			'A dynamic composition showing figures in motion, capturing the joy and energy of dance. The flowing lines and vibrant colors convey movement and emotion.',
+		title: 'Apunte paisaje 5',
+		description: 'Landscape sketch with gestural strokes.',
 		price: 350,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
@@ -152,9 +152,8 @@ export const mockArtworks: Artwork[] = [
 	},
 	{
 		id: '10',
-		title: 'Desert Mirage',
-		description:
-			'A surreal landscape depicting the optical illusion of water in a desert. The painting explores themes of perception and the boundary between reality and illusion.',
+		title: 'Celebes Sea (detalle 1)',
+		description: 'Detail study with marine palette.',
 		price: 480,
 		currency: 'EUR',
 		imageUrl: '/sample.png',
