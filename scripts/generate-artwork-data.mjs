@@ -153,8 +153,7 @@ function createArtworkFromImages(artworkId, variants) {
 		// Vite will handle the optimization and multiple formats
 		images.push({
 			name: variantName,
-			thumbnailUrl: `/src/lib/assets/images/${filename}`,
-			fullUrl: `/src/lib/assets/images/${filename}`
+			url: `/src/lib/assets/images/${filename}`
 		});
 	}
 

@@ -4,7 +4,7 @@ import { browser } from '$app/environment';
 export async function load({ url }) {
 	// Determine the locale from URL params, localStorage, or default to 'es'
 	let locale = 'es'; // Default locale
-	
+
 	if (browser) {
 		// In browser, check URL params and localStorage
 		const fromUrl = url.searchParams.get('lang');

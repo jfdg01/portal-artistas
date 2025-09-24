@@ -57,7 +57,7 @@
 		<div class="relative">
 			<img
 				bind:this={imageElement}
-				src={artwork.images[0].thumbnailUrl}
+				src={artwork.images[0].url}
 				alt={$t('artworkAlt', { values: { title: artwork.title } })}
 				class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
 				fetchpriority="high"

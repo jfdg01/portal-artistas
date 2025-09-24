@@ -35,8 +35,7 @@ export function generateArtworkData(): Artwork[] {
 			// The imagePath is the processed URL from Vite's enhanced image system
 			images.push({
 				name: variantName,
-				thumbnailUrl: imagePath,
-				fullUrl: imagePath
+				url: imagePath
 			});
 		}
 

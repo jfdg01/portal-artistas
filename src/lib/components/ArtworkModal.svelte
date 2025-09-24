@@ -139,9 +139,9 @@
 					<!-- Image Section -->
 					<div class="space-y-4">
 						<div class="relative">
-							{#if currentImage && currentImage.fullUrl && typeof currentImage.fullUrl === 'string'}
+							{#if currentImage && currentImage.url && typeof currentImage.url === 'string'}
 								<img
-									src={currentImage.fullUrl}
+									src={currentImage.url}
 									alt={$t('artworkAlt', { values: { title: artwork.title } })}
 									class="w-full h-auto rounded-lg shadow-md"
 									fetchpriority="high"
@@ -151,10 +151,10 @@
 									<p class="text-gray-500">
 										{#if !currentImage}
 											No current image
-										{:else if !currentImage.fullUrl}
-											No fullUrl property
-										{:else if typeof currentImage.fullUrl !== 'string'}
-											Invalid fullUrl type: {typeof currentImage.fullUrl}
+										{:else if !currentImage.url}
+											No url property
+										{:else if typeof currentImage.url !== 'string'}
+											Invalid url type: {typeof currentImage.url}
 										{:else}
 											No image available
 										{/if}
