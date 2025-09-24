@@ -15,7 +15,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'María García',
 		year: 2023,
 		dimensions: { width: 60, height: 40, unit: 'cm' },
 		category: 'Landscape',
@@ -32,7 +31,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'James Chen',
 		year: 2023,
 		dimensions: { width: 50, height: 70, unit: 'cm' },
 		category: 'Abstract',
@@ -49,7 +47,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Elena Rodriguez',
 		year: 2022,
 		dimensions: { width: 40, height: 50, unit: 'cm' },
 		category: 'Portrait',
@@ -66,7 +63,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'David Thompson',
 		year: 2023,
 		dimensions: { width: 80, height: 60, unit: 'cm' },
 		category: 'Seascape',
@@ -83,7 +79,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Sophie Martin',
 		year: 2023,
 		dimensions: { width: 45, height: 45, unit: 'cm' },
 		category: 'Abstract',
@@ -100,7 +95,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Anna Kowalski',
 		year: 2022,
 		dimensions: { width: 70, height: 50, unit: 'cm' },
 		category: 'Landscape',
@@ -117,7 +111,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Isabella Rossi',
 		year: 2023,
 		dimensions: { width: 35, height: 45, unit: 'cm' },
 		category: 'Still Life',
@@ -134,7 +127,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Michael Park',
 		year: 2023,
 		dimensions: { width: 60, height: 40, unit: 'cm' },
 		category: 'Urban',
@@ -151,7 +143,6 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Carlos Mendez',
 		year: 2022,
 		dimensions: { width: 55, height: 75, unit: 'cm' },
 		category: 'Figurative',
@@ -168,13 +159,41 @@ export const mockArtworks: Artwork[] = [
 		currency: 'EUR',
 		imageUrl: '/sample.png',
 		thumbnailUrl: '/sample.png',
-		artist: 'Sarah Ahmed',
 		year: 2023,
 		dimensions: { width: 65, height: 45, unit: 'cm' },
 		category: 'Surreal',
 		isAvailable: true,
 		createdAt: new Date('2023-07-30'),
 		updatedAt: new Date('2023-07-30')
+	},
+	{
+		id: '11',
+		title: 'Untitled Abstract',
+		// No description
+		// No price or currency
+		imageUrl: '/sample.png',
+		thumbnailUrl: '/sample.png',
+		// No year
+		// No dimensions
+		category: 'Abstract',
+		isAvailable: true,
+		createdAt: new Date('2023-08-15'),
+		updatedAt: new Date('2023-08-15')
+	},
+	{
+		id: '12',
+		title: 'Mystery Portrait',
+		description: 'A mysterious portrait with unknown origins.',
+		price: 350,
+		currency: 'USD',
+		imageUrl: '/sample.png',
+		thumbnailUrl: '/sample.png',
+		year: 2020,
+		// No dimensions
+		category: 'Portrait',
+		isAvailable: false,
+		createdAt: new Date('2023-09-01'),
+		updatedAt: new Date('2023-09-01')
 	}
 ];
 

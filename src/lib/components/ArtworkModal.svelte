@@ -7,7 +7,7 @@
 
 <script lang="ts">
 	import type { Artwork } from '$lib/types/artwork';
-	import { X, Euro, Calendar, Ruler, User, Tag } from 'lucide-svelte';
+	import { X, Euro, Calendar, Ruler, Tag } from 'lucide-svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { t } from 'svelte-i18n';
 
@@ -98,7 +98,7 @@
 						<div class="relative">
 							<img
 								src={artwork.imageUrl}
-								alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
+								alt={$t('artworkAlt', { values: { title: artwork.title } })}
 								class="w-full h-auto rounded-lg shadow-md"
 								loading="lazy"
 							/>
@@ -114,47 +114,44 @@
 
 					<!-- Details Section -->
 					<div class="space-y-5 md:space-y-6">
-						<!-- Artist -->
-						<div class="flex items-center gap-3">
-							<User class="w-5 h-5 text-gray-400" />
-							<div>
-								<p class="text-sm text-gray-500">{$t('artistLabel')}</p>
-								<p class="text-lg font-semibold text-gray-900">{artwork.artist}</p>
-							</div>
-						</div>
-
 						<!-- Price -->
-						<div class="flex items-center gap-3">
-							<Euro class="w-5 h-5 text-gray-400" />
-							<div>
-								<p class="text-sm text-gray-500">{$t('priceLabel')}</p>
-								<p class="text-2xl font-bold text-gray-900">
-									{artwork.price}
-									{artwork.currency}
-								</p>
+						{#if artwork.price && artwork.currency}
+							<div class="flex items-center gap-3">
+								<Euro class="w-5 h-5 text-gray-400" />
+								<div>
+									<p class="text-sm text-gray-500">{$t('priceLabel')}</p>
+									<p class="text-2xl font-bold text-gray-900">
+										{artwork.price}
+										{artwork.currency}
+									</p>
+								</div>
 							</div>
-						</div>
+						{/if}
 
 						<!-- Dimensions -->
-						<div class="flex items-center gap-3">
-							<Ruler class="w-5 h-5 text-gray-400" />
-							<div>
-								<p class="text-sm text-gray-500">{$t('dimensionsLabel')}</p>
-								<p class="text-lg font-semibold text-gray-900">
-									{artwork.dimensions.width} × {artwork.dimensions.height}
-									{artwork.dimensions.unit}
-								</p>
+						{#if artwork.dimensions}
+							<div class="flex items-center gap-3">
+								<Ruler class="w-5 h-5 text-gray-400" />
+								<div>
+									<p class="text-sm text-gray-500">{$t('dimensionsLabel')}</p>
+									<p class="text-lg font-semibold text-gray-900">
+										{artwork.dimensions.width} × {artwork.dimensions.height}
+										{artwork.dimensions.unit}
+									</p>
+								</div>
 							</div>
-						</div>
+						{/if}
 
 						<!-- Year -->
-						<div class="flex items-center gap-3">
-							<Calendar class="w-5 h-5 text-gray-400" />
-							<div>
-								<p class="text-sm text-gray-500">{$t('yearLabel')}</p>
-								<p class="text-lg font-semibold text-gray-900">{artwork.year}</p>
+						{#if artwork.year}
+							<div class="flex items-center gap-3">
+								<Calendar class="w-5 h-5 text-gray-400" />
+								<div>
+									<p class="text-sm text-gray-500">{$t('yearLabel')}</p>
+									<p class="text-lg font-semibold text-gray-900">{artwork.year}</p>
+								</div>
 							</div>
-						</div>
+						{/if}
 
 						<!-- Category -->
 						<div class="flex items-center space-x-3">
@@ -170,10 +167,12 @@
 						</div>
 
 						<!-- Description -->
-						<div>
-							<p class="text-sm text-gray-500 mb-2">{$t('descriptionLabel')}</p>
-							<p class="text-gray-700 leading-relaxed">{artwork.description}</p>
-						</div>
+						{#if artwork.description}
+							<div>
+								<p class="text-sm text-gray-500 mb-2">{$t('descriptionLabel')}</p>
+								<p class="text-gray-700 leading-relaxed">{artwork.description}</p>
+							</div>
+						{/if}
 
 						<!-- Contact Information -->
 						{#if artwork.isAvailable}

@@ -5,14 +5,13 @@
 export interface Artwork {
 	id: string;
 	title: string;
-	description: string;
-	price: number;
-	currency: string; // 'EUR', 'USD', etc.
+	description?: string;
+	price?: number;
+	currency?: string; // 'EUR', 'USD', etc.
 	imageUrl: string;
 	thumbnailUrl: string;
-	artist: string;
-	year: number;
-	dimensions: {
+	year?: number;
+	dimensions?: {
 		width: number;
 		height: number;
 		unit: string; // 'cm', 'in'
@@ -34,5 +33,4 @@ export interface GalleryState {
 	selectedArtwork: Artwork | null;
 	viewMode: 'grid' | 'list';
 	filter: GalleryFilter;
-	searchQuery: string;
 }

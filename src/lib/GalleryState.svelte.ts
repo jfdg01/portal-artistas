@@ -19,7 +19,6 @@ export class GalleryStateClass {
 	artworks = $state<Artwork[]>([]);
 	selectedArtwork = $state<Artwork | null>(null);
 	viewMode = $state<'grid' | 'list'>('grid');
-	searchQuery = $state<string>('');
 	filter = $state<GalleryFilter>({
 		category: '',
 		priceRange: [0, 10000] as [number, number],
@@ -29,18 +28,6 @@ export class GalleryStateClass {
 	// Getter methods for computed values
 	get filteredArtworks() {
 		return this.artworks.filter((artwork) => {
-			// Search filter
-			if (this.searchQuery) {
-				const query = this.searchQuery.toLowerCase();
-				if (
-					!artwork.title.toLowerCase().includes(query) &&
-					!artwork.artist.toLowerCase().includes(query) &&
-					!artwork.description.toLowerCase().includes(query)
-				) {
-					return false;
-				}
-			}
-
 			// Category filter
 			if (this.filter.category && artwork.category !== this.filter.category) {
 				return false;
@@ -48,8 +35,8 @@ export class GalleryStateClass {
 
 			// Price range filter
 			if (
-				artwork.price < this.filter.priceRange![0] ||
-				artwork.price > this.filter.priceRange![1]
+				artwork.price &&
+				(artwork.price < this.filter.priceRange![0] || artwork.price > this.filter.priceRange![1])
 			) {
 				return false;
 			}
@@ -81,10 +68,6 @@ export class GalleryStateClass {
 		this.viewMode = mode;
 	}
 
-	setSearchQuery(query: string) {
-		this.searchQuery = query;
-	}
-
 	updateFilters(filters: Partial<GalleryFilter>) {
 		this.filter = { ...this.filter, ...filters };
 	}
@@ -95,7 +78,6 @@ export class GalleryStateClass {
 			priceRange: [0, 10000] as [number, number],
 			availableOnly: false
 		};
-		this.searchQuery = '';
 	}
 
 	// Utility methods

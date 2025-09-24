@@ -7,29 +7,14 @@
 
 <script lang="ts">
 	import { getGalleryState } from '$lib/GalleryState.svelte';
-	import { Search, Funnel, Grid3x3, List, X } from 'lucide-svelte';
+	import { Funnel, Grid3x3, List, X } from 'lucide-svelte';
 	import FilterPanel from './FilterPanel.svelte';
 	import { locale, t } from 'svelte-i18n';
 
 	// Get shared gallery state
 	const galleryState = getGalleryState();
 
-	let searchInput = $state('');
 	let showFilters = $state(false);
-
-	// Debounced search
-	$effect(() => {
-		const timeout = setTimeout(() => {
-			galleryState.setSearchQuery(searchInput);
-		}, 300);
-
-		return () => clearTimeout(timeout);
-	});
-
-	function clearSearch() {
-		searchInput = '';
-		galleryState.setSearchQuery('');
-	}
 
 	function toggleFilters() {
 		const next = !showFilters;
@@ -72,34 +57,6 @@
 				<h1 class="text-xl xs:text-2xl md:text-3xl font-semibold tracking-tight">
 					{$t('galleryTitle')}
 				</h1>
-			</div>
-
-			<!-- Search Bar -->
-			<div class="w-full md:max-w-md">
-				<div class="relative">
-					<div
-						class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"
-					>
-						<Search class="size-5" />
-					</div>
-					<input
-						bind:value={searchInput}
-						type="text"
-						placeholder={$t('searchPlaceholder')}
-						class="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-10 text-base placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-500"
-					/>
-					{#if searchInput}
-						<div class="absolute inset-y-0 right-0 flex items-center pr-1.5">
-							<button
-								onclick={clearSearch}
-								aria-label={$t('clearSearch')}
-								class="inline-flex size-8 items-center justify-center rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-							>
-								<X class="size-4" />
-							</button>
-						</div>
-					{/if}
-				</div>
 			</div>
 
 			<!-- Controls -->

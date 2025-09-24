@@ -1,61 +1,30 @@
 #!/usr/bin/env node
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Configurable output directories inside the SvelteKit static dir
-const projectRoot = path.resolve(__dirname, '..');
-const staticDir = path.join(projectRoot, 'static');
-const outputMainDir = path.join(staticDir, 'images');
-const outputThumbDir = path.join(outputMainDir, 'thumbnails');
-
-// Default sizes
-const THUMB_WIDTHS = [320, 640];
-const MAIN_WIDTHS = [768, 1280, 1920, 2560];
+// Fixed resolutions and quality
+const RESOLUTIONS = [1440, 320];
+const QUALITY = 70;
 
 // Supported input extensions
-const INPUT_EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.tiff']);
+const INPUT_EXTS = new Set(['.jpg', '.jpeg', '.png']);
 
 function ensureDir(dirPath) {
 	fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function slugify(basename) {
-	return basename
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/(^-|-$)+/g, '');
-}
-
-async function processOneImage(filePath, { quality = 78 }) {
+async function processOneImage(filePath, outputDir) {
 	const ext = path.extname(filePath).toLowerCase();
 	const base = path.basename(filePath, ext);
-	const slug = slugify(base);
 
-	const image = sharp(filePath, { failOn: 'none' });
-	const metadata = await image.metadata();
-
-	// Generate thumbnails
-	for (const w of THUMB_WIDTHS) {
-		const out = path.join(outputThumbDir, `${slug}-${w}w.webp`);
+	// Generate images for each resolution
+	for (const resolution of RESOLUTIONS) {
+		const outputPath = path.join(outputDir, `${base}-${resolution}px.webp`);
 		await sharp(filePath)
-			.resize({ width: w, withoutEnlargement: true, fit: 'cover' })
-			.webp({ quality })
-			.toFile(out);
-	}
-
-	// Generate main responsive sizes
-	for (const w of MAIN_WIDTHS) {
-		if (metadata.width && w > metadata.width) continue; // avoid upscaling
-		const out = path.join(outputMainDir, `${slug}-${w}w.webp`);
-		await sharp(filePath)
-			.resize({ width: w, withoutEnlargement: true })
-			.webp({ quality })
-			.toFile(out);
+			.resize({ width: resolution, withoutEnlargement: true })
+			.webp({ quality: QUALITY })
+			.toFile(outputPath);
 	}
 }
 
@@ -73,20 +42,19 @@ function* walk(dir) {
 
 async function main() {
 	const sourceDir = process.argv[2];
-	const qualityArg = process.argv[3];
 	if (!sourceDir) {
-		console.error('Usage: node scripts/process-images.mjs <sourceDir> [quality 1-100]');
+		console.error('Usage: node scripts/process-images.mjs <sourceDir>');
 		process.exit(1);
 	}
-	const quality = qualityArg ? Math.max(1, Math.min(100, parseInt(qualityArg, 10))) : 78;
 
 	if (!fs.existsSync(sourceDir) || !fs.statSync(sourceDir).isDirectory()) {
 		console.error(`Source directory not found: ${sourceDir}`);
 		process.exit(1);
 	}
 
-	ensureDir(outputMainDir);
-	ensureDir(outputThumbDir);
+	// Create processed subfolder inside the source directory
+	const outputDir = path.join(sourceDir, 'processed');
+	ensureDir(outputDir);
 
 	const files = Array.from(walk(sourceDir)).filter((f) =>
 		INPUT_EXTS.has(path.extname(f).toLowerCase())
@@ -97,18 +65,18 @@ async function main() {
 	}
 
 	console.log(`Processing ${files.length} images from: ${sourceDir}`);
+	console.log(`Output directory: ${outputDir}`);
+
 	for (const file of files) {
 		try {
-			await processOneImage(file, { quality });
-			console.log(`✔ Processed: ${file}`);
+			await processOneImage(file, outputDir);
+			console.log(`✔ Processed: ${path.basename(file)}`);
 		} catch (err) {
 			console.error(`✖ Failed: ${file}\n${err.stack || err}`);
 		}
 	}
 
-	console.log('Done. Outputs:');
-	console.log(` - Thumbnails: ${outputThumbDir}`);
-	console.log(` - Main images: ${outputMainDir}`);
+	console.log('Done! Processed images saved to:', outputDir);
 }
 
 main().catch((e) => {

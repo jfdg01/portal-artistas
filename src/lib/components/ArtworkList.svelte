@@ -67,7 +67,7 @@
 				tabindex="0"
 				role="button"
 				aria-label={$t('viewDetailsFor', {
-					values: { title: artwork.title, artist: artwork.artist }
+					values: { title: artwork.title }
 				})}
 			>
 				<div class="flex items-center gap-3 md:gap-4">
@@ -75,7 +75,7 @@
 					<div class="flex-shrink-0 relative">
 						<img
 							src={artwork.thumbnailUrl}
-							alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
+							alt={$t('artworkAlt', { values: { title: artwork.title } })}
 							class="w-20 h-20 object-cover rounded-lg md:w-24 md:h-24"
 							loading="lazy"
 						/>
@@ -95,26 +95,29 @@
 								<h3 class="text-lg font-semibold text-gray-900 truncate">
 									{artwork.title}
 								</h3>
-								<p class="text-sm text-gray-600">
-									{$t('byAuthor', { values: { artist: artwork.artist } })}
-								</p>
-								<p class="text-sm text-gray-500 mt-1 line-clamp-2">
-									{artwork.description}
-								</p>
+								{#if artwork.description}
+									<p class="text-sm text-gray-500 mt-1 line-clamp-2">
+										{artwork.description}
+									</p>
+								{/if}
 							</div>
 
 							<!-- Price and Actions -->
 							<div class="flex items-center space-x-4 ml-4">
 								<div class="text-right">
-									<div class="flex items-center gap-1 text-lg font-bold text-gray-900">
-										<Euro class="w-4 h-4" />
-										<span>{artwork.price}</span>
-										<span class="text-sm text-gray-500">{artwork.currency}</span>
-									</div>
-									<p class="text-xs text-gray-500">
-										{artwork.dimensions.width} × {artwork.dimensions.height}
-										{artwork.dimensions.unit}
-									</p>
+									{#if artwork.price && artwork.currency}
+										<div class="flex items-center gap-1 text-lg font-bold text-gray-900">
+											<Euro class="w-4 h-4" />
+											<span>{artwork.price}</span>
+											<span class="text-sm text-gray-500">{artwork.currency}</span>
+										</div>
+									{/if}
+									{#if artwork.dimensions}
+										<p class="text-xs text-gray-500">
+											{artwork.dimensions.width} × {artwork.dimensions.height}
+											{artwork.dimensions.unit}
+										</p>
+									{/if}
 								</div>
 
 								<button
@@ -133,9 +136,11 @@
 							>
 								{artwork.category}
 							</span>
-							<span class="text-xs text-gray-500">
-								{artwork.year}
-							</span>
+							{#if artwork.year}
+								<span class="text-xs text-gray-500">
+									{artwork.year}
+								</span>
+							{/if}
 						</div>
 					</div>
 				</div>

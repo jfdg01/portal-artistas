@@ -67,13 +67,13 @@
 	onkeydown={handleKeydown}
 	tabindex="0"
 	role="button"
-	aria-label={$t('viewDetailsFor', { values: { title: artwork.title, artist: artwork.artist } })}
+	aria-label={$t('viewDetailsFor', { values: { title: artwork.title } })}
 >
 	<!-- Image Container -->
 	<div class="relative mb-3 overflow-hidden rounded-lg">
 		<img
 			src={artwork.thumbnailUrl}
-			alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
+			alt={$t('artworkAlt', { values: { title: artwork.title } })}
 			class="w-full {imageSizeClasses[
 				size
 			]} object-cover transition-transform duration-300 hover:scale-105"
@@ -106,18 +106,13 @@
 			{artwork.title}
 		</h3>
 
-		<!-- Artist -->
-		<p class="text-gray-600 text-sm">
-			{$t('byAuthor', { values: { artist: artwork.artist } })}
-		</p>
-
 		<!-- Category -->
 		<span class="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
 			{artwork.category}
 		</span>
 
 		<!-- Price -->
-		{#if showPrice}
+		{#if showPrice && artwork.price && artwork.currency}
 			<div class="flex items-center gap-1 text-lg font-bold text-gray-900">
 				<Euro class="w-4 h-4" />
 				<span>{artwork.price}</span>
@@ -126,10 +121,12 @@
 		{/if}
 
 		<!-- Dimensions -->
-		<p class="text-xs text-gray-500">
-			{artwork.dimensions.width} × {artwork.dimensions.height}
-			{artwork.dimensions.unit}
-		</p>
+		{#if artwork.dimensions}
+			<p class="text-xs text-gray-500">
+				{artwork.dimensions.width} × {artwork.dimensions.height}
+				{artwork.dimensions.unit}
+			</p>
+		{/if}
 	</div>
 </div>
 
