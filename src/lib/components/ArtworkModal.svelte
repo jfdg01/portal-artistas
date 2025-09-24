@@ -139,27 +139,17 @@
 					<!-- Image Section -->
 					<div class="space-y-4">
 						<div class="relative">
-							{#if currentImage && currentImage.url && typeof currentImage.url === 'string'}
+							{#if currentImage && currentImage.picture}
 								<enhanced:img
-									src={currentImage.url}
+									src={currentImage.picture.img.src}
 									alt={$t('artworkAlt', { values: { title: artwork.title } })}
 									class="w-full h-auto rounded-lg shadow-md"
-									fetchpriority="high"
 									sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+									loading="lazy"
 								/>
 							{:else}
 								<div class="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-									<p class="text-gray-500">
-										{#if !currentImage}
-											No current image
-										{:else if !currentImage.url}
-											No url property
-										{:else if typeof currentImage.url !== 'string'}
-											Invalid url type: {typeof currentImage.url}
-										{:else}
-											No image available
-										{/if}
-									</p>
+									<p class="text-gray-500">No image available</p>
 								</div>
 							{/if}
 

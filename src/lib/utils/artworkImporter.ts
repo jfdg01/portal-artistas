@@ -1,4 +1,4 @@
-import type { Artwork, ImageVariant } from '$lib/types/artwork';
+import type { Artwork, ImageVariant, Picture } from '$lib/types/artwork';
 
 /**
  * Dynamically imports all images from the assets/images directory
@@ -32,10 +32,10 @@ export function generateArtworkData(): Artwork[] {
 
 		for (const [variantName, imagePath] of sortedVariants) {
 			// For Svelte's enhanced:img, we need to use the actual imported module
-			// The imagePath is the processed URL from Vite's enhanced image system
+			// The imagePath is the processed Picture object from Vite's enhanced image system
 			images.push({
 				name: variantName,
-				url: imagePath
+				picture: imagePath
 			});
 		}
 
@@ -56,8 +56,8 @@ export function generateArtworkData(): Artwork[] {
 /**
  * Groups image files by artwork ID and variant based on filename patterns
  */
-function groupImagesByArtwork(): Map<string, Map<string, string>> {
-	const groups = new Map<string, Map<string, string>>();
+function groupImagesByArtwork(): Map<string, Map<string, Picture>> {
+	const groups = new Map<string, Map<string, Picture>>();
 
 	for (const [path, module] of Object.entries(imageModules)) {
 		// Extract filename from path like '/src/lib/assets/images/acrilico-1.png'
@@ -86,7 +86,7 @@ function groupImagesByArtwork(): Map<string, Map<string, string>> {
 		}
 
 		// Access the default export from the enhanced image module
-		groups.get(artworkId)!.set(variantName, (module as { default: string }).default);
+		groups.get(artworkId)!.set(variantName, (module as { default: Picture }).default);
 	}
 
 	return groups;

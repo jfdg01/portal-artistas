@@ -4,6 +4,50 @@
 
 import type { Artwork } from '$lib/types/artwork';
 
+// Import all images with enhanced processing
+import acrilico1 from '$lib/assets/images/acrilico-1.webp?enhanced';
+import acrilico1Zoom1 from '$lib/assets/images/acrilico-1-zoom-1.webp?enhanced';
+import albor from '$lib/assets/images/albor.webp?enhanced';
+import alborZoom1 from '$lib/assets/images/albor-zoom-1.webp?enhanced';
+import alconCollage from '$lib/assets/images/alcon-collage.webp?enhanced';
+import apunteAbstracto1 from '$lib/assets/images/apunte-abstracto-1.webp?enhanced';
+import apunteAbstracto2 from '$lib/assets/images/apunte-abstracto-2.webp?enhanced';
+import apunteAbstracto3 from '$lib/assets/images/apunte-abstracto-3.webp?enhanced';
+import apunteBaezaAcuerela from '$lib/assets/images/apunte-baeza-acuerela.webp?enhanced';
+import apuntePaisajeAcrilico from '$lib/assets/images/apunte-paisaje-acrilico.webp?enhanced';
+import apuntePaisajeAcuarela1 from '$lib/assets/images/apunte-paisaje-acuarela-1.webp?enhanced';
+import apuntePaisajeAcuarela3 from '$lib/assets/images/apunte-paisaje-acuarela-3.webp?enhanced';
+import apuntePaisajeAcuarela4 from '$lib/assets/images/apunte-paisaje-acuarela-4.webp?enhanced';
+import apuntePaisajeAcuarela5 from '$lib/assets/images/apunte-paisaje-acuarela-5.webp?enhanced';
+import apuntePaisajeCollage1 from '$lib/assets/images/apunte-paisaje-collage-1.webp?enhanced';
+import apuntePaisajeCollage2 from '$lib/assets/images/apunte-paisaje-collage-2.webp?enhanced';
+import belong from '$lib/assets/images/belong.webp?enhanced';
+import celebesSea from '$lib/assets/images/celebes-sea.webp?enhanced';
+import celebesSeaZoom1 from '$lib/assets/images/celebes-sea-zoom-1.webp?enhanced';
+import celebesSeaZoom2 from '$lib/assets/images/celebes-sea-zoom-2.webp?enhanced';
+import dama from '$lib/assets/images/dama.webp?enhanced';
+import estudioRetrato1 from '$lib/assets/images/estudio-retrato-1.webp?enhanced';
+import estudioRetrato1Zoom1 from '$lib/assets/images/estudio-retrato-1-zoom-1.webp?enhanced';
+import estudioRetrato1Zoom2 from '$lib/assets/images/estudio-retrato-1-zoom-2.webp?enhanced';
+import estudioRetrato2 from '$lib/assets/images/estudio-retrato-2.webp?enhanced';
+import estudioRetrato2Zoom1 from '$lib/assets/images/estudio-retrato-2-zoom-1.webp?enhanced';
+import grafitoCatedral from '$lib/assets/images/grafito-catedral.webp?enhanced';
+import hombreConBarba from '$lib/assets/images/hombre-con-barba.webp?enhanced';
+import lechera from '$lib/assets/images/lechera.webp?enhanced';
+import lilith from '$lib/assets/images/lilith.webp?enhanced';
+import lilithZoom1 from '$lib/assets/images/lilith-zoom-1.webp?enhanced';
+import nuevosAcercamientos from '$lib/assets/images/nuevos-acercamientos.webp?enhanced';
+import perpetuidad from '$lib/assets/images/perpetuidad.webp?enhanced';
+import retratoAnciano from '$lib/assets/images/retrato-anciano.webp?enhanced';
+import retratoDelFayum from '$lib/assets/images/retrato-del-fayum.webp?enhanced';
+import retratoSanguina from '$lib/assets/images/retrato-sanguina.webp?enhanced';
+import summary from '$lib/assets/images/summary.webp?enhanced';
+import theJoke from '$lib/assets/images/the-joke.webp?enhanced';
+import theRockero from '$lib/assets/images/the-rockero.webp?enhanced';
+import timeAfterTime from '$lib/assets/images/time-after-time.webp?enhanced';
+import tragaluz from '$lib/assets/images/tragaluz.webp?enhanced';
+import xauen from '$lib/assets/images/xauen.webp?enhanced';
+
 export const artworkData: Artwork[] = [
 	{
 		id: 'acrilico-1',
@@ -15,11 +59,11 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/acrilico-1.webp'
+				picture: acrilico1
 			},
 			{
 				name: 'zoom-1',
-				url: '/src/lib/assets/images/acrilico-1-zoom-1.webp'
+				picture: acrilico1Zoom1
 			}
 		],
 		year: 2017,
@@ -41,11 +85,11 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/albor.webp'
+				picture: albor
 			},
 			{
 				name: 'zoom-1',
-				url: '/src/lib/assets/images/albor-zoom-1.webp'
+				picture: alborZoom1
 			}
 		],
 		year: 2015,
@@ -67,7 +111,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/alcon-collage.webp'
+				picture: alconCollage
 			}
 		],
 		year: 2024,
@@ -89,7 +133,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-abstracto-1.webp'
+				picture: apunteAbstracto1
 			}
 		],
 		year: 2016,
@@ -111,7 +155,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-abstracto-2.webp'
+				picture: apunteAbstracto2
 			}
 		],
 		year: 2023,
@@ -133,7 +177,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-abstracto-3.webp'
+				picture: apunteAbstracto3
 			}
 		],
 		year: 2021,
@@ -155,7 +199,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-baeza-acuerela.webp'
+				picture: apunteBaezaAcuerela
 			}
 		],
 		year: 2015,
@@ -177,7 +221,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-acrilico.webp'
+				picture: apuntePaisajeAcrilico
 			}
 		],
 		year: 2023,
@@ -199,7 +243,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-acuarela-1.webp'
+				picture: apuntePaisajeAcuarela1
 			}
 		],
 		year: 2019,
@@ -221,7 +265,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-acuarela-3.webp'
+				picture: apuntePaisajeAcuarela3
 			}
 		],
 		year: 2020,
@@ -243,7 +287,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-acuarela-4.webp'
+				picture: apuntePaisajeAcuarela4
 			}
 		],
 		year: 2019,
@@ -265,7 +309,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-acuarela-5.webp'
+				picture: apuntePaisajeAcuarela5
 			}
 		],
 		year: 2020,
@@ -287,7 +331,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-collage-1.webp'
+				picture: apuntePaisajeCollage1
 			}
 		],
 		year: 2023,
@@ -309,7 +353,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/apunte-paisaje-collage-2.webp'
+				picture: apuntePaisajeCollage2
 			}
 		],
 		year: 2020,
@@ -331,7 +375,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/belong.webp'
+				picture: belong
 			}
 		],
 		year: 2019,
@@ -353,15 +397,15 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/celebes-sea.webp'
+				picture: celebesSea
 			},
 			{
 				name: 'zoom-1',
-				url: '/src/lib/assets/images/celebes-sea-zoom-1.webp'
+				picture: celebesSeaZoom1
 			},
 			{
 				name: 'zoom-2',
-				url: '/src/lib/assets/images/celebes-sea-zoom-2.webp'
+				picture: celebesSeaZoom2
 			}
 		],
 		year: 2018,
@@ -383,7 +427,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/dama.webp'
+				picture: dama
 			}
 		],
 		year: 2020,
@@ -405,15 +449,15 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/estudio-retrato-1.webp'
+				picture: estudioRetrato1
 			},
 			{
 				name: 'zoom-1',
-				url: '/src/lib/assets/images/estudio-retrato-1-zoom-1.webp'
+				picture: estudioRetrato1Zoom1
 			},
 			{
 				name: 'zoom-2',
-				url: '/src/lib/assets/images/estudio-retrato-1-zoom-2.webp'
+				picture: estudioRetrato1Zoom2
 			}
 		],
 		year: 2022,
@@ -435,11 +479,11 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/estudio-retrato-2.webp'
+				picture: estudioRetrato2
 			},
 			{
 				name: 'zoom-1',
-				url: '/src/lib/assets/images/estudio-retrato-2-zoom-1.webp'
+				picture: estudioRetrato2Zoom1
 			}
 		],
 		year: 2021,
@@ -461,7 +505,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/grafito-catedral.webp'
+				picture: grafitoCatedral
 			}
 		],
 		year: 2021,
@@ -483,7 +527,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/hombre-con-barba.webp'
+				picture: hombreConBarba
 			}
 		],
 		year: 2015,
@@ -505,7 +549,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/lechera.webp'
+				picture: lechera
 			}
 		],
 		year: 2022,
@@ -527,11 +571,11 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/lilith.webp'
+				picture: lilith
 			},
 			{
 				name: 'zoom-1',
-				url: '/src/lib/assets/images/lilith-zoom-1.webp'
+				picture: lilithZoom1
 			}
 		],
 		year: 2020,
@@ -553,7 +597,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/nuevos-acercamientos.webp'
+				picture: nuevosAcercamientos
 			}
 		],
 		year: 2019,
@@ -575,7 +619,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/perpetuidad.webp'
+				picture: perpetuidad
 			}
 		],
 		year: 2020,
@@ -597,7 +641,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/retrato-anciano.webp'
+				picture: retratoAnciano
 			}
 		],
 		year: 2016,
@@ -619,7 +663,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/retrato-del-fayum.webp'
+				picture: retratoDelFayum
 			}
 		],
 		year: 2022,
@@ -641,7 +685,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/retrato-sanguina.webp'
+				picture: retratoSanguina
 			}
 		],
 		year: 2018,
@@ -663,7 +707,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/summary.webp'
+				picture: summary
 			}
 		],
 		year: 2020,
@@ -685,7 +729,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/the-joke.webp'
+				picture: theJoke
 			}
 		],
 		year: 2020,
@@ -707,7 +751,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/the-rockero.webp'
+				picture: theRockero
 			}
 		],
 		year: 2017,
@@ -729,7 +773,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/time-after-time.webp'
+				picture: timeAfterTime
 			}
 		],
 		year: 2021,
@@ -751,7 +795,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/tragaluz.webp'
+				picture: tragaluz
 			}
 		],
 		year: 2021,
@@ -773,7 +817,7 @@ export const artworkData: Artwork[] = [
 		images: [
 			{
 				name: 'main',
-				url: '/src/lib/assets/images/xauen.webp'
+				picture: xauen
 			}
 		],
 		year: 2022,

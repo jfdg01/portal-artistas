@@ -2,9 +2,13 @@
  * TypeScript interfaces for the Gallery application
  */
 
+import type { Picture } from 'vite-imagetools';
+
+export type { Picture };
+
 export interface ImageVariant {
 	name: string; // e.g., "main", "zoom-1", "zoom-2"
-	url: string; // URL of the image
+	picture: Picture; // Enhanced image URL from @sveltejs/enhanced-img
 }
 
 export interface Artwork {

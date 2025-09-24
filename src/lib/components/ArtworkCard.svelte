@@ -55,14 +55,20 @@
 	>
 		<!-- Image -->
 		<div class="relative">
-			<enhanced:img
-				bind:this={imageElement}
-				src={artwork.images[0].url}
-				alt={$t('artworkAlt', { values: { title: artwork.title } })}
-				class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
-				fetchpriority="high"
-				sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-			/>
+			{#if artwork.images && artwork.images.length > 0}
+				<enhanced:img
+					bind:this={imageElement}
+					src={artwork.images[0].picture.img.src}
+					alt={$t('artworkAlt', { values: { title: artwork.title } })}
+					class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+					loading="lazy"
+					sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+				/>
+			{:else}
+				<div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+					<p class="text-gray-500">No image available</p>
+				</div>
+			{/if}
 
 			<!-- Overlay on hover -->
 			<div
