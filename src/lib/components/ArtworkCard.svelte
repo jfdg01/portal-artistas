@@ -32,7 +32,7 @@
 	 * @event click - Fired when the artwork card is clicked
 	 */
 
-	// Size-based styling tuned to mobile-first spacing
+	// Size-based styling for content padding
 	const sizeClasses = {
 		small: 'p-3 xs:p-3 md:p-4',
 		medium: 'p-4 xs:p-4 md:p-5',
@@ -62,19 +62,17 @@
 
 <div
 	class="artwork-card group bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50
-    hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-1 {sizeClasses[
-		size
-	]} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+    hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-1 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 	onclick={handleClick}
 	onkeydown={handleKeydown}
 	tabindex="0"
 	role="button"
 	aria-label={$t('viewDetailsFor', { values: { title: artwork.title, artist: artwork.artist } })}
 >
-	<!-- Image Container -->
-	<div class="relative mb-3 overflow-hidden rounded-xl">
+	<!-- Image Container - fills entire card -->
+	<div class="relative overflow-hidden rounded-t-2xl">
 		<img
-			src={artwork.thumbnailUrl}
+			src={artwork.imageUrl}
 			alt={$t('artworkAlt', { values: { title: artwork.title, artist: artwork.artist } })}
 			class="w-full {imageSizeClasses[
 				size
@@ -102,7 +100,7 @@
 	</div>
 
 	<!-- Content -->
-	<div class="space-y-2">
+	<div class="space-y-2 {sizeClasses[size]}">
 		<!-- Title -->
 		<h3
 			class="font-semibold text-gray-900 text-base xs:text-[17px] md:text-lg leading-tight line-clamp-2"

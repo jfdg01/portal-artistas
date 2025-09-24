@@ -1,6 +1,6 @@
 <!--
 @component GalleryPage
-@description Main gallery page displaying artworks with search, filtering, and view modes
+@description Main gallery page displaying artworks
 -->
 
 <script lang="ts">
@@ -8,7 +8,6 @@
 	import type { Artwork } from '$lib/types/artwork';
 	import GalleryHeader from '$lib/components/GalleryHeader.svelte';
 	import ArtworkGrid from '$lib/components/ArtworkGrid.svelte';
-	import ArtworkList from '$lib/components/ArtworkList.svelte';
 	import ArtworkModal from '$lib/components/ArtworkModal.svelte';
 
 	// Get shared gallery state
@@ -41,11 +40,7 @@
 	>
 		<!-- Gallery Content -->
 		<div class="w-full">
-			{#if galleryState.viewMode === 'grid'}
-				<ArtworkGrid artworks={galleryState.filteredArtworks} onartworkClick={handleArtworkClick} />
-			{:else}
-				<ArtworkList artworks={galleryState.filteredArtworks} onartworkClick={handleArtworkClick} />
-			{/if}
+			<ArtworkGrid artworks={galleryState.filteredArtworks} onartworkClick={handleArtworkClick} />
 		</div>
 	</main>
 

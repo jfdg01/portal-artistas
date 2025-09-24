@@ -5,19 +5,14 @@
 
 import type { Artwork } from '$lib/types/artwork';
 
-// Helpers to build srcset strings based on existing processed assets
-function buildImageSrcSet(base: string): string {
-	// base like '/images/notional'
-	return [768, 1280, 1920, 2560].map((w) => `/images/${base}-${w}w.webp ${w}w`).join(', ');
+// Simple image URL helpers
+function getImageUrl(base: string): string {
+	return `/images/${base}-1280w.webp`;
 }
 
-function buildThumbSrcSet(base: string): string {
-	return [320, 640].map((w) => `/images/thumbnails/${base}-${w}w.webp ${w}w`).join(', ');
+function getThumbnailUrl(base: string): string {
+	return `/images/thumbnails/${base}-320w.webp`;
 }
-
-// Default sizes mapping our breakpoints from app.css
-const defaultCardSizes =
-	'(min-width: 1440px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 425px) 50vw, 100vw';
 
 export const mockArtworks: Artwork[] = [
 	{
@@ -26,11 +21,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Oil on canvas exploring color fields and structure.',
 		price: 450,
 		currency: 'EUR',
-		imageUrl: '/images/notional-1280w.webp',
-		imageSrcSet: buildImageSrcSet('notional'),
-		thumbnailUrl: '/images/thumbnails/notional-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('notional'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('notional'),
+		thumbnailUrl: getThumbnailUrl('notional'),
 		artist: 'María García',
 		year: 2023,
 		dimensions: { width: 60, height: 40, unit: 'cm' },
@@ -45,11 +37,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Abstract composition reflecting place and identity.',
 		price: 320,
 		currency: 'EUR',
-		imageUrl: '/images/belong-1280w.webp',
-		imageSrcSet: buildImageSrcSet('belong'),
-		thumbnailUrl: '/images/thumbnails/belong-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('belong'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('belong'),
+		thumbnailUrl: getThumbnailUrl('belong'),
 		artist: 'James Chen',
 		year: 2023,
 		dimensions: { width: 50, height: 70, unit: 'cm' },
@@ -64,11 +53,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Figurative work with strong contrasts and symbolism.',
 		price: 680,
 		currency: 'EUR',
-		imageUrl: '/images/lilith-1280w.webp',
-		imageSrcSet: buildImageSrcSet('lilith'),
-		thumbnailUrl: '/images/thumbnails/lilith-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('lilith'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('lilith'),
+		thumbnailUrl: getThumbnailUrl('lilith'),
 		artist: 'Elena Rodriguez',
 		year: 2022,
 		dimensions: { width: 40, height: 50, unit: 'cm' },
@@ -83,11 +69,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Playful gesture and color, layered textures.',
 		price: 520,
 		currency: 'EUR',
-		imageUrl: '/images/the-joke-1280w.webp',
-		imageSrcSet: buildImageSrcSet('the-joke'),
-		thumbnailUrl: '/images/thumbnails/the-joke-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('the-joke'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('the-joke'),
+		thumbnailUrl: getThumbnailUrl('the-joke'),
 		artist: 'David Thompson',
 		year: 2023,
 		dimensions: { width: 80, height: 60, unit: 'cm' },
@@ -102,11 +85,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Detailed close-up with expressive brushwork.',
 		price: 280,
 		currency: 'EUR',
-		imageUrl: '/images/negra-detalle-1280w.webp',
-		imageSrcSet: buildImageSrcSet('negra-detalle'),
-		thumbnailUrl: '/images/thumbnails/negra-detalle-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('negra-detalle'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('negra-detalle'),
+		thumbnailUrl: getThumbnailUrl('negra-detalle'),
 		artist: 'Sophie Martin',
 		year: 2023,
 		dimensions: { width: 45, height: 45, unit: 'cm' },
@@ -121,11 +101,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Graphite study with tonal range and edges.',
 		price: 380,
 		currency: 'EUR',
-		imageUrl: '/images/grafito-1280w.webp',
-		imageSrcSet: buildImageSrcSet('grafito'),
-		thumbnailUrl: '/images/thumbnails/grafito-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('grafito'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('grafito'),
+		thumbnailUrl: getThumbnailUrl('grafito'),
 		artist: 'Anna Kowalski',
 		year: 2022,
 		dimensions: { width: 70, height: 50, unit: 'cm' },
@@ -140,11 +117,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Portrait study highlighting planes and light.',
 		price: 250,
 		currency: 'EUR',
-		imageUrl: '/images/estudio-retrato-1280w.webp',
-		imageSrcSet: buildImageSrcSet('estudio-retrato'),
-		thumbnailUrl: '/images/thumbnails/estudio-retrato-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('estudio-retrato'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('estudio-retrato'),
+		thumbnailUrl: getThumbnailUrl('estudio-retrato'),
 		artist: 'Isabella Rossi',
 		year: 2023,
 		dimensions: { width: 35, height: 45, unit: 'cm' },
@@ -159,11 +133,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Studio detail focusing on texture and color.',
 		price: 420,
 		currency: 'EUR',
-		imageUrl: '/images/detalle-estudio-3-1280w.webp',
-		imageSrcSet: buildImageSrcSet('detalle-estudio-3'),
-		thumbnailUrl: '/images/thumbnails/detalle-estudio-3-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('detalle-estudio-3'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('detalle-estudio-3'),
+		thumbnailUrl: getThumbnailUrl('detalle-estudio-3'),
 		artist: 'Michael Park',
 		year: 2023,
 		dimensions: { width: 60, height: 40, unit: 'cm' },
@@ -178,11 +149,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Landscape sketch with gestural strokes.',
 		price: 350,
 		currency: 'EUR',
-		imageUrl: '/images/apunte-paisaje-5-1280w.webp',
-		imageSrcSet: buildImageSrcSet('apunte-paisaje-5'),
-		thumbnailUrl: '/images/thumbnails/apunte-paisaje-5-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('apunte-paisaje-5'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('apunte-paisaje-5'),
+		thumbnailUrl: getThumbnailUrl('apunte-paisaje-5'),
 		artist: 'Carlos Mendez',
 		year: 2022,
 		dimensions: { width: 55, height: 75, unit: 'cm' },
@@ -197,11 +165,8 @@ export const mockArtworks: Artwork[] = [
 		description: 'Detail study with marine palette.',
 		price: 480,
 		currency: 'EUR',
-		imageUrl: '/images/celebes-sea-detalle-1-1280w.webp',
-		imageSrcSet: buildImageSrcSet('celebes-sea-detalle-1'),
-		thumbnailUrl: '/images/thumbnails/celebes-sea-detalle-1-320w.webp',
-		thumbnailSrcSet: buildThumbSrcSet('celebes-sea-detalle-1'),
-		sizes: defaultCardSizes,
+		imageUrl: getImageUrl('celebes-sea-detalle-1'),
+		thumbnailUrl: getThumbnailUrl('celebes-sea-detalle-1'),
 		artist: 'Sarah Ahmed',
 		year: 2023,
 		dimensions: { width: 65, height: 45, unit: 'cm' },
