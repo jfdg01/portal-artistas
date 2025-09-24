@@ -55,13 +55,13 @@
 	>
 		<!-- Image -->
 		<div class="relative">
-			<img
+			<enhanced:img
 				bind:this={imageElement}
 				src={artwork.images[0].url}
 				alt={$t('artworkAlt', { values: { title: artwork.title } })}
 				class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
 				fetchpriority="high"
-				onload={() => {}}
+				sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
 			/>
 
 			<!-- Overlay on hover -->

@@ -140,11 +140,12 @@
 					<div class="space-y-4">
 						<div class="relative">
 							{#if currentImage && currentImage.url && typeof currentImage.url === 'string'}
-								<img
+								<enhanced:img
 									src={currentImage.url}
 									alt={$t('artworkAlt', { values: { title: artwork.title } })}
 									class="w-full h-auto rounded-lg shadow-md"
 									fetchpriority="high"
+									sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
 								/>
 							{:else}
 								<div class="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center">
