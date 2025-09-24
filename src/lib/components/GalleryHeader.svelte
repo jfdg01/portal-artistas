@@ -51,7 +51,7 @@
 				<h1
 					class="text-xl xs:text-2xl md:text-3xl font-semibold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
 				>
-					{$t('galleryTitle')}
+					Carmen Cárdenas Pacheco<!-- {$t('galleryTitle')} -->
 				</h1>
 			</div>
 
