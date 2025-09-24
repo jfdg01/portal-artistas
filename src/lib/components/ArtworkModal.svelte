@@ -31,8 +31,8 @@
 	let currentImageIndex = $state(0);
 
 	// Computed values
-	let currentImage = $derived(artwork?.images[currentImageIndex] || null);
-	let hasMultipleImages = $derived(artwork ? artwork.images.length > 1 : false);
+	let currentImage = $derived(artwork?.images?.[currentImageIndex] || null);
+	let hasMultipleImages = $derived(artwork && artwork.images ? artwork.images.length > 1 : false);
 
 	function handleClose() {
 		if (onclose) {
@@ -61,13 +61,13 @@
 	}
 
 	function nextImage() {
-		if (artwork && hasMultipleImages) {
+		if (artwork && artwork.images && hasMultipleImages) {
 			currentImageIndex = (currentImageIndex + 1) % artwork.images.length;
 		}
 	}
 
 	function previousImage() {
-		if (artwork && hasMultipleImages) {
+		if (artwork && artwork.images && hasMultipleImages) {
 			currentImageIndex =
 				currentImageIndex === 0 ? artwork.images.length - 1 : currentImageIndex - 1;
 		}
@@ -139,13 +139,27 @@
 					<!-- Image Section -->
 					<div class="space-y-4">
 						<div class="relative">
-							{#if currentImage}
+							{#if currentImage && currentImage.fullUrl && typeof currentImage.fullUrl === 'string'}
 								<img
 									src={currentImage.fullUrl}
 									alt={$t('artworkAlt', { values: { title: artwork.title } })}
 									class="w-full h-auto rounded-lg shadow-md"
-									loading="lazy"
+									fetchpriority="high"
 								/>
+							{:else}
+								<div class="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+									<p class="text-gray-500">
+										{#if !currentImage}
+											No current image
+										{:else if !currentImage.fullUrl}
+											No fullUrl property
+										{:else if typeof currentImage.fullUrl !== 'string'}
+											Invalid fullUrl type: {typeof currentImage.fullUrl}
+										{:else}
+											No image available
+										{/if}
+									</p>
+								</div>
 							{/if}
 
 							<!-- Navigation Controls -->
@@ -177,7 +191,7 @@
 						</div>
 
 						<!-- Image Navigation Dots -->
-						{#if hasMultipleImages}
+						{#if hasMultipleImages && artwork.images}
 							<div class="flex justify-center space-x-2">
 								{#each range(artwork.images.length) as index (index)}
 									<button

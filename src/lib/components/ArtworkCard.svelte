@@ -60,7 +60,7 @@
 				src={artwork.images[0].thumbnailUrl}
 				alt={$t('artworkAlt', { values: { title: artwork.title } })}
 				class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
-				loading="lazy"
+				fetchpriority="high"
 				onload={() => {}}
 			/>
 

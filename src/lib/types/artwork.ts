@@ -23,8 +23,6 @@ export interface Artwork {
 	};
 	category: string;
 	isAvailable: boolean;
-	createdAt: Date;
-	updatedAt: Date;
 }
 
 export interface GalleryState {

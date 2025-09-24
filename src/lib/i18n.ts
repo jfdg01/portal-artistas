@@ -6,4 +6,8 @@ register('es', () => import('./locales/es.json'));
 register('fr', () => import('./locales/fr.json'));
 register('de', () => import('./locales/de.json'));
 
-init({ fallbackLocale: 'en', initialLocale: 'en' });
+// Initialize with proper SSR handling
+init({
+	fallbackLocale: 'es',
+	initialLocale: 'es'
+});

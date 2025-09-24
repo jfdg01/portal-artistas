@@ -73,11 +73,11 @@
 				<div class="flex items-center gap-3 md:gap-4">
 					<!-- Thumbnail -->
 					<div class="flex-shrink-0 relative">
-						<img
+						<enhanced:img
 							src={artwork.images[0].thumbnailUrl}
 							alt={$t('artworkAlt', { values: { title: artwork.title } })}
 							class="w-20 h-20 object-cover rounded-lg md:w-24 md:h-24"
-							loading="lazy"
+							fetchpriority="high"
 						/>
 						{#if !artwork.isAvailable}
 							<div

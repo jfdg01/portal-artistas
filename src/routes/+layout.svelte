@@ -6,7 +6,7 @@
 	import '$lib/i18n';
 	import { locale } from 'svelte-i18n';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
 	// Set up global gallery state
 	const galleryState = setGalleryState();
@@ -14,18 +14,18 @@
 	// Load artwork data
 	galleryState.setArtworks(artworkData);
 
-	// One-time language initialization (URL > localStorage > navigator)
+	// Set locale from load function data
+	locale.set(data.locale);
+
+	// Handle language changes in browser
 	$effect.pre(() => {
-		try {
-			const url = new URL(location.href);
-			const fromUrl = url.searchParams.get('lang');
-			const fromStorage = localStorage.getItem('lang');
-			const fallback = (navigator.language || 'en').slice(0, 2);
-			const lang = (fromUrl || fromStorage || fallback) as 'en' | 'es' | 'fr' | 'de';
-			locale.set(lang);
-			localStorage.setItem('lang', lang);
-		} catch {
-			// no-op in non-browser contexts
+		if (typeof window !== 'undefined') {
+			try {
+				// Save current locale to localStorage
+				localStorage.setItem('lang', data.locale);
+			} catch {
+				// no-op in case of errors
+			}
 		}
 	});
 </script>
