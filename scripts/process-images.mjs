@@ -60,7 +60,7 @@ async function main() {
 		INPUT_EXTS.has(path.extname(f).toLowerCase())
 	);
 	if (files.length === 0) {
-		console.warn('No input images found. Supported: .jpg, .jpeg, .png, .webp, .tiff');
+		console.warn('No input images found. Supported: .jpg, .jpeg, .png');
 		return;
 	}
 

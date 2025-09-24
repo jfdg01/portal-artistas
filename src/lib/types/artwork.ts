@@ -2,14 +2,19 @@
  * TypeScript interfaces for the Gallery application
  */
 
+export interface ImageVariant {
+	name: string; // e.g., "main", "zoom-1", "zoom-2"
+	thumbnailUrl: string; // 320px version
+	fullUrl: string; // 1440px version
+}
+
 export interface Artwork {
 	id: string;
 	title: string;
 	description?: string;
 	price?: number;
 	currency?: string; // 'EUR', 'USD', etc.
-	imageUrl: string;
-	thumbnailUrl: string;
+	images: ImageVariant[]; // All available image variants
 	year?: number;
 	dimensions?: {
 		width: number;

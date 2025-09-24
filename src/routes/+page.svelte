@@ -26,7 +26,7 @@
 	<title>Art Gallery - Discover Beautiful Artworks</title>
 	<meta
 		name="description"
-		content="Browse our collection of beautiful artworks from talented artists around the world."
+		content="Browse our collection of beautiful artworks and discover unique pieces for your collection."
 	/>
 </svelte:head>
 

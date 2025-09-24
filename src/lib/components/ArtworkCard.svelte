@@ -1,6 +1,6 @@
 <!--
 @component ArtworkCard
-@description Displays an individual artwork with image, title, artist, and price
+@description Displays an individual artwork with image, title, and price
 @example
   <ArtworkCard {artwork} on:click={handleArtworkClick} />
 -->
@@ -72,7 +72,7 @@
 	<!-- Image Container - fills entire card -->
 	<div class="relative overflow-hidden rounded-t-2xl">
 		<img
-			src={artwork.thumbnailUrl}
+			src={artwork.images[0].thumbnailUrl}
 			alt={$t('artworkAlt', { values: { title: artwork.title } })}
 			class="w-full {imageSizeClasses[
 				size

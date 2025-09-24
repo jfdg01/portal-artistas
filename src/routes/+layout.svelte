@@ -2,7 +2,7 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { setGalleryState } from '$lib/GalleryState.svelte';
-	import { mockArtworks } from '$lib/utils/mockData';
+	import { artworkData } from '$lib/data/artworkData';
 	import '$lib/i18n';
 	import { locale } from 'svelte-i18n';
 
@@ -11,8 +11,8 @@
 	// Set up global gallery state
 	const galleryState = setGalleryState();
 
-	// Load mock data
-	galleryState.setArtworks(mockArtworks);
+	// Load artwork data
+	galleryState.setArtworks(artworkData);
 
 	// One-time language initialization (URL > localStorage > navigator)
 	$effect.pre(() => {

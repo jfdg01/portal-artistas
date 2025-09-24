@@ -7,7 +7,7 @@
 
 <script lang="ts">
 	import type { Artwork } from '$lib/types/artwork';
-	import { X, Euro, Calendar, Ruler, Tag } from 'lucide-svelte';
+	import { X, Euro, Calendar, Ruler, Tag, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { t } from 'svelte-i18n';
 
@@ -27,10 +27,19 @@
 	 * @event close - Fired when the modal should be closed
 	 */
 
+	// Current image index for cycling through variants
+	let currentImageIndex = $state(0);
+
+	// Computed values
+	let currentImage = $derived(artwork?.images[currentImageIndex] || null);
+	let hasMultipleImages = $derived(artwork ? artwork.images.length > 1 : false);
+
 	function handleClose() {
 		if (onclose) {
 			onclose();
 		}
+		// Reset image index when closing
+		currentImageIndex = 0;
 	}
 
 	function handleBackdropClick(event: MouseEvent) {
@@ -42,7 +51,38 @@
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
 			handleClose();
+		} else if (event.key === 'ArrowLeft' && hasMultipleImages) {
+			event.preventDefault();
+			previousImage();
+		} else if (event.key === 'ArrowRight' && hasMultipleImages) {
+			event.preventDefault();
+			nextImage();
 		}
+	}
+
+	function nextImage() {
+		if (artwork && hasMultipleImages) {
+			currentImageIndex = (currentImageIndex + 1) % artwork.images.length;
+		}
+	}
+
+	function previousImage() {
+		if (artwork && hasMultipleImages) {
+			currentImageIndex =
+				currentImageIndex === 0 ? artwork.images.length - 1 : currentImageIndex - 1;
+		}
+	}
+
+	// Reset image index when artwork changes
+	$effect(() => {
+		if (artwork) {
+			currentImageIndex = 0;
+		}
+	});
+
+	// Helper function to create range for navigation dots
+	function range(length: number): number[] {
+		return Array.from({ length }, (_, i) => i);
 	}
 
 	// Focus management
@@ -99,12 +139,34 @@
 					<!-- Image Section -->
 					<div class="space-y-4">
 						<div class="relative">
-							<img
-								src={artwork.imageUrl}
-								alt={$t('artworkAlt', { values: { title: artwork.title } })}
-								class="w-full h-auto rounded-lg shadow-md"
-								loading="lazy"
-							/>
+							{#if currentImage}
+								<img
+									src={currentImage.fullUrl}
+									alt={$t('artworkAlt', { values: { title: artwork.title } })}
+									class="w-full h-auto rounded-lg shadow-md"
+									loading="lazy"
+								/>
+							{/if}
+
+							<!-- Navigation Controls -->
+							{#if hasMultipleImages}
+								<button
+									onclick={previousImage}
+									class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200"
+									aria-label="Previous image"
+								>
+									<ChevronLeft class="w-6 h-6" />
+								</button>
+
+								<button
+									onclick={nextImage}
+									class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200"
+									aria-label="Next image"
+								>
+									<ChevronRight class="w-6 h-6" />
+								</button>
+							{/if}
+
 							{#if !artwork.isAvailable}
 								<div
 									class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
@@ -113,6 +175,22 @@
 								</div>
 							{/if}
 						</div>
+
+						<!-- Image Navigation Dots -->
+						{#if hasMultipleImages}
+							<div class="flex justify-center space-x-2">
+								{#each range(artwork.images.length) as index (index)}
+									<button
+										onclick={() => (currentImageIndex = index)}
+										class="w-3 h-3 rounded-full transition-all duration-200 {currentImageIndex ===
+										index
+											? 'bg-blue-600'
+											: 'bg-gray-300 hover:bg-gray-400'}"
+										aria-label="View image {index + 1}"
+									></button>
+								{/each}
+							</div>
+						{/if}
 					</div>
 
 					<!-- Details Section -->

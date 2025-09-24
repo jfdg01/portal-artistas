@@ -74,7 +74,7 @@
 					<!-- Thumbnail -->
 					<div class="flex-shrink-0 relative">
 						<img
-							src={artwork.thumbnailUrl}
+							src={artwork.images[0].thumbnailUrl}
 							alt={$t('artworkAlt', { values: { title: artwork.title } })}
 							class="w-20 h-20 object-cover rounded-lg md:w-24 md:h-24"
 							loading="lazy"
