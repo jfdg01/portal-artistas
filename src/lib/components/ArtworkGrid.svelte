@@ -50,10 +50,8 @@
 		<p class="text-gray-500">{$t('noArtworksHint')}</p>
 	</div>
 {:else}
-	<!-- Grid Layout -->
-	<div
-		class="artwork-grid grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-4 xl:gap-6"
-	>
+	<!-- Masonry Layout using CSS Columns -->
+	<div class="artwork-grid masonry-columns">
 		{#each artworks as artwork (artwork.id)}
 			<ArtworkCard {artwork} onclick={handleArtworkClick} />
 		{/each}
@@ -66,3 +64,55 @@
 		</p>
 	</div>
 {/if}
+
+<style>
+	.masonry-columns {
+		/* CSS Columns masonry layout */
+		column-count: 1;
+		column-gap: 1rem;
+		break-inside: avoid;
+	}
+
+	/* Responsive breakpoints for column count */
+	@media (min-width: 640px) {
+		.masonry-columns {
+			column-count: 2;
+			column-gap: 1.25rem;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.masonry-columns {
+			column-count: 3;
+			column-gap: 1.5rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.masonry-columns {
+			column-count: 4;
+			column-gap: 1.75rem;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.masonry-columns {
+			column-count: 5;
+			column-gap: 2rem;
+		}
+	}
+
+	@media (min-width: 1536px) {
+		.masonry-columns {
+			column-count: 6;
+			column-gap: 2.25rem;
+		}
+	}
+
+	/* Ensure cards don't break across columns */
+	:global(.artwork-card) {
+		break-inside: avoid;
+		page-break-inside: avoid;
+		margin-bottom: 1rem;
+	}
+</style>
