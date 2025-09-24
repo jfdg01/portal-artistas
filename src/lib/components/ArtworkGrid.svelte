@@ -109,8 +109,8 @@
 		}
 	}
 
-	/* Ensure cards don't break across columns */
-	:global(.artwork-card) {
+	/* Ensure artwork containers don't break across columns */
+	:global(.artwork-container) {
 		break-inside: avoid;
 		page-break-inside: avoid;
 		margin-bottom: 1rem;
