@@ -27,7 +27,7 @@
 	 */
 
 	// Simple image-only approach
-	let imageElement: HTMLImageElement;
+	let imageElement = $state<HTMLImageElement | undefined>(undefined);
 
 	function handleClick() {
 		if (onclick) {

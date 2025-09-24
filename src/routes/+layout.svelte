@@ -2,7 +2,7 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { setGalleryState } from '$lib/GalleryState.svelte';
-	import { artworkData } from '$lib/data/artworkData';
+	import { getArtworkData } from '$lib/utils/artworkImporter';
 	import '$lib/i18n';
 	import { locale } from 'svelte-i18n';
 
@@ -11,8 +11,8 @@
 	// Set up global gallery state
 	const galleryState = setGalleryState();
 
-	// Load artwork data
-	galleryState.setArtworks(artworkData);
+	// Load artwork data using the enhanced image importer
+	galleryState.setArtworks(getArtworkData());
 
 	// Set locale from load function data
 	locale.set(data.locale);
