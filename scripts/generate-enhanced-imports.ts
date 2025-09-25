@@ -1,0 +1,316 @@
+#!/usr/bin/env node
+import fs from 'fs';
+import path from 'path';
+
+/**
+ * Script to generate enhanced image imports for all images in the assets directory
+ * This creates proper Picture objects that work with Svelte's enhanced:img component
+ */
+
+const SOURCE_IMAGES_DIR = path.join(process.cwd(), 'src', 'lib', 'assets', 'images');
+const OUTPUT_DIR = path.join(process.cwd(), 'src', 'lib', 'data');
+
+// Supported image extensions
+const SUPPORTED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
+
+function generateTitleFromId(id: string): string {
+	return id
+		.split('-')
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ');
+}
+
+function generateCategoryFromId(id: string): string | string[] {
+	const lowerId = id.toLowerCase();
+
+	// Check for watercolor indicators
+	if (lowerId.includes('acuarela') || lowerId.includes('watercolor')) {
+		return ['acuarela', 'apunte'];
+	}
+
+	// Check for drawing indicators
+	if (lowerId.includes('grafito') || lowerId.includes('dibujo') || lowerId.includes('drawing')) {
+		return ['dibujo', 'apunte'];
+	}
+
+	// Check for sketch/study indicators
+	if (
+		lowerId.includes('apunte') ||
+		lowerId.includes('estudio') ||
+		lowerId.includes('sketch') ||
+		lowerId.includes('study')
+	) {
+		return ['apunte'];
+	}
+
+	// Check for engraving indicators
+	if (lowerId.includes('grabado') || lowerId.includes('engraving') || lowerId.includes('print')) {
+		return 'grabado';
+	}
+
+	// Check for collage indicators
+	if (lowerId.includes('collage')) {
+		return ['pintura', 'apunte'];
+	}
+
+	// Default to painting
+	return 'pintura';
+}
+
+function extractArtworkId(filename: string): string {
+	// Remove file extension
+	const baseName = path.basename(filename, path.extname(filename));
+	// Remove zoom suffixes if present
+	return baseName.replace(/-zoom-\d+$/, '');
+}
+
+function extractVariantName(filename: string): string {
+	const baseName = path.basename(filename, path.extname(filename));
+
+	// Check if it's a zoom variant
+	const zoomMatch = baseName.match(/-zoom-(\d+)$/);
+	if (zoomMatch) {
+		return `zoom-${zoomMatch[1]}`;
+	}
+
+	return 'main';
+}
+
+function groupImagesByArtwork(files: string[]): Map<string, Map<string, string>> {
+	const groups = new Map<string, Map<string, string>>();
+
+	for (const file of files) {
+		const artworkId = extractArtworkId(file);
+		const variantName = extractVariantName(file);
+
+		if (!groups.has(artworkId)) {
+			groups.set(artworkId, new Map());
+		}
+
+		groups.get(artworkId)!.set(variantName, file);
+	}
+
+	return groups;
+}
+
+function generateImportStatement(filename: string): string {
+	const baseName = path.basename(filename, path.extname(filename));
+	const importName = baseName.replace(/[^a-zA-Z0-9]/g, '_');
+	return `import ${importName} from '$lib/assets/images/${filename}?enhanced';`;
+}
+
+function generateArtworkFromImages(artworkId: string, variants: Map<string, string>) {
+	const images: Array<{ name: string; filename: string; importName: string }> = [];
+	const title = generateTitleFromId(artworkId);
+	const category = generateCategoryFromId(artworkId);
+
+	// Sort variants by name (main first, then zoom-1, zoom-2, etc.)
+	const sortedVariants = Array.from(variants.entries()).sort((a, b) => {
+		if (a[0] === 'main') return -1;
+		if (b[0] === 'main') return 1;
+		return a[0].localeCompare(b[0]);
+	});
+
+	for (const [variantName, filename] of sortedVariants) {
+		const baseName = path.basename(filename, path.extname(filename));
+		const importName = baseName.replace(/[^a-zA-Z0-9]/g, '_');
+
+		images.push({
+			name: variantName,
+			filename,
+			importName
+		});
+	}
+
+	return {
+		id: artworkId,
+		title,
+		images,
+		category
+	};
+}
+
+function generateTypeScriptFile(
+	artworks: Array<{
+		id: string;
+		title: string;
+		images: Array<{ name: string; filename: string; importName: string }>;
+		category: string | string[];
+	}>
+): string {
+	const timestamp = new Date().toISOString();
+
+	// Generate all unique import statements
+	const allFiles = new Set<string>();
+	artworks.forEach((artwork) => {
+		artwork.images.forEach((image) => {
+			allFiles.add(image.filename);
+		});
+	});
+
+	const imports = Array.from(allFiles)
+		.sort()
+		.map((filename) => generateImportStatement(filename))
+		.join('\n');
+
+	// Generate artwork data
+	const artworksData = artworks
+		.map((artwork) => {
+			const imagesData = artwork.images
+				.map((image) => {
+					return `		{
+			name: "${image.name}",
+			picture: ${image.importName}
+		}`;
+				})
+				.join(',\n');
+
+			const categoryStr = Array.isArray(artwork.category)
+				? `[${artwork.category.map((cat) => `"${cat}"`).join(', ')}]`
+				: `"${artwork.category}"`;
+
+			return `	{
+		id: "${artwork.id}",
+		title: "${artwork.title}",
+		images: [
+${imagesData}
+		],
+		category: ${categoryStr},
+		isAvailable: false
+	}`;
+		})
+		.join(',\n');
+
+	return `// Auto-generated enhanced image imports and artwork data - ${timestamp}
+// This file is automatically generated from images in src/lib/assets/images/
+// To regenerate, run: npm run generate:enhanced-imports
+//
+// This file contains proper enhanced image imports using the ?enhanced parameter
+// which creates Picture objects compatible with Svelte's enhanced:img component
+
+import type { Artwork } from '$lib/types/artwork';
+
+${imports}
+
+export const artworkData: Artwork[] = [
+${artworksData}
+];
+
+// Helper functions
+export function getArtworkById(id: string): Artwork | undefined {
+	return artworkData.find((artwork) => artwork.id === id);
+}
+
+export function getArtworksByCategory(category: string): Artwork[] {
+	return artworkData.filter((artwork) => {
+		if (Array.isArray(artwork.category)) {
+			return artwork.category.includes(category);
+		}
+		return artwork.category === category;
+	});
+}
+
+export function getAvailableCategories(): string[] {
+	const categories = new Set<string>();
+	artworkData.forEach((artwork) => {
+		if (Array.isArray(artwork.category)) {
+			artwork.category.forEach(cat => categories.add(cat));
+		} else {
+			categories.add(artwork.category);
+		}
+	});
+	return Array.from(categories).sort();
+}
+
+export function getRandomArtwork(): Artwork {
+	const randomIndex = Math.floor(Math.random() * artworkData.length);
+	return artworkData[randomIndex];
+}
+
+// Export all imported images for direct access if needed
+export const importedImages = {
+${Array.from(allFiles)
+	.sort()
+	.map((filename) => {
+		const baseName = path.basename(filename, path.extname(filename));
+		const importName = baseName.replace(/[^a-zA-Z0-9]/g, '_');
+		return `	${importName}`;
+	})
+	.join(',\n')}
+} as const;
+`;
+}
+
+function main(): void {
+	console.log('🚀 Starting enhanced image imports generation...');
+
+	try {
+		if (!fs.existsSync(SOURCE_IMAGES_DIR)) {
+			console.error(`❌ Source images directory not found: ${SOURCE_IMAGES_DIR}`);
+			console.log('💡 Make sure you have images in src/lib/assets/images/');
+			process.exit(1);
+		}
+
+		const files = fs.readdirSync(SOURCE_IMAGES_DIR).filter((file) => {
+			const ext = path.extname(file).toLowerCase();
+			return SUPPORTED_EXTENSIONS.has(ext);
+		});
+
+		if (files.length === 0) {
+			console.error('❌ No supported image files found in source directory');
+			process.exit(1);
+		}
+
+		console.log(`📁 Found ${files.length} image files`);
+
+		const imageGroups = groupImagesByArtwork(files);
+		const artworks: Array<{
+			id: string;
+			title: string;
+			images: Array<{ name: string; filename: string; importName: string }>;
+			category: string | string[];
+		}> = [];
+
+		console.log('🎨 Generating enhanced image imports...');
+
+		for (const [artworkId, variants] of imageGroups) {
+			const artwork = generateArtworkFromImages(artworkId, variants);
+			artworks.push(artwork);
+			console.log(`✅ Generated: ${artwork.title} (${artwork.images.length} variants)`);
+		}
+
+		if (artworks.length === 0) {
+			console.error('❌ No artwork data generated');
+			process.exit(1);
+		}
+
+		console.log(`\n📊 Summary:`);
+		console.log(`   - Total artworks: ${artworks.length}`);
+		console.log(
+			`   - Total image variants: ${artworks.reduce((sum, a) => sum + a.images.length, 0)}`
+		);
+
+		const content = generateTypeScriptFile(artworks);
+		const outputPath = path.join(OUTPUT_DIR, 'enhancedArtworkData.ts');
+
+		// Ensure output directory exists
+		if (!fs.existsSync(OUTPUT_DIR)) {
+			fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+		}
+
+		fs.writeFileSync(outputPath, content, 'utf8');
+
+		console.log(`\n✅ Enhanced image imports generated successfully!`);
+		console.log(`📄 Output file: ${outputPath}`);
+		console.log(`\n💡 The generated file includes:`);
+		console.log(`   - Proper enhanced image imports with ?enhanced parameter`);
+		console.log(`   - Picture objects compatible with enhanced:img`);
+		console.log(`   - Organized artwork data structure`);
+		console.log(`   - Helper functions for data access`);
+	} catch (error) {
+		console.error('❌ Error generating enhanced imports:', (error as Error).message);
+		process.exit(1);
+	}
+}
+
+main();
