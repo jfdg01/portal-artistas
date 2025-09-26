@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/icon.ico';
 	import { setGalleryState } from '$lib/GalleryState.svelte';
 	import { getArtworkData } from '$lib/utils/artworkImporter';
 	import '$lib/i18n';

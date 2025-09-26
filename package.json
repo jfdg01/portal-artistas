@@ -14,8 +14,8 @@
 		"format": "prettier --write .",
 		"hygiene": "npm run check && npm run lint && npm run format",
 		"build-image-data": "convert:webp && generate:artwork-data",
-		"convert:webp": "node scripts/convert-to-webp.mjs",
-		"generate:images": "npx tsx scripts/generate-enhanced-imports.ts"
+		"images:convert": "node scripts/convert-to-webp.mjs",
+		"images:generate": "npx tsx scripts/generate-enhanced-imports.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

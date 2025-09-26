@@ -9,19 +9,48 @@ import sharp from 'sharp';
  */
 
 const SOURCE_IMAGES_DIR = path.join(process.cwd(), 'src', 'lib', 'assets', 'images');
-const BACKUP_DIR = path.join(process.cwd(), 'src', 'lib', 'assets', 'images', 'backup');
 const MAX_DIMENSION = 2048;
 const WEBP_QUALITY = 75;
 
 // Supported input image extensions
 const SUPPORTED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
-function ensureBackupDir() {
-	if (!fs.existsSync(BACKUP_DIR)) {
-		fs.mkdirSync(BACKUP_DIR, { recursive: true });
-		console.log(`📁 Created backup directory: ${BACKUP_DIR}`);
+/**
+ * Normalizes a filename by:
+ * - Removing accents and diacritics
+ * - Converting to lowercase
+ * - Replacing spaces with hyphens
+ * - Removing any other special characters except dots and hyphens
+ */
+function normalizeFileName(fileName) {
+	// Remove file extension temporarily
+	const ext = path.extname(fileName);
+	const baseName = path.basename(fileName, ext);
+	
+	// Normalize the base name
+	let normalized = baseName
+		// Remove accents and diacritics
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		// Convert to lowercase
+		.toLowerCase()
+		// Replace spaces and underscores with hyphens
+		.replace(/[\s_]+/g, '-')
+		// Remove any characters that aren't letters, numbers, or hyphens
+		.replace(/[^a-z0-9-]/g, '')
+		// Remove multiple consecutive hyphens
+		.replace(/-+/g, '-')
+		// Remove leading/trailing hyphens
+		.replace(/^-+|-+$/g, '');
+	
+	// Ensure we don't have an empty name
+	if (!normalized) {
+		normalized = 'unnamed';
 	}
+	
+	return normalized + ext;
 }
+
 
 function getImageFiles() {
 	if (!fs.existsSync(SOURCE_IMAGES_DIR)) {
@@ -38,15 +67,16 @@ function getImageFiles() {
 }
 
 function getWebPFileName(originalFileName) {
-	const baseName = path.basename(originalFileName, path.extname(originalFileName));
+	const normalizedName = normalizeFileName(originalFileName);
+	const baseName = path.basename(normalizedName, path.extname(normalizedName));
 	return `${baseName}.webp`;
 }
 
 async function processImage(fileName, forceMode = false) {
 	const inputPath = path.join(SOURCE_IMAGES_DIR, fileName);
+	const normalizedFileName = normalizeFileName(fileName);
 	const webpFileName = getWebPFileName(fileName);
 	const outputPath = path.join(SOURCE_IMAGES_DIR, webpFileName);
-	const backupPath = path.join(BACKUP_DIR, fileName);
 
 	// Check if WebP file already exists (unless force mode is enabled)
 	if (!forceMode && fs.existsSync(outputPath)) {
@@ -63,6 +93,9 @@ async function processImage(fileName, forceMode = false) {
 		// Get image metadata
 		const metadata = await sharp(inputPath).metadata();
 		console.log(`\n🖼️  Processing: ${fileName}`);
+		if (fileName !== normalizedFileName) {
+			console.log(`   Normalized: ${normalizedFileName}`);
+		}
 		console.log(`   Original: ${metadata.width}x${metadata.height} (${metadata.format})`);
 
 		// Calculate new dimensions if needed
@@ -118,10 +151,6 @@ async function processImage(fileName, forceMode = false) {
 			`   📊 Size: ${(outputStats.size / 1024 / 1024).toFixed(2)} MB (${compressionRatio}% smaller)`
 		);
 
-		// Backup original file
-		fs.copyFileSync(inputPath, backupPath);
-		console.log(`   💾 Backed up original to: backup/${fileName}`);
-
 		// Remove original file
 		fs.unlinkSync(inputPath);
 		console.log(`   🗑️  Removed original: ${fileName}`);
@@ -143,15 +172,11 @@ async function processImage(fileName, forceMode = false) {
 async function convertImages(forceMode = false) {
 	console.log('🚀 Starting image conversion to WebP...');
 	console.log(`📁 Source directory: ${SOURCE_IMAGES_DIR}`);
-	console.log(`💾 Backup directory: ${BACKUP_DIR}`);
 	console.log(`🎯 Target quality: ${WEBP_QUALITY}%`);
 	console.log(`📏 Max resolution: ${MAX_DIMENSION}x${MAX_DIMENSION}`);
 	if (forceMode) {
 		console.log(`🔄 Force mode: Will overwrite existing WebP files`);
 	}
-
-	// Ensure backup directory exists
-	ensureBackupDir();
 
 	// Get all image files
 	const imageFiles = getImageFiles();
@@ -207,7 +232,6 @@ async function convertImages(forceMode = false) {
 	}
 
 	console.log('\n✅ Image conversion completed!');
-	console.log(`💾 Original files backed up in: ${BACKUP_DIR}`);
 	console.log('💡 You can now update your artwork data to reference .webp files');
 }
 
@@ -226,9 +250,9 @@ Options:
 
 This script will:
 - Convert all .jpg, .jpeg, and .png files to .webp format
+- Normalize filenames by removing accents, diacritics, converting to lowercase, and replacing spaces with hyphens
 - Use 75% quality for WebP compression
 - Resize images to maximum 4K resolution (4096x4096) while maintaining aspect ratio
-- Backup original files to a 'backup' subdirectory
 - Remove original files after successful conversion
 - Skip existing WebP files unless --force is used
 - Show detailed conversion statistics
@@ -256,17 +280,30 @@ if (args.includes('--dry-run')) {
 	let wouldSkip = 0;
 
 	imageFiles.forEach((file) => {
+		const normalizedFileName = normalizeFileName(file);
 		const webpFileName = getWebPFileName(file);
 		const outputPath = path.join(SOURCE_IMAGES_DIR, webpFileName);
 
 		if (!forceMode && fs.existsSync(outputPath)) {
-			console.log(`   ⏭️  ${file} → ${webpFileName} (SKIP - already exists)`);
+			if (file !== normalizedFileName) {
+				console.log(`   ⏭️  ${file} → ${normalizedFileName} → ${webpFileName} (SKIP - already exists)`);
+			} else {
+				console.log(`   ⏭️  ${file} → ${webpFileName} (SKIP - already exists)`);
+			}
 			wouldSkip++;
 		} else if (forceMode && fs.existsSync(outputPath)) {
-			console.log(`   🔄 ${file} → ${webpFileName} (OVERWRITE - force mode)`);
+			if (file !== normalizedFileName) {
+				console.log(`   🔄 ${file} → ${normalizedFileName} → ${webpFileName} (OVERWRITE - force mode)`);
+			} else {
+				console.log(`   🔄 ${file} → ${webpFileName} (OVERWRITE - force mode)`);
+			}
 			wouldConvert++;
 		} else {
-			console.log(`   ✅ ${file} → ${webpFileName} (CONVERT)`);
+			if (file !== normalizedFileName) {
+				console.log(`   ✅ ${file} → ${normalizedFileName} → ${webpFileName} (CONVERT)`);
+			} else {
+				console.log(`   ✅ ${file} → ${webpFileName} (CONVERT)`);
+			}
 			wouldConvert++;
 		}
 	});
