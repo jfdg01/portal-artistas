@@ -9,8 +9,8 @@ import sharp from 'sharp';
  */
 
 const SOURCE_IMAGES_DIR = path.join(process.cwd(), 'src', 'lib', 'assets', 'images');
-const MAX_DIMENSION = 2048;
-const WEBP_QUALITY = 75;
+const MAX_DIMENSION = 1536;
+const WEBP_QUALITY = 70;
 
 // Supported input image extensions
 const SUPPORTED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
