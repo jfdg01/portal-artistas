@@ -14,8 +14,6 @@ import apunte_abstracto_1 from '$lib/assets/images/apunte-abstracto-1.webp?enhan
 import apunte_abstracto_2 from '$lib/assets/images/apunte-abstracto-2.webp?enhanced';
 import apunte_abstracto_3 from '$lib/assets/images/apunte-abstracto-3.webp?enhanced';
 import apunte_acrilico_1 from '$lib/assets/images/apunte-acrilico-1.webp?enhanced';
-import apunte_acrilico_2_zoom_1 from '$lib/assets/images/apunte-acrilico-2-zoom-1.webp?enhanced';
-import apunte_acrilico_2 from '$lib/assets/images/apunte-acrilico-2.webp?enhanced';
 import apunte_acrilico_3 from '$lib/assets/images/apunte-acrilico-3.webp?enhanced';
 import apunte_acrilico_4 from '$lib/assets/images/apunte-acrilico-4.webp?enhanced';
 import apunte_acuarela_paloma from '$lib/assets/images/apunte-acuarela-paloma.webp?enhanced';
@@ -138,22 +136,6 @@ export const artworkData: Artwork[] = [
 		{
 			name: "main",
 			picture: apunte_acrilico_1
-		}
-		],
-		category: ["apunte","pintura"],
-		isAvailable: false
-	},
-	{
-		id: "apunte-acrilico-2",
-		title: "Apunte Acrilico 2",
-		images: [
-		{
-			name: "main",
-			picture: apunte_acrilico_2
-		},
-		{
-			name: "zoom-1",
-			picture: apunte_acrilico_2_zoom_1
 		}
 		],
 		category: ["apunte","pintura"],
@@ -693,8 +675,6 @@ export const importedImages = {
 	apunte_abstracto_2,
 	apunte_abstracto_3,
 	apunte_acrilico_1,
-	apunte_acrilico_2_zoom_1,
-	apunte_acrilico_2,
 	apunte_acrilico_3,
 	apunte_acrilico_4,
 	apunte_acuarela_paloma,
