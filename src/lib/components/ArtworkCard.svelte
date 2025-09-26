@@ -71,14 +71,6 @@
 				/>
 			</div>
 
-			<!-- Availability Badge -->
-			{#if !artwork.isAvailable}
-				<div
-					class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold"
-				>
-					{$t('sold')}
-				</div>
-			{/if}
 		</div>
 
 		<!-- Title - integrated into the same card -->

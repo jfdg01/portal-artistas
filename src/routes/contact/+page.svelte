@@ -7,8 +7,9 @@
 
 <script lang="ts">
 	import { t } from 'svelte-i18n';
-	import { Mail, Phone, Instagram, MessageCircle, Send } from 'lucide-svelte';
+	import { Send } from 'lucide-svelte';
 	import GalleryHeader from '$lib/components/GalleryHeader.svelte';
+	import ContactCard from '$lib/components/ContactCard.svelte';
 
 	let formData = $state({
 		name: '',
@@ -79,87 +80,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 w-full">
 			<!-- Contact Information -->
 			<div class="space-y-6 lg:space-y-8">
-				<div
-					class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 p-6 sm:p-8"
-				>
-					<h2 class="text-xl font-semibold montserrat-semibold text-gray-900 mb-6">
-						{$t('contactInfo')}
-					</h2>
-
-					<div class="space-y-6">
-						<!-- Email -->
-						<div class="flex items-start gap-4">
-							<div
-								class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-							>
-								<Mail class="w-6 h-6 text-white" />
-							</div>
-							<div class="min-w-0 flex-1">
-								<h3 class="text-sm font-medium text-gray-700 montserrat-medium">
-									{$t('emailLabel')}
-								</h3>
-								<p class="text-gray-900 font-medium break-all">{$t('emailAddress')}</p>
-							</div>
-						</div>
-
-						<!-- Phone -->
-						<div class="flex items-start gap-4">
-							<div
-								class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-							>
-								<Phone class="w-6 h-6 text-white" />
-							</div>
-							<div class="min-w-0 flex-1">
-								<h3 class="text-sm font-medium text-gray-700 montserrat-medium">
-									{$t('phoneNumberLabel')}
-								</h3>
-								<p class="text-gray-900 font-medium break-all">{$t('phoneNumber')}</p>
-							</div>
-						</div>
-
-						<!-- WhatsApp -->
-						<div class="flex items-start gap-4">
-							<div
-								class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-							>
-								<MessageCircle class="w-6 h-6 text-white" />
-							</div>
-							<div class="min-w-0 flex-1">
-								<h3 class="text-sm font-medium text-gray-700 montserrat-medium">
-									{$t('whatsapp')}
-								</h3>
-								<a
-									href="https://wa.me/34628672368"
-									target="_blank"
-									rel="noopener noreferrer"
-									class="text-green-600 hover:text-green-700 font-medium transition-all duration-200 hover:underline break-all"
-								>
-									{$t('phoneNumber')}
-								</a>
-							</div>
-						</div>
-
-						<!-- Instagram -->
-						<div class="flex items-start gap-4">
-							<div
-								class="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-pink-500 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-							>
-								<Instagram class="w-6 h-6 text-white" />
-							</div>
-							<div class="min-w-0 flex-1">
-								<h3 class="text-sm font-medium text-gray-700 montserrat-medium">Instagram</h3>
-								<a
-									href="https://instagram.com/cardenas.pacheco"
-									target="_blank"
-									rel="noopener noreferrer"
-									class="text-pink-600 hover:text-pink-700 font-medium transition-all duration-200 hover:underline break-all"
-								>
-									{$t('instagram')}
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
+				<ContactCard />
 			</div>
 
 			<!-- Contact Form -->
