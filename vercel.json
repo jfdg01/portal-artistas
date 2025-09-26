@@ -1,9 +1,0 @@
-{
-	"functions": {
-		"src/routes/**": {
-			"excludeFiles": "{.next,*.cache,node_modules,public,src/lib/assets/images,scripts,docs}/**"
-		}
-	},
-	"buildCommand": "npm run build",
-	"outputDirectory": ".svelte-kit"
-}
