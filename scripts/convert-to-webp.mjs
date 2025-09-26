@@ -71,7 +71,7 @@ function getWebPFileName(originalFileName) {
 	return `${baseName}.webp`;
 }
 
-async function processImage(fileName, sourceDir, forceMode = false) {
+async function processImage(fileName, sourceDir) {
 	const inputPath = path.join(sourceDir, fileName);
 	const normalizedFileName = normalizeFileName(fileName);
 	const webpFileName = getWebPFileName(fileName);
@@ -290,7 +290,6 @@ if (args.includes('--dry-run')) {
 	imageFiles.forEach((file) => {
 		const normalizedFileName = normalizeFileName(file);
 		const webpFileName = getWebPFileName(file);
-		const outputPath = path.join(OUTPUT_IMAGES_DIR, webpFileName);
 
 		if (file !== normalizedFileName) {
 			console.log(`   ✅ ${file} → ${normalizedFileName} → ${webpFileName} (CONVERT)`);

@@ -1,28 +1,8 @@
-### robots.txt
-
-# Allow major search engines
-User-agent: Googlebot
+# Allow all good bots
+User-agent: *
 Disallow:
 
-User-agent: AdsBot-Google
-Disallow:
-
-User-agent: Google-InspectionTool
-Disallow:
-
-User-agent: Bingbot
-Disallow:
-
-User-agent: DuckDuckBot
-Disallow:
-
-User-agent: Slurp
-Disallow:
-
-User-agent: Applebot
-Disallow:
-
-# Block known aggressive scrapers/crawlers
+# Block aggressive scrapers
 User-agent: AhrefsBot
 Disallow: /
 
@@ -68,7 +48,7 @@ Disallow: /
 User-agent: anthropic-ai
 Disallow: /
 
-# Block common programmatic clients often used for scraping
+# Block common scraping tools
 User-agent: python-requests
 Disallow: /
 
@@ -90,6 +70,5 @@ Disallow: /
 User-agent: httpx
 Disallow: /
 
-# Default: disallow all other bots
-User-agent: *
-Disallow: /
+# Sitemap location
+Sitemap: https://cardenaspacheco.es/sitemap.xml

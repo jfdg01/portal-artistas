@@ -16,7 +16,8 @@
 		"images:convert": "node scripts/convert-to-webp.mjs",
 		"generate-artwork-images": "node scripts/generate-artwork-images.mjs",
 		"generate-artwork-data": "node scripts/generate-artwork-data.mjs",
-		"generate-artwork-all": "npm run generate-artwork-images && npm run generate-artwork-data"
+		"generate-artwork-all": "npm run generate-artwork-images && npm run generate-artwork-data",
+		"generate-sitemap": "node scripts/generate-sitemap.mjs"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

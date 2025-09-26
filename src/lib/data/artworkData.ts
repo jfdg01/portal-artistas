@@ -29,7 +29,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Abstracto 1',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-abstracto-1'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -37,7 +37,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Abstracto 2',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-abstracto-2'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -45,7 +45,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Abstracto 3',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-abstracto-3'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -53,7 +53,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Acrilico 1',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-acrilico-1'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -61,7 +61,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Acrilico 2',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-acrilico-2'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -93,7 +93,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Baeza Acuerela',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-baeza-acuerela'],
-		category: ['apunte','acuarela'],
+		category: ['apunte', 'acuarela'],
 		isAvailable: false
 	},
 	{
@@ -141,7 +141,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Paisaje Collage 1',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-paisaje-collage-1'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -149,7 +149,7 @@ export const artworkData: Artwork[] = [
 		title: 'Apunte Paisaje Collage 2',
 		description: '', // TODO: Add description
 		images: artworkImages['apunte-paisaje-collage-2'],
-		category: ['apunte','pintura'],
+		category: ['apunte', 'pintura'],
 		isAvailable: false
 	},
 	{
@@ -189,7 +189,7 @@ export const artworkData: Artwork[] = [
 		title: 'Estudio Anatomia',
 		description: '', // TODO: Add description
 		images: artworkImages['estudio-anatomia'],
-		category: ['dibujo','apunte'],
+		category: ['dibujo', 'apunte'],
 		isAvailable: false
 	},
 	{
@@ -197,7 +197,7 @@ export const artworkData: Artwork[] = [
 		title: 'Estudio Retrato 1',
 		description: '', // TODO: Add description
 		images: artworkImages['estudio-retrato-1'],
-		category: ['acuarela','apunte'],
+		category: ['acuarela', 'apunte'],
 		isAvailable: false
 	},
 	{
@@ -205,7 +205,7 @@ export const artworkData: Artwork[] = [
 		title: 'Estudio Retrato 2',
 		description: '', // TODO: Add description
 		images: artworkImages['estudio-retrato-2'],
-		category: ['acuarela','apunte'],
+		category: ['acuarela', 'apunte'],
 		isAvailable: false
 	},
 	{
@@ -293,7 +293,7 @@ export const artworkData: Artwork[] = [
 		title: 'Summary',
 		description: '', // TODO: Add description
 		images: artworkImages['summary'],
-		category: ['dibujo','pintura'],
+		category: ['dibujo', 'pintura'],
 		isAvailable: false
 	},
 	{
