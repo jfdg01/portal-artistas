@@ -78,7 +78,7 @@
 	<meta name="description" content="View {artwork.title} by Carmen Cárdenas Pacheco" />
 </svelte:head>
 
-<div 
+<div
 	class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-x-hidden"
 	data-artwork-page
 >
@@ -103,24 +103,25 @@
 
 	<!-- Main Content -->
 	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<main 
+	<main
 		class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 md:py-8 lg:py-12 focus:outline-none"
 		onkeydown={handleKeydown}
 		tabindex="-1"
 	>
-		<div class="bg-white/80 backdrop-blur-xl rounded-xl md:rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden w-full">
+		<div
+			class="bg-white/80 backdrop-blur-xl rounded-xl md:rounded-2xl shadow-lg border border-gray-200/50 overflow-hidden w-full"
+		>
 			<!-- Content Grid -->
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-0 w-full">
 				<!-- Image Section -->
 				<div class="p-4 md:p-6 lg:p-8">
 					<div class="space-y-4">
 						<div class="relative">
-							{#if currentImage && currentImage.picture}
-								<enhanced:img
-									src={currentImage.picture}
+							{#if currentImage && currentImage.src}
+								<img
+									src={currentImage.src}
 									alt={$t('artworkAlt', { values: { title: artwork.title } })}
 									class="w-full h-auto rounded-lg shadow-md"
-									sizes="(max-width: 1024px) 100vw, 50vw"
 									loading="lazy"
 								/>
 							{:else}
@@ -180,7 +181,9 @@
 					<div class="space-y-4 md:space-y-6">
 						<!-- Title -->
 						<div>
-							<h1 class="text-xl md:text-2xl lg:text-3xl font-bold montserrat-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+							<h1
+								class="text-xl md:text-2xl lg:text-3xl font-bold montserrat-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
+							>
 								{artwork.title}
 							</h1>
 						</div>
@@ -189,9 +192,12 @@
 							<div class="flex items-start gap-3">
 								<Euro class="w-5 h-5 text-gray-400 mt-1" />
 								<div class="flex-1">
-									<p class="text-xs md:text-sm font-medium text-gray-700 mb-1">{$t('priceLabel')}</p>
+									<p class="text-xs md:text-sm font-medium text-gray-700 mb-1">
+										{$t('priceLabel')}
+									</p>
 									<p class="text-lg md:text-2xl font-bold text-gray-900">
-										{artwork.price} {artwork.currency}
+										{artwork.price}
+										{artwork.currency}
 									</p>
 								</div>
 							</div>
@@ -202,9 +208,12 @@
 							<div class="flex items-start gap-3">
 								<Ruler class="w-5 h-5 text-gray-400 mt-1" />
 								<div class="flex-1">
-									<p class="text-xs md:text-sm font-medium text-gray-700 mb-1">{$t('dimensionsLabel')}</p>
+									<p class="text-xs md:text-sm font-medium text-gray-700 mb-1">
+										{$t('dimensionsLabel')}
+									</p>
 									<p class="text-base md:text-lg font-semibold text-gray-900">
-										{artwork.dimensions.width} × {artwork.dimensions.height} {artwork.dimensions.unit}
+										{artwork.dimensions.width} × {artwork.dimensions.height}
+										{artwork.dimensions.unit}
 									</p>
 								</div>
 							</div>
@@ -229,12 +238,16 @@
 								<div class="flex flex-wrap gap-2">
 									{#if Array.isArray(artwork.category)}
 										{#each artwork.category as category (category)}
-											<span class="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-blue-100 text-blue-800">
+											<span
+												class="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-blue-100 text-blue-800"
+											>
 												{$t('categories.' + category)}
 											</span>
 										{/each}
 									{:else}
-										<span class="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-blue-100 text-blue-800">
+										<span
+											class="inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-blue-100 text-blue-800"
+										>
 											{$t('categories.' + artwork.category)}
 										</span>
 									{/if}
@@ -245,15 +258,21 @@
 						<!-- Description -->
 						{#if artwork.description}
 							<div>
-								<p class="text-xs md:text-sm font-medium text-gray-700 mb-2">{$t('descriptionLabel')}</p>
-								<p class="text-sm md:text-base text-gray-600 leading-relaxed max-w-prose">{artwork.description}</p>
+								<p class="text-xs md:text-sm font-medium text-gray-700 mb-2">
+									{$t('descriptionLabel')}
+								</p>
+								<p class="text-sm md:text-base text-gray-600 leading-relaxed max-w-prose">
+									{artwork.description}
+								</p>
 							</div>
 						{/if}
 
 						<!-- Contact Information -->
 						{#if artwork.isAvailable}
 							<div class="bg-green-50 border border-green-200 rounded-xl p-4 md:p-6">
-								<h3 class="text-base md:text-lg font-semibold montserrat-semibold text-green-800 mb-2">
+								<h3
+									class="text-base md:text-lg font-semibold montserrat-semibold text-green-800 mb-2"
+								>
 									{$t('interestedHeading')}
 								</h3>
 								<p class="text-green-700 text-xs md:text-sm mb-4 leading-relaxed">

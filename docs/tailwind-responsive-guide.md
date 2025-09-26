@@ -115,42 +115,47 @@ Usage example: `p-3 md:p-6 lg:p-8 xl:p-10 2xl:p-12` (mobile-first progression)
 **⚠️ CRITICAL: Always prevent horizontal overflow to maintain proper responsive behavior**
 
 #### Container Padding Rules
+
 - **Maximum Padding**: Never exceed `px-4 sm:px-6 lg:px-8` for main containers
 - **Avoid Excessive Padding**: Don't use `xl:px-10 2xl:px-12` or `xl:px-12 2xl:px-16` as they cause overflow
 - **Consistent Max-Width**: Always pair with `max-w-7xl` for proper constraint
 
 #### Safe Padding Patterns
+
 ```html
 <!-- ✅ CORRECT: Safe padding that won't overflow -->
 <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-
-<!-- ❌ WRONG: Excessive padding causes horizontal overflow -->
-<div class="mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-7xl">
+	<!-- ❌ WRONG: Excessive padding causes horizontal overflow -->
+	<div class="mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-7xl"></div>
+</div>
 ```
 
 #### Overflow Protection
+
 - **Always Add**: `overflow-x-hidden` to main page containers
 - **Width Constraints**: Add `w-full` to grid containers and form elements
 - **Responsive Gaps**: Use `gap-6 lg:gap-8` instead of `gap-8 lg:gap-12` for grids
 
 #### Layout Container Best Practices
+
 ```html
 <!-- ✅ CORRECT: Safe responsive container -->
 <main class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 sm:py-12 lg:py-16">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 w-full">
-    <!-- content -->
-  </div>
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 w-full">
+		<!-- content -->
+	</div>
 </main>
 
 <!-- ✅ CORRECT: Header with safe padding -->
 <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl">
-  <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-    <!-- header content -->
-  </div>
+	<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+		<!-- header content -->
+	</div>
 </header>
 ```
 
 #### Testing for Overflow
+
 - **Always Test**: Check at 1920px, 2560px, and ultra-wide screens
 - **Visual Check**: Ensure no horizontal scrollbar appears
 - **Content Check**: Verify all content fits within viewport bounds
@@ -184,9 +189,7 @@ Responsive container and grid:
 
 ```html
 <!-- ✅ SAFE: No horizontal overflow -->
-<div
-	class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
->
+<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 	<div
 		class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6 w-full"
 	>

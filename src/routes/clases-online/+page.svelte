@@ -32,15 +32,21 @@
 		<!-- Main Coming Soon Content -->
 		<div class="text-center mb-8 sm:mb-12 lg:mb-16">
 			<!-- Icon and Title -->
-			<div class="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl mb-6 sm:mb-8">
+			<div
+				class="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl mb-6 sm:mb-8"
+			>
 				<span class="text-white font-bold text-3xl sm:text-4xl lg:text-5xl montserrat-bold">
 					🎨
 				</span>
 			</div>
-			<h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold montserrat-bold text-gray-900 mb-6 sm:mb-8">
+			<h2
+				class="text-2xl sm:text-3xl lg:text-4xl font-bold montserrat-bold text-gray-900 mb-6 sm:mb-8"
+			>
 				{$t('comingSoon')}
 			</h2>
-			<p class="text-lg sm:text-xl lg:text-2xl font-medium text-gray-600 leading-relaxed max-w-[70ch] mx-auto mb-8 sm:mb-12">
+			<p
+				class="text-lg sm:text-xl lg:text-2xl font-medium text-gray-600 leading-relaxed max-w-[70ch] mx-auto mb-8 sm:mb-12"
+			>
 				{$t('onlineClassesInterest')}
 			</p>
 

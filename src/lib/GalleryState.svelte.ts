@@ -7,6 +7,7 @@
 import { getContext, setContext } from 'svelte';
 import { SvelteSet } from 'svelte/reactivity';
 import type { Artwork } from '$lib/types/artwork';
+import { artworkData } from '$lib/data/artworkData';
 
 const GALLERY_KEY = Symbol('gallery_state');
 
@@ -16,7 +17,7 @@ const GALLERY_KEY = Symbol('gallery_state');
  */
 export class GalleryStateClass {
 	// Reactive properties using $state rune
-	artworks = $state<Artwork[]>([]);
+	artworks = $state<Artwork[]>(artworkData);
 	selectedCategory = $state<string>('');
 
 	// Getter methods for computed values
@@ -49,7 +50,6 @@ export class GalleryStateClass {
 	setArtworks(artworks: Artwork[]) {
 		this.artworks = artworks;
 	}
-
 
 	setCategoryFilter(category: string) {
 		this.selectedCategory = category;

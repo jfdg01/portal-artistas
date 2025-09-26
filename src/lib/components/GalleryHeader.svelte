@@ -66,9 +66,7 @@
 <header
 	class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm"
 >
-	<div
-		class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
-	>
+	<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 		<!-- Main Header Content - Mobile First -->
 		<div class="flex items-center justify-between gap-3 py-3 md:gap-4 md:py-4 lg:gap-6 lg:py-6">
 			<!-- Logo/Title - Mobile First -->
@@ -120,7 +118,7 @@
 			<div class="flex md:hidden items-center gap-2">
 				<!-- Language Selector - Mobile -->
 				<LanguageSelector />
-				
+
 				<!-- Mobile Menu Button -->
 				<button
 					onclick={toggleMobileMenu}
@@ -176,7 +174,9 @@
 <button
 	onclick={scrollToTop}
 	aria-label="Scroll to top"
-	class="fixed bottom-4 right-4 z-50 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full p-3 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[48px] min-w-[48px] flex items-center justify-center group {showScrollToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}"
+	class="fixed bottom-4 right-4 z-50 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full p-3 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[48px] min-w-[48px] flex items-center justify-center group {showScrollToTop
+		? 'opacity-100 translate-y-0'
+		: 'opacity-0 translate-y-2 pointer-events-none'}"
 >
 	<ArrowUp class="size-5 group-hover:scale-110 transition-transform duration-300" />
 </button>

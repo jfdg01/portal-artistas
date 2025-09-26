@@ -8,7 +8,7 @@ import sharp from 'sharp';
  * This script processes all images in the source directory and converts them to WebP
  */
 
-const SOURCE_IMAGES_DIR = path.join(process.cwd(), 'src', 'lib', 'assets', 'images');
+const OUTPUT_IMAGES_DIR = path.join(process.cwd(), 'static', 'images');
 const MAX_DIMENSION = 1536;
 const WEBP_QUALITY = 70;
 
@@ -26,7 +26,7 @@ function normalizeFileName(fileName) {
 	// Remove file extension temporarily
 	const ext = path.extname(fileName);
 	const baseName = path.basename(fileName, ext);
-	
+
 	// Normalize the base name
 	let normalized = baseName
 		// Remove accents and diacritics
@@ -42,23 +42,22 @@ function normalizeFileName(fileName) {
 		.replace(/-+/g, '-')
 		// Remove leading/trailing hyphens
 		.replace(/^-+|-+$/g, '');
-	
+
 	// Ensure we don't have an empty name
 	if (!normalized) {
 		normalized = 'unnamed';
 	}
-	
+
 	return normalized + ext;
 }
 
-
-function getImageFiles() {
-	if (!fs.existsSync(SOURCE_IMAGES_DIR)) {
-		console.error(`❌ Source images directory not found: ${SOURCE_IMAGES_DIR}`);
+function getImageFiles(sourceDir) {
+	if (!fs.existsSync(sourceDir)) {
+		console.error(`❌ Source images directory not found: ${sourceDir}`);
 		process.exit(1);
 	}
 
-	const files = fs.readdirSync(SOURCE_IMAGES_DIR).filter((file) => {
+	const files = fs.readdirSync(sourceDir).filter((file) => {
 		const ext = path.extname(file).toLowerCase();
 		return SUPPORTED_EXTENSIONS.has(ext) && !file.startsWith('.');
 	});
@@ -72,21 +71,21 @@ function getWebPFileName(originalFileName) {
 	return `${baseName}.webp`;
 }
 
-async function processImage(fileName, forceMode = false) {
-	const inputPath = path.join(SOURCE_IMAGES_DIR, fileName);
+async function processImage(fileName, sourceDir, forceMode = false) {
+	const inputPath = path.join(sourceDir, fileName);
 	const normalizedFileName = normalizeFileName(fileName);
 	const webpFileName = getWebPFileName(fileName);
-	const outputPath = path.join(SOURCE_IMAGES_DIR, webpFileName);
+	const outputPath = path.join(OUTPUT_IMAGES_DIR, webpFileName);
 
-	// Check if WebP file already exists (unless force mode is enabled)
-	if (!forceMode && fs.existsSync(outputPath)) {
-		console.log(`\n⏭️  Skipping: ${fileName} (WebP already exists: ${webpFileName})`);
-		return null;
+	// Ensure output directory exists
+	if (!fs.existsSync(OUTPUT_IMAGES_DIR)) {
+		fs.mkdirSync(OUTPUT_IMAGES_DIR, { recursive: true });
+		console.log(`📁 Created output directory: ${OUTPUT_IMAGES_DIR}`);
 	}
 
-	// If force mode and WebP exists, show that we're overwriting
-	if (forceMode && fs.existsSync(outputPath)) {
-		console.log(`\n🔄 Force mode: Overwriting existing WebP file: ${webpFileName}`);
+	// Always overwrite existing files in static/images directory
+	if (fs.existsSync(outputPath)) {
+		console.log(`\n🔄 Overwriting existing WebP file: ${webpFileName}`);
 	}
 
 	try {
@@ -120,7 +119,7 @@ async function processImage(fileName, forceMode = false) {
 
 		if (path.extname(fileName).toLowerCase() === '.webp') {
 			// Create temporary file for WebP-to-WebP conversion
-			tempPath = path.join(SOURCE_IMAGES_DIR, `temp_${webpFileName}`);
+			tempPath = path.join(OUTPUT_IMAGES_DIR, `temp_${webpFileName}`);
 			finalOutputPath = tempPath;
 		}
 
@@ -151,9 +150,8 @@ async function processImage(fileName, forceMode = false) {
 			`   📊 Size: ${(outputStats.size / 1024 / 1024).toFixed(2)} MB (${compressionRatio}% smaller)`
 		);
 
-		// Remove original file
-		fs.unlinkSync(inputPath);
-		console.log(`   🗑️  Removed original: ${fileName}`);
+		// Note: Original file is NOT removed since it's in the source directory
+		console.log(`   📁 Saved to: ${outputPath}`);
 
 		return {
 			original: fileName,
@@ -169,17 +167,16 @@ async function processImage(fileName, forceMode = false) {
 	}
 }
 
-async function convertImages(forceMode = false) {
+async function convertImages(sourceDir) {
 	console.log('🚀 Starting image conversion to WebP...');
-	console.log(`📁 Source directory: ${SOURCE_IMAGES_DIR}`);
+	console.log(`📁 Source directory: ${sourceDir}`);
+	console.log(`📁 Output directory: ${OUTPUT_IMAGES_DIR}`);
 	console.log(`🎯 Target quality: ${WEBP_QUALITY}%`);
 	console.log(`📏 Max resolution: ${MAX_DIMENSION}x${MAX_DIMENSION}`);
-	if (forceMode) {
-		console.log(`🔄 Force mode: Will overwrite existing WebP files`);
-	}
+	console.log(`🔄 Will overwrite existing WebP files in output directory`);
 
 	// Get all image files
-	const imageFiles = getImageFiles();
+	const imageFiles = getImageFiles(sourceDir);
 
 	if (imageFiles.length === 0) {
 		console.log('ℹ️  No images found to convert');
@@ -198,7 +195,7 @@ async function convertImages(forceMode = false) {
 	console.log('\n🔄 Starting conversion process...');
 
 	for (const fileName of imageFiles) {
-		const result = await processImage(fileName, forceMode);
+		const result = await processImage(fileName, sourceDir);
 		if (result) {
 			results.push(result);
 			successCount++;
@@ -212,7 +209,7 @@ async function convertImages(forceMode = false) {
 	// Summary
 	console.log('\n📊 Conversion Summary:');
 	console.log(`   ✅ Successfully converted: ${successCount}/${imageFiles.length} images`);
-	console.log(`   ⏭️  Skipped (already exist): ${skippedCount}/${imageFiles.length} images`);
+	console.log(`   ⏭️  Skipped (errors): ${skippedCount}/${imageFiles.length} images`);
 	console.log(`   📁 Original total size: ${(totalOriginalSize / 1024 / 1024).toFixed(2)} MB`);
 	console.log(`   📁 WebP total size: ${(totalWebpSize / 1024 / 1024).toFixed(2)} MB`);
 	console.log(
@@ -241,82 +238,76 @@ if (args.includes('--help') || args.includes('-h')) {
 	console.log(`
 WebP Conversion Script
 
-Usage: node scripts/convert-to-webp.mjs [options]
+Usage: node scripts/convert-to-webp.mjs <source-directory> [options]
+
+Arguments:
+  source-directory    Path to the directory containing images to convert
 
 Options:
-  --help, -h     Show this help message
-  --dry-run      Show what would be converted without actually converting
-  --force        Overwrite existing WebP files (useful for quality changes)
+  --help, -h          Show this help message
+  --dry-run           Show what would be converted without actually converting
 
 This script will:
-- Convert all .jpg, .jpeg, and .png files to .webp format
+- Convert all .jpg, .jpeg, .png, and .webp files to .webp format
 - Normalize filenames by removing accents, diacritics, converting to lowercase, and replacing spaces with hyphens
-- Use 75% quality for WebP compression
-- Resize images to maximum 4K resolution (4096x4096) while maintaining aspect ratio
-- Remove original files after successful conversion
-- Skip existing WebP files unless --force is used
+- Use 70% quality for WebP compression
+- Resize images to maximum 1536x1536 resolution while maintaining aspect ratio
+- Save converted files to static/images directory
+- Always overwrite existing files in the output directory
+- Preserve original files in the source directory
 - Show detailed conversion statistics
 
 Examples:
-  node scripts/convert-to-webp.mjs
-  node scripts/convert-to-webp.mjs --force
-  node scripts/convert-to-webp.mjs --dry-run
-  node scripts/convert-to-webp.mjs --dry-run --force
-  npm run convert:webp
+  node scripts/convert-to-webp.mjs ./my-images
+  node scripts/convert-to-webp.mjs "C:\\Users\\User\\Pictures" --dry-run
+  node scripts/convert-to-webp.mjs /path/to/images
 `);
 	process.exit(0);
 }
 
+// Get source directory from command line arguments
+const sourceDirArg = args.find((arg) => !arg.startsWith('--'));
+if (!sourceDirArg) {
+	console.error('❌ Error: Source directory is required');
+	console.log('Usage: node scripts/convert-to-webp.mjs <source-directory> [options]');
+	console.log('Use --help for more information');
+	process.exit(1);
+}
+
+// Resolve the source directory path
+const sourceDir = path.resolve(sourceDirArg);
+
 if (args.includes('--dry-run')) {
 	console.log('🔍 Dry run mode - showing what would be converted:');
-	const imageFiles = getImageFiles();
-	const forceMode = args.includes('--force');
+	console.log(`📁 Source directory: ${sourceDir}`);
+	console.log(`📁 Output directory: ${OUTPUT_IMAGES_DIR}`);
+
+	const imageFiles = getImageFiles(sourceDir);
 	console.log(`Found ${imageFiles.length} images to process:`);
-	if (forceMode) {
-		console.log(`🔄 Force mode: Will overwrite existing WebP files`);
-	}
 
 	let wouldConvert = 0;
-	let wouldSkip = 0;
 
 	imageFiles.forEach((file) => {
 		const normalizedFileName = normalizeFileName(file);
 		const webpFileName = getWebPFileName(file);
-		const outputPath = path.join(SOURCE_IMAGES_DIR, webpFileName);
+		const outputPath = path.join(OUTPUT_IMAGES_DIR, webpFileName);
 
-		if (!forceMode && fs.existsSync(outputPath)) {
-			if (file !== normalizedFileName) {
-				console.log(`   ⏭️  ${file} → ${normalizedFileName} → ${webpFileName} (SKIP - already exists)`);
-			} else {
-				console.log(`   ⏭️  ${file} → ${webpFileName} (SKIP - already exists)`);
-			}
-			wouldSkip++;
-		} else if (forceMode && fs.existsSync(outputPath)) {
-			if (file !== normalizedFileName) {
-				console.log(`   🔄 ${file} → ${normalizedFileName} → ${webpFileName} (OVERWRITE - force mode)`);
-			} else {
-				console.log(`   🔄 ${file} → ${webpFileName} (OVERWRITE - force mode)`);
-			}
-			wouldConvert++;
+		if (file !== normalizedFileName) {
+			console.log(`   ✅ ${file} → ${normalizedFileName} → ${webpFileName} (CONVERT)`);
 		} else {
-			if (file !== normalizedFileName) {
-				console.log(`   ✅ ${file} → ${normalizedFileName} → ${webpFileName} (CONVERT)`);
-			} else {
-				console.log(`   ✅ ${file} → ${webpFileName} (CONVERT)`);
-			}
-			wouldConvert++;
+			console.log(`   ✅ ${file} → ${webpFileName} (CONVERT)`);
 		}
+		wouldConvert++;
 	});
 
 	console.log(`\n📊 Dry run summary:`);
 	console.log(`   ✅ Would convert: ${wouldConvert} images`);
-	console.log(`   ⏭️  Would skip: ${wouldSkip} images`);
+	console.log(`   📁 Output directory: ${OUTPUT_IMAGES_DIR}`);
 	process.exit(0);
 }
 
 // Run the conversion
-const forceMode = args.includes('--force');
-convertImages(forceMode).catch((error) => {
+convertImages(sourceDir).catch((error) => {
 	console.error('❌ Conversion failed:', error.message);
 	process.exit(1);
 });

@@ -49,12 +49,12 @@
 		<!-- Image -->
 		<div class="relative">
 			{#if artwork.images && artwork.images.length > 0}
-				<enhanced:img
+				<img
 					bind:this={imageElement}
-					src={artwork.images[0].picture}
+					src={artwork.images[0].src}
 					alt={$t('artworkAlt', { values: { title: artwork.title } })}
 					class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
-					sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+					loading="lazy"
 				/>
 			{:else}
 				<div class="w-full h-48 bg-gray-200 flex items-center justify-center">
@@ -70,7 +70,6 @@
 					class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
 				/>
 			</div>
-
 		</div>
 
 		<!-- Title - integrated into the same card -->

@@ -13,16 +13,16 @@
 		"lint": "eslint .",
 		"format": "prettier --write .",
 		"hygiene": "npm run check && npm run lint && npm run format",
-		"build-image-data": "convert:webp && generate:artwork-data",
 		"images:convert": "node scripts/convert-to-webp.mjs",
-		"images:generate": "npx tsx scripts/generate-enhanced-imports.ts"
+		"generate-artwork-images": "node scripts/generate-artwork-images.mjs",
+		"generate-artwork-data": "node scripts/generate-artwork-data.mjs",
+		"generate-artwork-all": "npm run generate-artwork-images && npm run generate-artwork-data"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@sveltejs/adapter-auto": "^6.0.0",
 		"@sveltejs/adapter-vercel": "^5.10.2",
-		"@sveltejs/enhanced-img": "^0.8.2",
 		"@sveltejs/kit": "^2.22.0",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@tailwindcss/forms": "^0.5.9",
