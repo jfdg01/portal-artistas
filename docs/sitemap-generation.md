@@ -9,18 +9,21 @@ The sitemap generation system provides both static and dynamic sitemap generatio
 ## Files Created
 
 ### 1. Static Sitemap Generator (`scripts/generate-sitemap.mjs`)
+
 - **Purpose**: Generates a static `sitemap.xml` file in the `static/` directory
 - **Usage**: `npm run generate-sitemap`
 - **Output**: `static/sitemap.xml`
 
 ### 2. Dynamic Sitemap Route (`src/routes/sitemap.xml/+page.server.ts`)
+
 - **Purpose**: Provides real-time sitemap generation at `/sitemap.xml`
-- **Features**: 
+- **Features**:
   - Automatically updates when artwork data changes
   - Cached for 1 hour for performance
   - Returns proper XML content type
 
 ### 3. Updated `robots.txt`
+
 - **Location**: `static/robots.txt`
 - **Addition**: Sitemap reference pointing to the dynamic route
 
@@ -29,33 +32,39 @@ The sitemap generation system provides both static and dynamic sitemap generatio
 The sitemap includes:
 
 ### Static Pages
+
 - **Homepage** (`/`) - Priority: 1.0, Change frequency: weekly
-- **Contact** (`/contact`) - Priority: 0.8, Change frequency: monthly  
+- **Contact** (`/contact`) - Priority: 0.8, Change frequency: monthly
 - **Online Classes** (`/clases-online`) - Priority: 0.7, Change frequency: monthly
 
 ### Dynamic Artwork Pages
+
 - **Individual Artwork Pages** (`/artwork/[id]`) - Priority: 0.6, Change frequency: monthly
 - **Total**: 44 artwork pages automatically generated from `artworkData.ts`
 
 ## Usage Instructions
 
 ### Generate Static Sitemap
+
 ```bash
 npm run generate-sitemap
 ```
 
 This will:
+
 1. Read all artwork IDs from `src/lib/data/artworkData.ts`
 2. Generate XML sitemap with all static and dynamic routes
 3. Save to `static/sitemap.xml`
 4. Display summary of generated URLs
 
 ### Access Dynamic Sitemap
+
 Visit `https://your-domain.com/sitemap.xml` to see the real-time generated sitemap.
 
 ## Configuration
 
 ### Update Base URL
+
 To change the base URL, update it in both files:
 
 1. **Static generator**: `scripts/generate-sitemap.mjs` (line 20)
@@ -66,10 +75,11 @@ const baseUrl = 'https://your-actual-domain.com';
 ```
 
 ### Priority and Change Frequency
+
 You can adjust the priority and change frequency for different page types:
 
 - **Homepage**: Priority 1.0, Weekly updates
-- **Contact/Classes**: Priority 0.7-0.8, Monthly updates  
+- **Contact/Classes**: Priority 0.7-0.8, Monthly updates
 - **Artwork Pages**: Priority 0.6, Monthly updates
 
 ## SEO Benefits
@@ -85,10 +95,10 @@ The sitemap generation can be integrated into your build process:
 
 ```json
 {
-  "scripts": {
-    "build": "npm run generate-sitemap && vite build",
-    "preview": "vite preview"
-  }
+	"scripts": {
+		"build": "npm run generate-sitemap && vite build",
+		"preview": "vite preview"
+	}
 }
 ```
 
@@ -109,6 +119,7 @@ The sitemap generation can be integrated into your build process:
 ### Validation
 
 You can validate your sitemap using:
+
 - [XML Sitemap Validator](https://www.xml-sitemaps.com/validate-xml-sitemap.html)
 - Google Search Console
 - Online XML validators

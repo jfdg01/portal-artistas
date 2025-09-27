@@ -28,26 +28,26 @@ Since the domain is registered with Arsys, the preferred and most robust verific
 
 The verification process requires interacting directly with the Arsys domain management interface:
 
-* **Step 1: Obtain the TXT Record:** Generate the unique verification string provided by GSC during the setup process. In the verification popup, the TXT record type should be selected.4  
-* **Step 2: Access Arsys DNS Management:** Log into the Arsys Control Panel and locate the DNS management settings. This section is typically labeled **Entradas DNS** (DNS Entries).6  
-* **Step 3: Add the TXT Record:**  
-  * Select the option to **Añadir entrada DNS** (Add DNS entry).6  
-  * Choose **TXT** as the record type.7  
-  * In the **Name/Host** field, input @ to signify the root domain (cardenaspacheco.es) or leave it blank, depending on the specific formatting required by the Arsys interface.5  
-  * In the **Value/Text** field, paste the *exact* unique string copied from the GSC setup screen.4  
-  * The **TTL (Time to Live)** should generally be left at the default setting (e.g., 3600 seconds) unless a rapid change is specifically needed.5  
-* **Step 4: Propagation and Verification:** Save the changes and allow time for DNS propagation across the internet, which can range from a few minutes up to 72 hours.7 Once the changes are propagated, return to GSC and click the "Verificar" (Verify) button. A successful verification message confirms the link between the site and Google.9
+- **Step 1: Obtain the TXT Record:** Generate the unique verification string provided by GSC during the setup process. In the verification popup, the TXT record type should be selected.4
+- **Step 2: Access Arsys DNS Management:** Log into the Arsys Control Panel and locate the DNS management settings. This section is typically labeled **Entradas DNS** (DNS Entries).6
+- **Step 3: Add the TXT Record:**
+  - Select the option to **Añadir entrada DNS** (Add DNS entry).6
+  - Choose **TXT** as the record type.7
+  - In the **Name/Host** field, input @ to signify the root domain (cardenaspacheco.es) or leave it blank, depending on the specific formatting required by the Arsys interface.5
+  - In the **Value/Text** field, paste the _exact_ unique string copied from the GSC setup screen.4
+  - The **TTL (Time to Live)** should generally be left at the default setting (e.g., 3600 seconds) unless a rapid change is specifically needed.5
+- **Step 4: Propagation and Verification:** Save the changes and allow time for DNS propagation across the internet, which can range from a few minutes up to 72 hours.7 Once the changes are propagated, return to GSC and click the "Verificar" (Verify) button. A successful verification message confirms the link between the site and Google.9
 
 Table 1 details the required configuration fields:
 
 Table 1: Arsys DNS TXT Record Configuration for GSC Verification
 
-| Google Search Console Field (TXT Record) | Arsys DNS Panel Equivalent | Value Input | Notes |
-| :---- | :---- | :---- | :---- |
-| **Type** | TXT (Text) | Must select this record type. | 5 |
-| **Name/Host** | @ or leave blank | Target the root domain (cardenaspacheco.es). Follow Arsys's format. | 5 |
-| **Value/Text** | (Unique Verification String) | The exact string provided by GSC. | 4 |
-| **TTL (Time to Live)** | Default (e.g., 3600 seconds) | Use default unless rapid change is needed. | 5 |
+| Google Search Console Field (TXT Record) | Arsys DNS Panel Equivalent   | Value Input                                                         | Notes |
+| :--------------------------------------- | :--------------------------- | :------------------------------------------------------------------ | :---- |
+| **Type**                                 | TXT (Text)                   | Must select this record type.                                       | 5     |
+| **Name/Host**                            | @ or leave blank             | Target the root domain (cardenaspacheco.es). Follow Arsys's format. | 5     |
+| **Value/Text**                           | (Unique Verification String) | The exact string provided by GSC.                                   | 4     |
+| **TTL (Time to Live)**                   | Default (e.g., 3600 seconds) | Use default unless rapid change is needed.                          | 5     |
 
 ### **3\. Essential Security Configuration (HTTPS and HSTS)**
 
@@ -63,7 +63,7 @@ This policy sets the duration for one year (max-age=31536000), applies the rule 
 
 HSTS must be implemented as an HTTP response header, separate from the HTML document's \<head\> section.11 For SvelteKit projects, which are typically deployed via adapters to platforms like Vercel or Netlify, implementation options include:
 
-1. **Hosting Platform Configuration:** Setting the HSTS header via the host provider’s configuration files (e.g., a vercel.json or Netlify headers file) is often the most reliable way to enforce it at the edge infrastructure level.14  
+1. **Hosting Platform Configuration:** Setting the HSTS header via the host provider’s configuration files (e.g., a vercel.json or Netlify headers file) is often the most reliable way to enforce it at the edge infrastructure level.14
 2. **SvelteKit Server Hooks:** If the site is self-hosted or requires custom server logic, the src/hooks.server.js file can be used to globally intercept server responses and inject the header via the SvelteKit handle function.13
 
 ### **4\. Integrating Web Analytics (GA4)**
@@ -111,26 +111,26 @@ To implement dynamic and reliable canonical tags, the URL path must be captured 
 
 1. **Data Retrieval (src/routes/+layout.server.js):** The URL components are accessed via the load function on the server side:  
    JavaScript  
-   export const load \= async ({ url }) \=\> {   
-     return {   
-       pathname: url.pathname,   
-       fullUrl: url.href   
-     };   
+   export const load \= async ({ url }) \=\> {  
+    return {  
+    pathname: url.pathname,  
+    fullUrl: url.href  
+    };  
    };  
    \`\`\` \[23\]
 
 2. **Rendering the Canonical Tag (src/routes/+layout.svelte):** The canonical tag is rendered in the root layout file, using the path data and a constant for the preferred site URL:  
    Svelte  
    \<script\>  
-       import { page } from '$app/stores';  
-       export let data;  
-       const SITE\_URL \= 'https://cardenaspacheco.es';   
+    import { page } from '$app/stores';  
+    export let data;  
+    const SITE_URL \= 'https://cardenaspacheco.es';  
    \</script\>
 
    \<svelte:head\>  
-       {\#key $page.url.pathname}  
+    {\#key $page.url.pathname}  
            \<link rel="canonical" href="{SITE\_URL}{$page.url.pathname}" /\>  
-       {/key}  
+    {/key}  
    \</svelte:head\>
 
    \<slot /\>  
@@ -157,7 +157,7 @@ HTML
 \<meta property\="og:title" content\="{title}"\>  
 \<meta property\="og:description" content\="{description}"\>  
 \<meta property\="og:image" content\="{image}"\>  
-\<meta name\="twitter:card" content\="summary\_large\_image"\>  
+\<meta name\="twitter:card" content\="summary_large_image"\>  
 \`\`\` \[27\]
 
 This component-based strategy receives props (title, description, image) populated by the server-side \`load\` functions, making metadata management scalable and reliable across the application.\[27\]
@@ -186,19 +186,19 @@ A component strategy involves defining the schema object in JavaScript, stringif
 
 \`\`\`svelte  
 \<script\>  
-    // Data fetched from load function  
-    export let schemaOrgObject;   
-    let jsonLdString \= JSON.stringify(schemaOrgObject);  
-    // Splitting the closing tag safely prevents Svelte parsing errors  
-    let jsonLdScript \= \`  
-        \<script type="application/ld+json"\>  
-        ${jsonLdString}  
-        ${'\<'}/script\>  
-        \`;  
+ // Data fetched from load function  
+ export let schemaOrgObject;  
+ let jsonLdString \= JSON.stringify(schemaOrgObject);  
+ // Splitting the closing tag safely prevents Svelte parsing errors  
+ let jsonLdScript \= \`  
+ \<script type="application/ld+json"\>  
+ ${jsonLdString}  
+ ${'\<'}/script\>  
+ \`;  
 \</script\>
 
 \<svelte:head\>  
-    {@html jsonLdScript}  
+ {@html jsonLdScript}  
 \</svelte:head\>  
 \`\`\` \[30\]
 
@@ -222,11 +222,11 @@ Table 2 illustrates the necessary shift in keyword prioritization for a new doma
 
 Table 2: New Domain Keyword Prioritization Matrix
 
-| \*\*Keyword Type\*\* | \*\*Difficulty\*\* | \*\*Search Volume (SV)\*\* | \*\*Goal for cardenaspacheco.es\*\* | \*\*Timeframe\*\* |  
-|---|---|---|---|---|  
-| \*\*High SV, High Difficulty\*\* | High | High | Avoid—Too competitive for a new domain. | Long-term (6-12+ months) |  
-| \*\*Low SV, Low Difficulty (Long-Tail)\*\* | Low | Low-Medium | \*\*Primary Target:\*\* Quick wins, initial traffic, immediate authority building. | Short-term (0-6 months) |  
-| \*\*Questions/Problem-Based\*\* | Varies | Varies | \*\*High Intent:\*\* Directly address user problems, essential for Topic Clusters. | Short-term (0-6 months) |
+| \*\*Keyword Type\*\*                       | \*\*Difficulty\*\* | \*\*Search Volume (SV)\*\* | \*\*Goal for cardenaspacheco.es\*\*                                                | \*\*Timeframe\*\*        |
+| ------------------------------------------ | ------------------ | -------------------------- | ---------------------------------------------------------------------------------- | ------------------------ |
+| \*\*High SV, High Difficulty\*\*           | High               | High                       | Avoid—Too competitive for a new domain.                                            | Long-term (6-12+ months) |
+| \*\*Low SV, Low Difficulty (Long-Tail)\*\* | Low                | Low-Medium                 | \*\*Primary Target:\*\* Quick wins, initial traffic, immediate authority building. | Short-term (0-6 months)  |
+| \*\*Questions/Problem-Based\*\*            | Varies             | Varies                     | \*\*High Intent:\*\* Directly address user problems, essential for Topic Clusters. | Short-term (0-6 months)  |
 
 \#\#\# 2\. Building E-E-A-T
 
@@ -240,8 +240,8 @@ The Topic Cluster content model is a structural approach that signals topical au
 
 \#\#\#\# Defining Pillars and Clusters
 
-1\.  \*\*Pillar Pages:\*\* These are comprehensive, standalone, high-level pages covering a broad topic (e.g., "The Complete Guide to Spanish Real Estate"). They aim to secure backlinks and capture users at the top of the funnel (awareness stage).\[38, 40\]  
-2\.  \*\*Cluster Pages:\*\* These are in-depth articles focusing on specific, granular subtopics derived from the pillar (e.g., "Navigating Spanish Inheritance Tax for Foreigners"). These pages target users in the middle and bottom of the marketing funnel.\[39, 40\]
+1\. \*\*Pillar Pages:\*\* These are comprehensive, standalone, high-level pages covering a broad topic (e.g., "The Complete Guide to Spanish Real Estate"). They aim to secure backlinks and capture users at the top of the funnel (awareness stage).\[38, 40\]  
+2\. \*\*Cluster Pages:\*\* These are in-depth articles focusing on specific, granular subtopics derived from the pillar (e.g., "Navigating Spanish Inheritance Tax for Foreigners"). These pages target users in the middle and bottom of the marketing funnel.\[39, 40\]
 
 \#\#\#\# Strategic Internal Linking
 
@@ -287,11 +287,11 @@ Table 3 summarizes the CWV optimization strategy:
 
 Table 3: Core Web Vitals Optimization Checklist for SvelteKit
 
-| \*\*Metric\*\* | \*\*Optimization Goal\*\* | \*\*SvelteKit Technical Implementation\*\* | \*\*SEO Impact/Benefit\*\* |  
-|---|---|---|---|  
-| \*\*LCP\*\* | Improve perceived loading speed of main content. | Use \`@sveltejs/enhanced-img\` for AVIF/WebP and responsive sizing. | Faster primary content visibility, better ranking signal. |  
-| \*\*CLS\*\* | Stabilize page content during loading. | Self-host fonts with \`font-display: swap\`. Use explicit \`width\`/\`height\` attributes on images. | Improved user experience, avoiding layout shift penalties. |  
-| \*\*INP/FID\*\* | Ensure smooth responsiveness to user input. | Leverage Svelte compilation efficiency; defer/async non-critical JS scripts. | Better user interaction rating, lower bounce rate. |
+| \*\*Metric\*\*  | \*\*Optimization Goal\*\*                        | \*\*SvelteKit Technical Implementation\*\*                                                           | \*\*SEO Impact/Benefit\*\*                                 |
+| --------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| \*\*LCP\*\*     | Improve perceived loading speed of main content. | Use \`@sveltejs/enhanced-img\` for AVIF/WebP and responsive sizing.                                  | Faster primary content visibility, better ranking signal.  |
+| \*\*CLS\*\*     | Stabilize page content during loading.           | Self-host fonts with \`font-display: swap\`. Use explicit \`width\`/\`height\` attributes on images. | Improved user experience, avoiding layout shift penalties. |
+| \*\*INP/FID\*\* | Ensure smooth responsiveness to user input.      | Leverage Svelte compilation efficiency; defer/async non-critical JS scripts.                         | Better user interaction rating, lower bounce rate.         |
 
 \#\# V. Final Pre-Flight and Maintenance Checklist
 
@@ -299,12 +299,12 @@ The launch preparation concludes with essential administrative checks and establ
 
 \#\#\# 1\. Pre-Launch Checklist
 
-\*   \*\*404 Error Page:\*\* A custom and helpful \`src/routes/\[...404\]/+page.svelte\` should be created to gracefully handle broken links and non-existent URLs.\[45\]  
-\*   \*\*Redirects:\*\* Implement necessary 301 redirects for any URLs that have changed or for domain consolidation.\[45\]  
-\*   \*\*Link Integrity:\*\* Conduct a full scan of the site to identify and resolve any broken internal or external links (404s).\[25, 26, 45\]  
-\*   \*\*Compatibility Testing:\*\* Verify that the design and functionality are consistent across all major browsers and devices to ensure a positive user experience.\[26, 45\]  
-\*   \*\*Favicon and Title:\*\* Ensure the favicon is correctly configured and the homepage \`\<title\>\` tag is set.\[45\]  
-\*   \*\*Form Functionality:\*\* Rigorously test all contact and conversion forms to confirm they are operational.\[45\]
+\* \*\*404 Error Page:\*\* A custom and helpful \`src/routes/\[...404\]/+page.svelte\` should be created to gracefully handle broken links and non-existent URLs.\[45\]  
+\* \*\*Redirects:\*\* Implement necessary 301 redirects for any URLs that have changed or for domain consolidation.\[45\]  
+\* \*\*Link Integrity:\*\* Conduct a full scan of the site to identify and resolve any broken internal or external links (404s).\[25, 26, 45\]  
+\* \*\*Compatibility Testing:\*\* Verify that the design and functionality are consistent across all major browsers and devices to ensure a positive user experience.\[26, 45\]  
+\* \*\*Favicon and Title:\*\* Ensure the favicon is correctly configured and the homepage \`\<title\>\` tag is set.\[45\]  
+\* \*\*Form Functionality:\*\* Rigorously test all contact and conversion forms to confirm they are operational.\[45\]
 
 \#\#\# 2\. Legal Requirements
 
@@ -316,10 +316,10 @@ Google Search Console is the operational hub for post-launch monitoring, providi
 
 \#\#\#\# Immediate Key Monitoring Reports:
 
-\*   \*\*Coverage Report:\*\* This report verifies which pages have been successfully indexed. The owner must rapidly resolve any \`Excluded\` or \`Error\` pages, specifically monitoring for instances where canonical tags are failing to consolidate duplicate variations.  
-\*   \*\*Crawl Stats Report:\*\* Immediately after launch, this report must be reviewed, focusing on the "Crawl requests by file type" section. A successful implementation of the specialized \`robots.txt\` (Section II.1) should demonstrate a low percentage of requests spent on JavaScript and JSON files, validating the crawl budget optimization strategy.\[18\]  
-\*   \*\*Core Web Vitals Report:\*\* Monitor mobile and desktop CWV performance to detect any performance regressions that may occur post-deployment.  
-\*   \*\*Performance Report:\*\* Use this report to track initial ranking keywords, verifying that the strategic focus on long-tail, low-difficulty terms (Section III.1) is yielding initial impressions and clicks.\[34\]
+\* \*\*Coverage Report:\*\* This report verifies which pages have been successfully indexed. The owner must rapidly resolve any \`Excluded\` or \`Error\` pages, specifically monitoring for instances where canonical tags are failing to consolidate duplicate variations.  
+\* \*\*Crawl Stats Report:\*\* Immediately after launch, this report must be reviewed, focusing on the "Crawl requests by file type" section. A successful implementation of the specialized \`robots.txt\` (Section II.1) should demonstrate a low percentage of requests spent on JavaScript and JSON files, validating the crawl budget optimization strategy.\[18\]  
+\* \*\*Core Web Vitals Report:\*\* Monitor mobile and desktop CWV performance to detect any performance regressions that may occur post-deployment.  
+\* \*\*Performance Report:\*\* Use this report to track initial ranking keywords, verifying that the strategic focus on long-tail, low-difficulty terms (Section III.1) is yielding initial impressions and clicks.\[34\]
 
 \#\# VI. Conclusions and Recommendations
 
@@ -335,30 +335,30 @@ Finally, persistent monitoring of the GSC Coverage and Crawl Stats reports will 
 
 #### **Obras citadas**
 
-1. Managing Multi-Regional and Multilingual Sites | Google Search Central | Documentation, fecha de acceso: septiembre 27, 2025, [https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)  
-2. The International Targeting report is deprecated \- Search Console Help, fecha de acceso: septiembre 27, 2025, [https://support.google.com/webmasters/answer/12474899?hl=en](https://support.google.com/webmasters/answer/12474899?hl=en)  
-3. Hreflang: The Easy Guide for Beginners \- Ahrefs, fecha de acceso: septiembre 27, 2025, [https://ahrefs.com/blog/hreflang-tags/](https://ahrefs.com/blog/hreflang-tags/)  
-4. Verify your site ownership \- Search Console Help, fecha de acceso: septiembre 27, 2025, [https://support.google.com/webmasters/answer/9008080?hl=en](https://support.google.com/webmasters/answer/9008080?hl=en)  
-5. How to Add a TXT Record to Your DNS Server for Domain Verification and Email Authentication \- ID123, fecha de acceso: septiembre 27, 2025, [https://www.id123.io/knowledgebase/adding-a-txt-record-to-a-dns-server/](https://www.id123.io/knowledgebase/adding-a-txt-record-to-a-dns-server/)  
-6. Verificar tu dominio con Google \- Centro de Soporte \- Arsys, fecha de acceso: septiembre 27, 2025, [https://www.arsys.es/soporte/correo/verificar-tu-dominio-con-google](https://www.arsys.es/soporte/correo/verificar-tu-dominio-con-google)  
-7. How to create a DNS TXT record \- SecureAuth Product Docs, fecha de acceso: septiembre 27, 2025, [https://docs.secureauth.com/arculix/en/how-to-create-a-dns-txt-record.html](https://docs.secureauth.com/arculix/en/how-to-create-a-dns-txt-record.html)  
-8. ¿Qué es un registro TXT de DNS y cómo crearlo? | Blog de Arsys, fecha de acceso: septiembre 27, 2025, [https://www.arsys.es/blog/que-es-un-registro-txt-de-dns-y-como-crearlo](https://www.arsys.es/blog/que-es-un-registro-txt-de-dns-y-como-crearlo)  
-9. Cómo verificar tu dominio en Google paso a paso usando un registro DNS TXT en tu hosting (Guía) \- YouTube, fecha de acceso: septiembre 27, 2025, [https://www.youtube.com/watch?v=fNN03ApS-8E](https://www.youtube.com/watch?v=fNN03ApS-8E)  
-10. HTTP Strict Transport Security \- The HTTPS-Only Standard, fecha de acceso: septiembre 27, 2025, [https://https.cio.gov/hsts/](https://https.cio.gov/hsts/)  
-11. Strict-Transport-Security header \- HTTP \- MDN, fecha de acceso: septiembre 27, 2025, [https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security)  
-12. HTTP Strict Transport Security \- OWASP Cheat Sheet Series, fecha de acceso: septiembre 27, 2025, [https://cheatsheetseries.owasp.org/cheatsheets/HTTP\_Strict\_Transport\_Security\_Cheat\_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)  
-13. SvelteKit Static Site HTTP Headers | Rodney Lab, fecha de acceso: septiembre 27, 2025, [https://dev.to/askrodney/sveltekit-static-site-http-headers-2g6j](https://dev.to/askrodney/sveltekit-static-site-http-headers-2g6j)  
-14. HSTS header \- Help \- Vercel Community, fecha de acceso: septiembre 27, 2025, [https://community.vercel.com/t/hsts-header/14985](https://community.vercel.com/t/hsts-header/14985)  
-15. Website Launch Checklist: What to Double Check Before You Go Live \- Story Reimagined, fecha de acceso: septiembre 27, 2025, [https://www.storyreimagined.org/blog/website-launch-checklist-what-to-double-check-before-you-go-live](https://www.storyreimagined.org/blog/website-launch-checklist-what-to-double-check-before-you-go-live)  
-16. Enhancing Web Performance with Core Web Vitals Optimization | Leapcell, fecha de acceso: septiembre 27, 2025, [https://leapcell.io/blog/enhancing-web-performance-with-core-web-vitals-optimization](https://leapcell.io/blog/enhancing-web-performance-with-core-web-vitals-optimization)  
-17. SEO • Docs \- Svelte, fecha de acceso: septiembre 27, 2025, [https://svelte.dev/docs/kit/seo](https://svelte.dev/docs/kit/seo)  
-18. Robots.txt file for SvelteKit projects \- Scott Spence, fecha de acceso: septiembre 27, 2025, [https://scottspence.com/posts/robots-txt-file-for-sveltekit-projects](https://scottspence.com/posts/robots-txt-file-for-sveltekit-projects)  
-19. Mastering robots.txt: A Comprehensive Guide to Optimizing Crawl Budget and Enhancing SEO | by Teamcode | Medium, fecha de acceso: septiembre 27, 2025, [https://medium.com/@teamcode20233/mastering-robots-txt-a-comprehensive-guide-to-optimizing-crawl-budget-and-enhancing-seo-593228484068](https://medium.com/@teamcode20233/mastering-robots-txt-a-comprehensive-guide-to-optimizing-crawl-budget-and-enhancing-seo-593228484068)  
-20. What's the best way to add a robots.txt file to a SvelteKit project? \- Stack Overflow, fecha de acceso: septiembre 27, 2025, [https://stackoverflow.com/questions/72188193/whats-the-best-way-to-add-a-robots-txt-file-to-a-sveltekit-project](https://stackoverflow.com/questions/72188193/whats-the-best-way-to-add-a-robots-txt-file-to-a-sveltekit-project)  
-21. How to create a dynamic sitemap.xml for your Sveltekit app. \- DEV Community, fecha de acceso: septiembre 27, 2025, [https://dev.to/n3rd/how-to-create-a-dynamic-sitemapxml-for-your-sveltekit-app-3c1f](https://dev.to/n3rd/how-to-create-a-dynamic-sitemapxml-for-your-sveltekit-app-3c1f)  
-22. Canonical Tag: Definition, Examples & Best Practices \- Moz, fecha de acceso: septiembre 27, 2025, [https://moz.com/learn/seo/canonicalization](https://moz.com/learn/seo/canonicalization)  
-23. SvelteKit SEO | Webjeda, fecha de acceso: septiembre 27, 2025, [https://webjeda.com/blog/sveltekit-seo](https://webjeda.com/blog/sveltekit-seo)  
-24. Add meta tags to dynamic page in sveltekit \- Stack Overflow, fecha de acceso: septiembre 27, 2025, [https://stackoverflow.com/questions/78048621/add-meta-tags-to-dynamic-page-in-sveltekit](https://stackoverflow.com/questions/78048621/add-meta-tags-to-dynamic-page-in-sveltekit)  
-25. SEO Best Practices for 2025: Rank Higher with Smart Strategy | Svitla Systems, fecha de acceso: septiembre 27, 2025, [https://svitla.com/blog/seo-best-practices/](https://svitla.com/blog/seo-best-practices/)  
-26. The Definitive Checklist for Your New Website Launch, fecha de acceso: septiembre 27, 2025, [https://www.trajectorywebdesign.com/blog/website-launch-checklist](https://www.trajectorywebdesign.com/blog/website-launch-checklist)  
-27. How you guys manage Metadata/SEO in svelte kit? : r/sveltejs \- Reddit, fecha de acceso: septiembre 27, 2025, [https://www.reddit.com/r/sveltejs/comments/1e1bcb6/how\_you\_guys\_manage\_metadataseo\_in\_svelte\_kit/](https://www.reddit.com/r/sveltejs/comments/1e1bcb6/how_you_guys_manage_metadataseo_in_svelte_kit/)
+1. Managing Multi-Regional and Multilingual Sites | Google Search Central | Documentation, fecha de acceso: septiembre 27, 2025, [https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)
+2. The International Targeting report is deprecated \- Search Console Help, fecha de acceso: septiembre 27, 2025, [https://support.google.com/webmasters/answer/12474899?hl=en](https://support.google.com/webmasters/answer/12474899?hl=en)
+3. Hreflang: The Easy Guide for Beginners \- Ahrefs, fecha de acceso: septiembre 27, 2025, [https://ahrefs.com/blog/hreflang-tags/](https://ahrefs.com/blog/hreflang-tags/)
+4. Verify your site ownership \- Search Console Help, fecha de acceso: septiembre 27, 2025, [https://support.google.com/webmasters/answer/9008080?hl=en](https://support.google.com/webmasters/answer/9008080?hl=en)
+5. How to Add a TXT Record to Your DNS Server for Domain Verification and Email Authentication \- ID123, fecha de acceso: septiembre 27, 2025, [https://www.id123.io/knowledgebase/adding-a-txt-record-to-a-dns-server/](https://www.id123.io/knowledgebase/adding-a-txt-record-to-a-dns-server/)
+6. Verificar tu dominio con Google \- Centro de Soporte \- Arsys, fecha de acceso: septiembre 27, 2025, [https://www.arsys.es/soporte/correo/verificar-tu-dominio-con-google](https://www.arsys.es/soporte/correo/verificar-tu-dominio-con-google)
+7. How to create a DNS TXT record \- SecureAuth Product Docs, fecha de acceso: septiembre 27, 2025, [https://docs.secureauth.com/arculix/en/how-to-create-a-dns-txt-record.html](https://docs.secureauth.com/arculix/en/how-to-create-a-dns-txt-record.html)
+8. ¿Qué es un registro TXT de DNS y cómo crearlo? | Blog de Arsys, fecha de acceso: septiembre 27, 2025, [https://www.arsys.es/blog/que-es-un-registro-txt-de-dns-y-como-crearlo](https://www.arsys.es/blog/que-es-un-registro-txt-de-dns-y-como-crearlo)
+9. Cómo verificar tu dominio en Google paso a paso usando un registro DNS TXT en tu hosting (Guía) \- YouTube, fecha de acceso: septiembre 27, 2025, [https://www.youtube.com/watch?v=fNN03ApS-8E](https://www.youtube.com/watch?v=fNN03ApS-8E)
+10. HTTP Strict Transport Security \- The HTTPS-Only Standard, fecha de acceso: septiembre 27, 2025, [https://https.cio.gov/hsts/](https://https.cio.gov/hsts/)
+11. Strict-Transport-Security header \- HTTP \- MDN, fecha de acceso: septiembre 27, 2025, [https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security)
+12. HTTP Strict Transport Security \- OWASP Cheat Sheet Series, fecha de acceso: septiembre 27, 2025, [https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
+13. SvelteKit Static Site HTTP Headers | Rodney Lab, fecha de acceso: septiembre 27, 2025, [https://dev.to/askrodney/sveltekit-static-site-http-headers-2g6j](https://dev.to/askrodney/sveltekit-static-site-http-headers-2g6j)
+14. HSTS header \- Help \- Vercel Community, fecha de acceso: septiembre 27, 2025, [https://community.vercel.com/t/hsts-header/14985](https://community.vercel.com/t/hsts-header/14985)
+15. Website Launch Checklist: What to Double Check Before You Go Live \- Story Reimagined, fecha de acceso: septiembre 27, 2025, [https://www.storyreimagined.org/blog/website-launch-checklist-what-to-double-check-before-you-go-live](https://www.storyreimagined.org/blog/website-launch-checklist-what-to-double-check-before-you-go-live)
+16. Enhancing Web Performance with Core Web Vitals Optimization | Leapcell, fecha de acceso: septiembre 27, 2025, [https://leapcell.io/blog/enhancing-web-performance-with-core-web-vitals-optimization](https://leapcell.io/blog/enhancing-web-performance-with-core-web-vitals-optimization)
+17. SEO • Docs \- Svelte, fecha de acceso: septiembre 27, 2025, [https://svelte.dev/docs/kit/seo](https://svelte.dev/docs/kit/seo)
+18. Robots.txt file for SvelteKit projects \- Scott Spence, fecha de acceso: septiembre 27, 2025, [https://scottspence.com/posts/robots-txt-file-for-sveltekit-projects](https://scottspence.com/posts/robots-txt-file-for-sveltekit-projects)
+19. Mastering robots.txt: A Comprehensive Guide to Optimizing Crawl Budget and Enhancing SEO | by Teamcode | Medium, fecha de acceso: septiembre 27, 2025, [https://medium.com/@teamcode20233/mastering-robots-txt-a-comprehensive-guide-to-optimizing-crawl-budget-and-enhancing-seo-593228484068](https://medium.com/@teamcode20233/mastering-robots-txt-a-comprehensive-guide-to-optimizing-crawl-budget-and-enhancing-seo-593228484068)
+20. What's the best way to add a robots.txt file to a SvelteKit project? \- Stack Overflow, fecha de acceso: septiembre 27, 2025, [https://stackoverflow.com/questions/72188193/whats-the-best-way-to-add-a-robots-txt-file-to-a-sveltekit-project](https://stackoverflow.com/questions/72188193/whats-the-best-way-to-add-a-robots-txt-file-to-a-sveltekit-project)
+21. How to create a dynamic sitemap.xml for your Sveltekit app. \- DEV Community, fecha de acceso: septiembre 27, 2025, [https://dev.to/n3rd/how-to-create-a-dynamic-sitemapxml-for-your-sveltekit-app-3c1f](https://dev.to/n3rd/how-to-create-a-dynamic-sitemapxml-for-your-sveltekit-app-3c1f)
+22. Canonical Tag: Definition, Examples & Best Practices \- Moz, fecha de acceso: septiembre 27, 2025, [https://moz.com/learn/seo/canonicalization](https://moz.com/learn/seo/canonicalization)
+23. SvelteKit SEO | Webjeda, fecha de acceso: septiembre 27, 2025, [https://webjeda.com/blog/sveltekit-seo](https://webjeda.com/blog/sveltekit-seo)
+24. Add meta tags to dynamic page in sveltekit \- Stack Overflow, fecha de acceso: septiembre 27, 2025, [https://stackoverflow.com/questions/78048621/add-meta-tags-to-dynamic-page-in-sveltekit](https://stackoverflow.com/questions/78048621/add-meta-tags-to-dynamic-page-in-sveltekit)
+25. SEO Best Practices for 2025: Rank Higher with Smart Strategy | Svitla Systems, fecha de acceso: septiembre 27, 2025, [https://svitla.com/blog/seo-best-practices/](https://svitla.com/blog/seo-best-practices/)
+26. The Definitive Checklist for Your New Website Launch, fecha de acceso: septiembre 27, 2025, [https://www.trajectorywebdesign.com/blog/website-launch-checklist](https://www.trajectorywebdesign.com/blog/website-launch-checklist)
+27. How you guys manage Metadata/SEO in svelte kit? : r/sveltejs \- Reddit, fecha de acceso: septiembre 27, 2025, [https://www.reddit.com/r/sveltejs/comments/1e1bcb6/how_you_guys_manage_metadataseo_in_svelte_kit/](https://www.reddit.com/r/sveltejs/comments/1e1bcb6/how_you_guys_manage_metadataseo_in_svelte_kit/)

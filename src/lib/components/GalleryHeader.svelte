@@ -23,19 +23,16 @@
 	}
 
 	function goToHome() {
-		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		goto('/');
 		closeMobileMenu();
 	}
 
 	function goToContact() {
-		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		goto('/contact');
 		closeMobileMenu();
 	}
 
 	function goToOnlineClasses() {
-		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		goto('/clases-online');
 		closeMobileMenu();
 	}

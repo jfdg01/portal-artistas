@@ -24,7 +24,6 @@
 	let imageElement = $state<HTMLImageElement | undefined>(undefined);
 
 	function handleClick() {
-		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		goto(`/artwork/${artwork.id}`);
 	}
 

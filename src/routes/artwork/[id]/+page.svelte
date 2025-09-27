@@ -22,7 +22,6 @@
 	let hasMultipleImages = $derived(artwork && artwork.images ? artwork.images.length > 1 : false);
 
 	function goBack() {
-		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		goto('/');
 	}
 
